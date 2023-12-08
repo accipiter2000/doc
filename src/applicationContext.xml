@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="  
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd  
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<import resource="applicationContextMsT.xml" />
+
+	<context:component-scan base-package="com.opendynamic">
+		<context:exclude-filter type="regex" expression="com.opendynamic.om.service.impl.mysql.*" />
+		<context:exclude-filter type="regex" expression="com.opendynamic.cb.service.impl.mysql.*" />
+	</context:component-scan>
+	<context:component-scan base-package="cn.newangels" />
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<tx:annotation-driven transaction-manager="msTransactionManager" />
+
+	<alias name="msDataSource" alias="omDataSource" />
+	<alias name="msDataSource" alias="ffDataSource" />
+	<alias name="msJdbcTemplate" alias="omJdbcTemplate" />
+	<alias name="msJdbcTemplate" alias="ffJdbcTemplate" />
+
+	<!-- I18N -->
+	<!-- 资源文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/classes/messageSource" />
+		<property name="cacheSeconds" value="10" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+	<!-- 国际化方案. 可选session, cookie -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	<!-- 国际化拦截器，基于session/cookie时必须配置 -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<!-- 国际化参数 -->
+			<property name="paramName" value="locale" />
+		</bean>
+	</mvc:interceptors>
+
+	<!-- don't handle the static resource -->
+	<mvc:default-servlet-handler />
+
+	<!-- if you use annotation you must configure following setting -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- configure the InternalResourceViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>

@@ -1,0 +1,310 @@
+{
+    "procDefCode": "nodeConfigsDemo",
+    "procDefName": "节点配置流程示例",
+    "procDefCat": "demo.main",
+    "procDefDiagramWidth": null,
+    "procDefDiagramHeight": null,
+    "memo": "memo",
+    "nodeDefList": [
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 50; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "单人办理",
+            "nodeName": "单人办理",
+            "assignee": "31c5fa6f72074442aa19427f8295b847",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 150; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "多人办理",
+            "nodeName": "多人办理",
+            "assignee": "28fcc1e79d8440019bf9884ab0559394,b58656cfc219487b86283e7644e58dec",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 250; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "设置节点完成条件",
+            "nodeName": "设置节点完成条件",
+            "completeExpression": "${COMPLETE/TOTAL>=0.5}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5",
+            "assignee": "31c5fa6f72074442aa19427f8295b847,a582aa44643641049fc9d52c96499b8b",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 350; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "排他",
+            "nodeName": "排他",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "1",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5",
+            "assignee": "28fcc1e79d8440019bf9884ab0559394,b58656cfc219487b86283e7644e58dec",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 550; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "候选人",
+            "nodeName": "候选人",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5",
+            "candidateAssignee": "${ffOmService.selectOrgLeader(ffOmService.selectOrg(INIT_COM_ID_, null, null, \"财务\").get(0).getOrgId(),\"2\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 750; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "自动完成相同办理人",
+            "nodeName": "自动完成相同办理人",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "1",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5",
+            "assignee": "${ffOmService.selectOrgLeader(INIT_ORG_ID_,\"1,2\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 650; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "自动完成没有办理人",
+            "nodeName": "自动完成没有办理人",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "1",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5",
+            "assignee": "${ffOmService.selectOrgLeader(INIT_ORG_ID_,\"3\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 450; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "办理人用表达式获取",
+            "nodeName": "办理人用表达式获取",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5",
+            "assignee": "${ffOmService.selectOrgLeader(INIT_ORG_ID_,\"2\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}"
+        }
+    ],
+    "noteDefList": [
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 50; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "bd025ceed6454b29a1e31db2ff30c993",
+            "noteName": "设置办理人为单个字符串",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 150; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "880febe87fcf4d15ae29bf608c535506",
+            "noteName": "设置办理人为逗号分割的字符串，并发",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 450; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "0e5855b7154a4009a654d093ee061772",
+            "noteName": "办理人使用JUEL表达式获取",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 250; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "2805c9afbe8a4ad2bf2fcfbf3bf88a04",
+            "noteName": "设置节点完成表达式。默认为该节点的所有办理人都完成任务。本节点的完成条件是50%以上的人同意",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 350; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "9936233f77054159958282d61a0117f5",
+            "noteName": "设置节点排他属性。设置后，该节点第一个办理人完成任务后，自动终止其它办理人的任务，并完成该节点。",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 550; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "5e69ecac8fd4490b98ae6b37b103302c",
+            "noteName": "设置节点的候选办理人。实际办理人由上一个节点的办理人从这些候选人中选取",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 750; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "a9e3bfd6b9684919908af88f98b7ab54",
+            "noteName": "设置节点的自动完成相同办理人属性。此时若办理人已经在其它节点办理过任务，可自动完成。默认为否。",
+            "dynamic": "0"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 650; width: 200; height: 50; border-style: solid; border-width: 0; border-radius: 0; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "noteCode": "4f130b19f737483e8f31ef519917e1ab",
+            "noteName": "设置节点的自动完成没有办理人属性。此时若节点没有办理人，自动完成节点。默认为否。",
+            "dynamic": "0"
+        }
+    ],
+    "flowDefList": [
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN"
+            },
+            "flowCode": "flow01",
+            "sourceNodeCode": "单人办理",
+            "targetNodeCode": "多人办理",
+            "conditionExpression": "true"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "多人办理",
+            "targetNodeCode": "设置节点完成条件"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "设置节点完成条件",
+            "targetNodeCode": "排他"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "排他",
+            "targetNodeCode": "办理人用表达式获取"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "办理人用表达式获取",
+            "targetNodeCode": "候选人"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "候选人",
+            "targetNodeCode": "自动完成没有办理人"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "自动完成没有办理人",
+            "targetNodeCode": "自动完成相同办理人"
+        }
+    ]
+}

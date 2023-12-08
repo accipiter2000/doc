@@ -1,0 +1,89 @@
+{
+    "procDefCode": "serviceTaskDemo",
+    "procDefName": "服务任务示例",
+    "procDefCat": "demo.main",
+    "procDefDiagramWidth": null,
+    "procDefDiagramHeight": null,
+    "memo": "memo",
+    "nodeDefList": [
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 50; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "部门领导审批",
+            "nodeName": "部门领导审批",
+            "assignee": "${ffOmService.selectOrgLeader(INIT_ORG_ID_,\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 150; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "SERVICE_TASK",
+            "nodeCode": "服务接口调用",
+            "nodeName": "服务接口调用",
+            "action": "${docService.testService()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 250; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "厂矿领导审批",
+            "nodeName": "厂矿领导审批",
+            "assignee": "${ffOmService.selectOrgLeader(INIT_COM_ID_,\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        }
+    ],
+    "flowDefList": [
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "部门领导审批",
+            "targetNodeCode": "服务接口调用"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "sourceNodeCode": "服务接口调用",
+            "targetNodeCode": "厂矿领导审批"
+        }
+    ]
+}

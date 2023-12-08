@@ -1,0 +1,85 @@
+{
+    "procDefCode": "subProcDemo2",
+    "procDefName": "子流程2",
+    "procDefCat": "demo.hq.hr",
+    "procDefDiagramWidth": null,
+    "procDefDiagramHeight": null,
+    "memo": "memo",
+    "nodeDefList": [
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 100; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "B厂长审批",
+            "nodeName": "B厂长审批",
+            "candidateAssignee": "${ffOmService.selectOrgLeader(\"2418a7c609ff464682099e2cd100cce7\",\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 50; top: 200; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "B财务部长审批",
+            "nodeName": "B财务部长审批",
+            "assignee": "${ffOmService.selectOrgLeader(ffOmService.selectOrg(\"2418a7c609ff464682099e2cd100cce7\",null,null,\"财务\").get(0).getOrgId(),\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        }
+    ],
+    "noteDefList": [
+                    {
+                        "shape": {
+                            "type": "rectangle",
+                            "style": "left: 0; top: -1; width: 200; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: transparent; background-color: transparent; font-family: Microsoft YaHei; font-weight: normal; font-size: 15; color: #000000; text-align: center; vertical-align: middle; "
+                        },
+                        "noteCode": "noteCode",
+                        "noteName": "${INIT_COM_NAME_}通用审批流程",
+                        "dynamic": "1"
+                    }
+                ],
+    "flowDefList": [
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN"
+            },
+            "flowCode": "flow01",
+            "sourceNodeCode": "B厂长审批",
+            "targetNodeCode": "B财务部长审批",
+            "conditionExpression": "true"
+        }
+    ],
+    "procVarDefList": [
+        {
+            "varName": "assignee",
+            "value": "zhang2",
+            "varType": "STRING"
+        },
+        {
+            "varType": "STRING",
+            "varName": "INIT_COM_NAME_",
+            "value": "B厂矿"
+        }
+    ]
+}
