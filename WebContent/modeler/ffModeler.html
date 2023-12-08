@@ -1,0 +1,2273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>FreeFlow Modeler</title>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+input {
+	border-width: 1px;
+	width: 95%;
+}
+
+.required {
+	border-color: #F08080;
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	var procDef;
+	var diagramOffsetLeft = 0;
+	var diagramOffsetTop = 0;
+	var $multipulSelected;
+
+	var ProcDef = {//流程定义基类
+		procDefCode : null, // 流程定义编码
+		procDefName : null, // 流程定义名称
+		procDefCat : null, // 流程定义分类
+		procDefDiagramWidth : null, // 流程定义图宽度
+		procDefDiagramHeight : null, // 流程定义图高度
+		memo : null, // 备注
+		nodeDefList : new Array(),// 节点定列表
+		noteDefList : new Array(),// 注释定义列表
+		flowDefList : new Array(),// 流转定义列表
+		procVarDefList : new Array(),// 流程变量定义列表
+		getNodeDef : function(nodeDefId) {//根据nodeDefId获取nodeDef
+			for (var i = 0; i < this.nodeDefList.length; i++) {
+				if (this.nodeDefList[i].nodeDefId == nodeDefId) {
+					return this.nodeDefList[i];
+				}
+			}
+		},
+		getNodeDefByCode : function(nodeCode) {//根据nodeCode获取nodeDef
+			for (var i = 0; i < this.nodeDefList.length; i++) {
+				if (this.nodeDefList[i].nodeCode == nodeCode) {
+					return this.nodeDefList[i];
+				}
+			}
+		},
+		addNodeDef : function(nodeType, left, top, silent) {//新增nodeDef。silent为是否刷新绘图(默认为刷新)。
+			var nodeDef = Object.create(NodeDef);//创建nodeDef
+			nodeDef.shape = Object.create(Shape);
+
+			//属性赋值
+			nodeDef.nodeDefId = _getUuid();
+			nodeDef.nodeType = nodeType;
+			nodeDef.nodeCode = nodeDef.nodeDefId;
+			if (nodeType == 'TASK') {
+				nodeDef.nodeName = 'TASK';
+			}
+			if (nodeType == 'CENTER_FORWARD_TASK') {
+				nodeDef.nodeName = 'CENTER FORWARD TASK';
+			}
+			if (nodeType == 'SERVICE_TASK') {
+				nodeDef.nodeName = 'SERVICE TASK';
+			}
+			if (nodeType == 'STAGE') {
+				nodeDef.nodeName = 'STAGE';
+				nodeDef.shape.width = 200;
+				nodeDef.shape.height = 300;
+				nodeDef.shape.verticalAlign = 'top';
+			}
+			if (nodeType == 'SUB_PROC') {
+				nodeDef.nodeName = 'SUB PROC';
+			}
+			if (nodeType == 'ISOLATE_SUB_PROC') {
+				nodeDef.nodeName = 'ISOLATE SUB PROC';
+			}
+			if (nodeType == 'GATEWAY') {
+				nodeDef.nodeName = 'GATEWAY';
+			}
+			if (nodeType == 'END') {
+				nodeDef.nodeName = 'END';
+			}
+			nodeDef.shape.type = 'rectangle';
+			if (nodeType == 'GATEWAY') {
+				nodeDef.shape.type = 'diamond';
+			}
+			if (nodeType == 'END') {
+				nodeDef.shape.width = 50;
+				nodeDef.shape.type = 'oval';
+			}
+			nodeDef.shape.left = left;
+			nodeDef.shape.top = top;
+
+			nodeDef.shape.updateStyle();
+			this.nodeDefList.push(nodeDef);//放入数组
+
+			if (!silent) {
+				nodeDef.updateLayout();//刷新绘图
+				_preUpdateNodeDefAttr(nodeDef);//显示属性界面
+			}
+		},
+		removeNodeDef : function(nodeDef) {//删除nodeDef。
+			for (var i = this.flowDefList.length - 1; i >= 0; i--) {
+				if (this.flowDefList[i].sourceNodeCode == nodeDef.nodeCode || this.flowDefList[i].targetNodeCode == nodeDef.nodeCode) {
+					procDef.removeFlowDef(this.flowDefList[i]);
+				}
+			}
+
+			nodeDef.removeLayout();//删除绘图
+
+			this.nodeDefList.splice(this.nodeDefList.indexOf(nodeDef), 1);//从数组中删除
+		},
+		duplicateNodeCode : function(nodeDef, nodeCode) {//编码是否重复。
+			for (var i = 0; i < this.nodeDefList.length; i++) {
+				if (this.nodeDefList[i] != nodeDef && this.nodeDefList[i].nodeCode == nodeCode) {
+					return true;
+				}
+			}
+
+			return false;
+		},
+		getNoteDef : function(noteDefId) {//根据noteDefId获取noteDef
+			for (var i = 0; i < this.noteDefList.length; i++) {
+				if (this.noteDefList[i].noteDefId == noteDefId) {
+					return this.noteDefList[i];
+				}
+			}
+		},
+		getNoteDefByCode : function(noteCode) {//根据noteCode获取noteDef
+			for (var i = 0; i < this.noteDefList.length; i++) {
+				if (this.noteDefList[i].noteCode == noteCode) {
+					return this.noteDefList[i];
+				}
+			}
+		},
+		addNoteDef : function(left, top, silent) {//新增noteDef。silent为是否刷新绘图(默认为刷新)。
+			var noteDef = Object.create(NoteDef);//创建noteDef
+			noteDef.shape = Object.create(Shape);
+
+			//属性赋值
+			noteDef.noteDefId = _getUuid();
+			noteDef.noteCode = noteDef.noteDefId;
+			noteDef.noteName = 'NOTE';
+			noteDef.shape.type = 'rectangle';
+			noteDef.shape.left = left;
+			noteDef.shape.top = top;
+			noteDef.shape.borderWidth = 0;
+			noteDef.shape.borderRadius = 0;
+			noteDef.shape.borderColor = 'transparent';
+			noteDef.shape.backgroundColor = 'transparent';
+
+			noteDef.shape.updateStyle();
+			this.noteDefList.push(noteDef);//放入数组
+
+			if (!silent) {
+				noteDef.updateLayout();//刷新绘图
+				_preUpdateNoteDefAttr(noteDef);//显示属性界面
+			}
+		},
+		removeNoteDef : function(noteDef) {//删除noteDef。
+			noteDef.removeLayout();//删除绘图
+
+			this.noteDefList.splice(this.noteDefList.indexOf(noteDef), 1);//从数组中删除
+		},
+		duplicateNoteCode : function(noteDef, noteCode) {//编码是否重复。
+			for (var i = 0; i < this.noteDefList.length; i++) {
+				if (this.noteDefList[i] != noteDef && this.noteDefList[i].noteCode == noteCode) {
+					return true;
+				}
+			}
+
+			return false;
+		},
+		getFlowDef : function(flowDefId) {//根据flowDefId获取flowDef
+			for (var i = 0; i < this.flowDefList.length; i++) {
+				if (this.flowDefList[i].flowDefId == flowDefId) {
+					return this.flowDefList[i];
+				}
+			}
+		},
+		addFlowDef : function(sourceNodeDef, targetNodeDef, silent) {//新增flowDef。silent为是否刷新绘图(默认为刷新)。
+			var flowDef = Object.create(FlowDef);
+			flowDef.shape = Object.create(Shape);
+
+			//属性赋值
+			flowDef.flowDefId = _getUuid();
+			flowDef.shape.type = 'line';
+			flowDef.shape.linePath = 'SN';
+			flowDef.sourceNodeCode = sourceNodeDef.nodeCode;
+			flowDef.targetNodeCode = targetNodeDef.nodeCode;
+
+			flowDef.shape.updateStyle();
+			this.flowDefList.push(flowDef);//放入数组
+
+			if (!silent) {
+				flowDef.updateLayout();
+				_preUpdateFlowDefAttr(flowDef);//显示属性界面
+			}
+		},
+		removeFlowDef : function(flowDef) {//删除flowDef。 
+			flowDef.removeLayout();//删除绘图
+
+			this.flowDefList.splice(this.flowDefList.indexOf(flowDef), 1);//从数组中删除
+		},
+		updateAllFlowDefLayout : function() {
+			for (var i = 0; i < this.flowDefList.length; i++) {
+				this.flowDefList[i].updateLayout();
+			}
+		},
+		deselectAll : function() {//取消所有选择 
+			for (var i = 0; i < this.nodeDefList.length; i++) {
+				this.nodeDefList[i].setDeselected();
+			}
+			for (var i = 0; i < this.flowDefList.length; i++) {
+				this.flowDefList[i].setDeselected();
+			}
+			for (var i = 0; i < this.noteDefList.length; i++) {
+				this.noteDefList[i].setDeselected();
+			}
+
+			$multipulSelected = null;
+		}
+	}
+
+	var NodeDef = {//节点定义基类
+		nodeDefId : null,// 节点ID
+		nodeType : 'TASK',// 节点类型
+		nodeCode : null,// 节点编码
+		nodeName : 'TASK',// 节点名称
+		parentNodeCode : null,// 上级节点编码
+		candidateAssignee : null,// 候选人
+		candidateSubProcDef : null,// 候选子流程定义
+		completeExpression : '${COMPLETE/TOTAL>=1}',// 完成表达式
+		completeReturn : '0',// 完成后返回前一个节点
+		exclusive : '0',// 排他
+		autoCompleteSameAssignee : '0',// 自动完成相同办理人任务
+		autoCompleteEmptyAssignee : '0',// 自动完成没有办理人节点
+		inform : '0',// 通知
+		assignee : null,// 办理人
+		assignSubProcDef : null,// 办理子流程定义
+		action : null,// 业务行为
+		dueDate : null,// 截止日期
+		claim : '0',//认领
+		forwardable : '0',// 可转发
+		priority : 5, // 优先级
+		shape : null,
+		selected : false,
+		updateLayout : function() {//刷新绘图
+			var me = this;
+
+			var exist = false;
+
+			var $nodeDefOuter = $('#' + this.nodeDefId);
+			var $nodeDefInner;
+
+			if ($nodeDefOuter.length > 0) {
+				exist = true;
+			}
+
+			if (exist) {
+				$nodeDefInner = $nodeDefOuter.find(':first-child');
+				$nodeDefInner.text(this.nodeName);
+			} else {
+				var $nodeDefOuter = $('<div></div>');
+				var $nodeDefInner = $('<div>' + this.nodeName + '</div>');
+				$nodeDefOuter.append($nodeDefInner);
+				$('#diagram').append($nodeDefOuter);//绘图
+			}
+
+			$nodeDefOuter.attr('id', this.nodeDefId);
+			$nodeDefOuter.attr('type', 'nodeDef');
+			$nodeDefOuter.css('position', 'absolute');
+			$nodeDefOuter.css('left', this.shape.left);
+			$nodeDefOuter.css('top', this.shape.top);
+			$nodeDefOuter.css('width', this.shape.width);
+			$nodeDefOuter.css('height', this.shape.height);
+			$nodeDefOuter.css('border-style', this.shape.borderStyle);
+			$nodeDefOuter.css('border-width', this.shape.borderWidth);
+			$nodeDefOuter.css('border-radius', this.shape.borderRadius);
+			$nodeDefOuter.css('border-color', this.shape.borderColor);
+			$nodeDefOuter.css('background-color', this.shape.backgroundColor);
+			$nodeDefOuter.css('box-shadow', '1px 1px');
+			$nodeDefOuter.css('cursor', 'pointer');
+			$nodeDefOuter.css('user-select', 'none');
+			if (this.nodeType == 'GATEWAY') {
+				$nodeDefOuter.css('clip-path', 'polygon(50% 0, 100% 50%, 50% 100%, 0 50%)');
+			}
+			if (this.nodeType == 'END') {
+				$nodeDefOuter.css('border-radius', '50% 50% 50% 50%');
+			}
+
+			$nodeDefInner.css('width', this.shape.width);
+			$nodeDefInner.css('height', this.shape.height);
+			$nodeDefInner.css('font-family', this.shape.fontFamily);
+			$nodeDefInner.css('font-weight', this.shape.fontWeight);
+			$nodeDefInner.css('font-size', this.shape.fontSize);
+			$nodeDefInner.css('color', this.shape.color);
+			$nodeDefInner.css('display', 'table-cell');
+			$nodeDefInner.css('text-align', this.shape.textAlign);
+			$nodeDefInner.css('vertical-align', this.shape.verticalAlign);
+
+			if (this.selected) {
+				this.setSelected();
+			}
+
+			if (!exist) {
+				$nodeDefOuter.draggable({//添加拖拽事件
+					stop : function(e, ui) {
+						if ($multipulSelected != null) {
+							_moveMultipulSelected(ui);
+						} else {
+							var nodeDef = procDef.getNodeDef(ui.helper.context.id);
+							nodeDef.shape.left = ui.position.left;
+							nodeDef.shape.top = ui.position.top;
+							nodeDef.shape.updateStyle();
+							nodeDef.updateLayout();
+							_preUpdateNodeDefAttr(me);//显示属性界面
+
+							procDef.updateAllFlowDefLayout();
+						}
+					}
+				});
+
+				$nodeDefOuter.bind('click', function(e) {//添加点击事件
+					_preUpdateNodeDefAttr(me);//显示属性界面
+				});
+
+				$nodeDefOuter.bind('contextmenu', function(e) {
+					e.preventDefault();
+				});
+
+				$nodeDefOuter.bind('mousedown', function(e) {//右键拖拽划线
+					if (e.buttons == 1) {//取消拖拽选择的事件冒泡
+						if (e || e.stopPropagation) {
+							e.stopPropagation();
+						} else { //IE
+							e.cancelBubble = true;
+						}
+					}
+
+					if (e.buttons == 2) {
+						var dragging = true;
+						var sourceNodeDef = me;
+
+						$(document).bind('mouseup', (function(e) {
+							if (dragging) {
+								var $nodeDefDiv = _findNodeDefDiv($(e.toElement));
+								if ($nodeDefDiv != null) {
+									var targetNodeDef = procDef.getNodeDef($nodeDefDiv.attr('id'));
+									if (sourceNodeDef != targetNodeDef) {
+										procDef.addFlowDef(sourceNodeDef, targetNodeDef, false);
+									}
+								}
+							}
+
+							//解除绑定
+							dragging = false;
+							$(document).unbind('mouseup');
+						}));
+					}
+				});
+			}
+		},
+		removeLayout : function() {//删除绘图
+			$('#' + this.nodeDefId).remove();
+		},
+		setSelected : function() {//设置为样式为选中
+			this.selected = true;
+			var $nodeDefOuter = $('#' + this.nodeDefId);
+			$nodeDefOuter.css('border-color', 'red');
+			$nodeDefOuter.css('border-width', 1);
+			$nodeDefOuter.attr('selected', 'selected');
+		},
+		setDeselected : function() {//设置为样式为取消选中
+			this.selected = false;
+			var $nodeDefOuter = $('#' + this.nodeDefId);
+			$nodeDefOuter.css('border-color', this.shape.borderColor);
+			$nodeDefOuter.css('border-width', this.shape.borderWidth);
+			$nodeDefOuter.removeAttr('selected');
+		}
+	}
+
+	var NoteDef = {
+		noteDefId : null,// 注释ID
+		noteCode : null,//注释编码
+		noteName : null,// 注释名称
+		dynamic : '0',// 是否为动态。如为动态，则在获取动态流程图时才绘制注释内容。
+		shape : null,
+		selected : false,
+		updateLayout : function() {
+			var me = this;
+
+			var exist = false;
+
+			var $noteDefOuter = $('#' + this.noteDefId);
+			var $noteDefInner;
+
+			if ($noteDefOuter.length > 0) {
+				exist = true;
+			}
+
+			if (exist) {
+				$noteDefInner = $noteDefOuter.find(':first-child');
+				$noteDefInner.text(this.noteName);
+			} else {
+				var $noteDefOuter = $('<div></div>');
+				var $noteDefInner = $('<div>' + this.noteName + '</div>');
+				$noteDefOuter.append($noteDefInner);
+				$('#diagram').append($noteDefOuter);//绘图
+			}
+
+			$noteDefOuter.attr('id', this.noteDefId);
+			$noteDefOuter.attr('type', 'noteDef');
+			$noteDefOuter.css('position', 'absolute');
+			$noteDefOuter.css('left', this.shape.left);
+			$noteDefOuter.css('top', this.shape.top);
+			$noteDefOuter.css('width', this.shape.width);
+			$noteDefOuter.css('height', this.shape.height);
+			$noteDefOuter.css('border-style', this.shape.borderStyle);
+			$noteDefOuter.css('border-width', this.shape.borderWidth);
+			$noteDefOuter.css('border-radius', this.shape.borderRadius);
+			$noteDefOuter.css('border-color', this.shape.borderColor);
+			$noteDefOuter.css('background-color', this.shape.backgroundColor);
+			$noteDefOuter.css('cursor', 'pointer');
+			$noteDefOuter.css('user-select', 'none');
+
+			$noteDefInner.css('width', this.shape.width);
+			$noteDefInner.css('height', this.shape.height);
+			$noteDefInner.css('font-family', this.shape.fontFamily);
+			$noteDefInner.css('font-weight', this.shape.fontWeight);
+			$noteDefInner.css('font-size', this.shape.fontSize);
+			$noteDefInner.css('color', this.shape.color);
+			$noteDefInner.css('display', 'table-cell');
+			$noteDefInner.css('text-align', this.shape.textAlign);
+			$noteDefInner.css('vertical-align', this.shape.verticalAlign);
+
+			if (this.selected) {
+				this.setSelected();
+			}
+
+			if (!exist) {
+				$noteDefOuter.draggable({//添加拖拽事件
+					stop : function(e, ui) {
+						if ($multipulSelected != null) {
+							_moveMultipulSelected(ui);
+						} else {
+							var noteDef = procDef.getNoteDef(ui.helper.context.id);
+							noteDef.shape.left = ui.position.left;
+							noteDef.shape.top = ui.position.top;
+							noteDef.shape.updateStyle();
+							noteDef.updateLayout();
+							_preUpdateNoteDefAttr(me);//显示属性界面
+						}
+					}
+				});
+
+				$noteDefOuter.bind('click', function(e) {//添加点击事件
+					_preUpdateNoteDefAttr(me);//显示属性界面
+				});
+
+				$noteDefOuter.bind('mousedown', function(e) {
+					if (e.buttons == 1) {//取消拖拽选择的事件冒泡
+						if (e || e.stopPropagation) {
+							e.stopPropagation();
+						} else { //IE
+							e.cancelBubble = true;
+						}
+					}
+				});
+			}
+		},
+		removeLayout : function() {
+			$('#' + this.noteDefId).remove();
+		},
+		setSelected : function() {//设置为样式为选中
+			this.selected = true;
+			var $noteDefOuter = $('#' + this.noteDefId);
+			$noteDefOuter.css('border-color', 'red');
+			$noteDefOuter.css('border-width', 1);
+			$noteDefOuter.attr('selected', 'selected');
+		},
+		setDeselected : function() {//设置为样式为取消选中
+			this.selected = false;
+			var $noteDefOuter = $('#' + this.noteDefId);
+			$noteDefOuter.css('border-color', this.shape.borderColor);
+			$noteDefOuter.css('border-width', this.shape.borderWidth);
+			$noteDefOuter.removeAttr('selected');
+		}
+	}
+
+	var FlowDef = {
+		flowDefId : null,// 流转ID
+		flowCode : null,// 流转编码
+		flowName : null,// 流转名称
+		sourceNodeCode : null,// 来源节点编码
+		targetNodeCode : null,// 目标节点编码
+		conditionExpression : 'true',// 流转表达式
+		shape : null,
+		selected : false,
+		updateLayout : function() {
+			var pointList = new Array();
+
+			var sourceNodeDef = procDef.getNodeDefByCode(this.sourceNodeCode);
+			var targetNodeDef = procDef.getNodeDefByCode(this.targetNodeCode);
+
+			var sourceNodeLeft = sourceNodeDef.shape.left;
+			var sourceNodeTop = sourceNodeDef.shape.top;
+			var sourceNodeWidth = sourceNodeDef.shape.width;
+			var sourceNodeHeight = sourceNodeDef.shape.height;
+			var targetNodeLeft = targetNodeDef.shape.left;
+			var targetNodeTop = targetNodeDef.shape.top;
+			var targetNodeWidth = targetNodeDef.shape.width;
+			var targetNodeHeight = targetNodeDef.shape.height;
+
+			var startDirection = null;
+			var endDirection = null;
+			var startPoint = null;
+			var stavarbPoint = null;
+			var m1Point = null;
+			var m2Point = null;
+			var m3Point = null;
+			var m4Point = null;
+			var endStubPoint = null;
+			var endPoint = null;
+			if (this.shape.linePath == 'D') {// 直线
+				if (Math.abs(sourceNodeLeft - targetNodeLeft) <= Math.abs(sourceNodeTop - targetNodeTop)) {
+					if (sourceNodeTop < targetNodeTop) {
+						startPoint = {
+							x : sourceNodeLeft + sourceNodeWidth / 2,
+							y : sourceNodeTop + sourceNodeHeight
+						};
+						endPoint = {
+							x : targetNodeLeft + targetNodeWidth / 2,
+							y : targetNodeTop
+						};
+					} else {
+						startPoint = {
+							x : sourceNodeLeft + sourceNodeWidth / 2,
+							y : sourceNodeTop
+						};
+						endPoint = {
+							x : targetNodeLeft + targetNodeWidth / 2,
+							y : targetNodeTop + targetNodeHeight
+						};
+					}
+				} else {
+					if (sourceNodeLeft < targetNodeLeft) {
+						startPoint = {
+							x : sourceNodeLeft + sourceNodeWidth,
+							y : sourceNodeTop + sourceNodeHeight / 2
+						};
+						endPoint = {
+							x : targetNodeLeft,
+							y : targetNodeTop + targetNodeHeight / 2
+						};
+					} else {
+						startPoint = {
+							x : sourceNodeLeft,
+							y : sourceNodeTop + sourceNodeHeight / 2
+						};
+						endPoint = {
+							x : targetNodeLeft + targetNodeWidth,
+							y : targetNodeTop + targetNodeHeight / 2
+						};
+					}
+				}
+
+				pointList.push(startPoint);
+				pointList.push(endPoint);
+			} else {// 折线
+				startDirection = this.shape.linePath.substring(0, 1);
+				endDirection = this.shape.linePath.substring(this.shape.linePath.length - 1, this.shape.linePath.length);
+
+				if (startDirection == 'N') {// 计算起点，终点和各自的延长点
+					startPoint = {
+						x : sourceNodeLeft + sourceNodeWidth / 2,
+						y : sourceNodeTop
+					};
+					startStubPoint = {
+						x : sourceNodeLeft + sourceNodeWidth / 2,
+						y : sourceNodeTop - this.shape.stub
+					};
+				}
+				if (startDirection == 'E') {
+					startPoint = {
+						x : sourceNodeLeft + sourceNodeWidth,
+						y : sourceNodeTop + sourceNodeHeight / 2
+					};
+					startStubPoint = {
+						x : sourceNodeLeft + sourceNodeWidth + this.shape.stub,
+						y : sourceNodeTop + sourceNodeHeight / 2
+					};
+				}
+				if (startDirection == 'S') {
+					startPoint = {
+						x : sourceNodeLeft + sourceNodeWidth / 2,
+						y : sourceNodeTop + sourceNodeHeight
+					};
+					startStubPoint = {
+						x : sourceNodeLeft + sourceNodeWidth / 2,
+						y : sourceNodeTop + sourceNodeHeight + this.shape.stub
+					};
+				}
+				if (startDirection == 'W') {
+					startPoint = {
+						x : sourceNodeLeft,
+						y : sourceNodeTop + sourceNodeHeight / 2
+					};
+					startStubPoint = {
+						x : sourceNodeLeft - this.shape.stub,
+						y : sourceNodeTop + sourceNodeHeight / 2
+					};
+				}
+				if (endDirection == 'N') {
+					endPoint = {
+						x : targetNodeLeft + targetNodeWidth / 2,
+						y : targetNodeTop
+					};
+					endStubPoint = {
+						x : targetNodeLeft + targetNodeWidth / 2,
+						y : targetNodeTop - this.shape.stub
+					};
+				}
+				if (endDirection == 'E') {
+					endPoint = {
+						x : targetNodeLeft + targetNodeWidth,
+						y : targetNodeTop + targetNodeHeight / 2
+					};
+					endStubPoint = {
+						x : targetNodeLeft + targetNodeWidth + this.shape.stub,
+						y : targetNodeTop + targetNodeHeight / 2
+					};
+				}
+				if (endDirection == 'S') {
+					endPoint = {
+						x : targetNodeLeft + targetNodeWidth / 2,
+						y : targetNodeTop + targetNodeHeight
+					};
+					endStubPoint = {
+						x : targetNodeLeft + targetNodeWidth / 2,
+						y : targetNodeTop + targetNodeHeight + this.shape.stub
+					};
+				}
+				if (endDirection == 'W') {
+					endPoint = {
+						x : targetNodeLeft,
+						y : targetNodeTop + targetNodeHeight / 2
+					};
+					endStubPoint = {
+						x : targetNodeLeft - this.shape.stub,
+						y : targetNodeTop + targetNodeHeight / 2
+					};
+				}
+
+				// 计算中间折点
+				if (_isSameDirection(startStubPoint, endStubPoint, startDirection)) {// 与开始方向相同
+					if (_isSubjectToEndStub(startStubPoint, endStubPoint, startDirection, endDirection)) {// 以终点折点为准
+						if (startDirection == 'N' || startDirection == 'S') {
+							m1Point = {
+								x : startStubPoint.x,
+								y : endStubPoint.y
+							};// 计算起点折点
+							if (!(m1Point.x == endStubPoint.x && m1Point.y == endStubPoint.y) && (endDirection == 'N' || endDirection == 'S')) {// 计算终点折点
+								m4Point = endStubPoint;
+							}
+						} else {
+							m1Point = {
+								x : endStubPoint.x,
+								y : startStubPoint.y
+							};// 计算起点折点
+							if (!(m1Point.x == endStubPoint.x && m1Point.y == endStubPoint.y) && (endDirection == 'E' || endDirection == 'W')) {// 计算终点折点
+								m4Point = endStubPoint;
+							}
+						}
+					} else {// 反向折线
+						if (startDirection == _reverseDirection(endDirection)) {// 中点双折
+							if (startDirection == 'N' || startDirection == 'S') {
+								m1Point = {
+									x : startStubPoint.x,
+									y : (startStubPoint.y + endStubPoint.y) / 2
+								};
+								m4Point = {
+									x : endStubPoint.x,
+									y : (startStubPoint.y + endStubPoint.y) / 2
+								};
+							} else {
+								m1Point = {
+									x : (startStubPoint.x + endStubPoint.x) / 2,
+									y : startStubPoint.y
+								};
+								m4Point = {
+									x : (startStubPoint.x + endStubPoint.x) / 2,
+									y : endStubPoint.y
+								};
+							}
+
+							if (m1Point.x == m4Point.x && m1Point.y == m4Point.y) {// 起终折点在一条直线上，取消折点
+								m1Point = null;
+								m4Point = null;
+							}
+						} else {// 反向单折
+							if (!(startStubPoint.x == endStubPoint.x && startStubPoint.y == endStubPoint.y)) {// 起终折点不在一条直线上，添加折点
+								m1Point = startStubPoint;
+								m4Point = endStubPoint;
+							}
+
+							if (startDirection == 'N' || startDirection == 'S') {// 计算单折折点
+								m2Point = {
+									x : endStubPoint.x,
+									y : startStubPoint.y
+								};
+							} else {
+								m2Point = {
+									x : startStubPoint.x,
+									y : endStubPoint.y
+								};
+							}
+
+							if ((m2Point.x == m1Point.x && m2Point.y == m1Point.y) || (m2Point.x == m4Point.x && m2Point.y == m4Point.y)) {// 与折点重合取消
+								m2Point = null;
+							}
+						}
+					}
+				} else {// 与开始方向相反
+					if (startDirection == endDirection) {// 同向单折
+						m1Point = startStubPoint;
+
+						if (startDirection == 'N' || startDirection == 'S') {
+							m4Point = {
+								x : endStubPoint.x,
+								y : startStubPoint.y
+							};
+						} else {
+							m4Point = {
+								x : startStubPoint.x,
+								y : endStubPoint.y
+							};
+						}
+
+						if (m4Point.x == m1Point.x && m4Point.y == m1Point.y) {// 与折点重合取消
+							m4Point = null;
+						}
+					} else if (startDirection == _reverseDirection(endDirection)) {// 反向中点双折
+						m1Point = startStubPoint;
+						m4Point = endStubPoint;
+
+						if (startDirection == 'N' || startDirection == 'S') {
+							m2Point = {
+								x : (startStubPoint.x + endStubPoint.x) / 2,
+								y : startStubPoint.y
+							};
+							m3Point = {
+								x : (startStubPoint.x + endStubPoint.x) / 2,
+								y : endStubPoint.y
+							};
+						} else {
+							m2Point = {
+								x : startStubPoint.x,
+								y : (startStubPoint.y + endStubPoint.y) / 2
+							};
+							m3Point = {
+								x : endStubPoint.x,
+								y : (startStubPoint.y + endStubPoint.y) / 2
+							};
+						}
+
+						// 与折点重合取消
+						if ((m2Point.x == m1Point.x && m2Point.y == m1Point.y)) {
+							m2Point = null;
+						}
+						if ((m3Point.x == m4Point.x && m3Point.y == m4Point.y)) {
+							m3Point = null;
+						}
+					} else {// 单折
+						m1Point = startStubPoint;
+						m4Point = endStubPoint;
+
+						if (startDirection == 'N' || startDirection == 'S') {
+							m2Point = {
+								x : endStubPoint.x,
+								y : startStubPoint.y
+							};
+						} else {
+							m2Point = {
+								x : startStubPoint.x,
+								y : endStubPoint.y
+							};
+						}
+					}
+				}
+
+				pointList.push(startPoint);
+				if (m1Point != null) {
+					pointList.push(m1Point);
+				}
+				if (m2Point != null) {
+					pointList.push(m2Point);
+				}
+				if (m3Point != null) {
+					pointList.push(m3Point);
+				}
+				if (m4Point != null) {
+					pointList.push(m4Point);
+				}
+				pointList.push(endPoint);
+			}
+
+			$('#' + this.flowDefId).remove();
+
+			var flowDefOuter = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+			$(flowDefOuter).attr('id', this.flowDefId);
+			$(flowDefOuter).attr('type', 'flowDef');
+
+			var margin = 6;
+			var left = pointList[0].x;
+			var top = pointList[0].y;
+			var right = pointList[0].x;
+			var bottom = pointList[0].y;
+			var d = 'M ' + pointList[0].x + ' ' + pointList[0].y;
+			for (var i = 1; i < pointList.length; i++) {
+				if (pointList[i].x < left) {
+					left = pointList[i].x;
+				}
+				if (pointList[i].y < top) {
+					top = pointList[i].y;
+				}
+				if (pointList[i].x > right) {
+					right = pointList[i].x;
+				}
+				if (pointList[i].y > bottom) {
+					bottom = pointList[i].y;
+				}
+
+				d = d + ' L ' + pointList[i].x + ' ' + pointList[i].y;
+			}
+			var positionStyle = 'left:' + (left - margin) + 'px;top:' + (top - margin) + 'px;width:' + (right - left + margin * 2) + 'px;height:' + (bottom - top + margin * 2) + 'px';
+			flowDefOuter.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" pointer-events="none" style="position:absolute;cursor:pointer;' + positionStyle + '"><path xmlns="http://www.w3.org/2000/svg" pointer-events="visibleStroke" transform="translate(' + (margin - left) + ',' + (margin - top) + ')" fill="none" d="' + d + '" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"></path></svg>';
+			$('#diagram').append($(flowDefOuter));//绘图
+
+			if (this.flowName != null && this.flowName != '') {//流程名称
+				var $flowName = $('<div style="position:absolute;text-align:center;"></div>');
+				var startPoint = pointList[this.shape.textLineIndex];
+				var endPoint = pointList[this.shape.textLineIndex + 1];
+				$flowName.css('left', ((startPoint.x + endPoint.x - this.shape.textWidth) / 2 + this.shape.textOffsetX) + 'px');
+				$flowName.css('top', ((startPoint.y + endPoint.y - this.shape.textHeight) / 2 + this.shape.textOffsetY) + 'px');
+				$flowName.css('width', this.shape.textWidth + 'px');
+				$flowName.css('height', this.shape.textHeight + 'px');
+				$flowName.text(this.flowName);
+				$(flowDefOuter).append($flowName);
+			}
+
+			if (this.selected) {
+				this.setSelected();
+			}
+
+			var me = this;
+			$(flowDefOuter).bind('click', function(e) {//添加点击事件
+				_preUpdateFlowDefAttr(me);//显示属性界面
+			});
+			$(flowDefOuter).bind('mousedown', function(e) {//右键拖拽划线
+				if (e.buttons == 1) {//取消拖拽选择的事件冒泡
+					if (e || e.stopPropagation) {
+						e.stopPropagation();
+					} else { //IE
+						e.cancelBubble = true;
+					}
+				}
+			});
+		},
+		removeLayout : function() {
+			$('#' + this.flowDefId).remove();
+		},
+		setSelected : function() {//设置为样式为选中
+			this.selected = true;
+			var $flowDefOuter = $('#' + this.flowDefId);
+			$flowDefInner = $flowDefOuter.find(':first-child').find(':first-child');
+			$flowDefInner.attr('stroke', '#ff0000');
+		},
+		setDeselected : function() {//设置为样式为取消选中
+			this.selected = false;
+			var $flowDefOuter = $('#' + this.flowDefId);
+			$flowDefInner = $flowDefOuter.find(':first-child').find(':first-child');
+			$flowDefInner.attr('stroke', '#000000');
+		}
+	}
+
+	var Shape = {
+		type : null,// 类型
+		linePath : 'SN',// 折线路径
+		stub : 25,// 连线两端截线的最小长度
+		textLineIndex : 0,// 文本所在折线段下标
+		textWidth : 100,// 文本最大宽度
+		textHeight : 20,// 文本最大高度
+		textOffsetX : 0,// 文本横向偏移
+		textOffsetY : 0,// 文本纵向偏移
+		style : null,
+
+		left : 0,// 左边缘x坐标
+		top : 0,// 上边缘y坐标
+		width : 100,// 宽度
+		height : 50,// 高度
+		fontFamily : 'Microsoft YaHei',// 字体
+		fontWeight : 'normal',// 字体粗细
+		fontSize : '13px',// 字体大小
+		borderStyle : 'solid',// 边框类型
+		borderWidth : 1,// 边框宽度
+		borderRadius : 10,// 边框圆角
+		borderColor : '#000000',// 边框颜色
+		color : '#000000',// 文字颜色
+		backgroundColor : '#ffffc8',// 背景颜色
+		textAlign : 'center',// 文字横向对齐
+		verticalAlign : 'middle',// 文字纵向对齐
+
+		updateStyle : function() {
+			this.style = '';
+			this.style += 'left: ' + this.left + '; ';
+			this.style += 'top: ' + this.top + '; ';
+			this.style += 'width: ' + this.width + '; ';
+			this.style += 'height: ' + this.height + '; ';
+			this.style += 'border-style: ' + this.borderStyle + '; ';
+			this.style += 'border-width: ' + this.borderWidth + '; ';
+			this.style += 'border-radius: ' + this.borderRadius + '; ';
+			this.style += 'border-color: ' + this.borderColor + '; ';
+			this.style += 'background-color: ' + this.backgroundColor + '; ';
+			this.style += 'font-family: ' + this.fontFamily + '; ';
+			this.style += 'font-weight: ' + this.fontWeight + '; ';
+			this.style += 'font-size: ' + this.fontSize + '; ';
+			this.style += 'color: ' + this.color + '; ';
+			this.style += 'text-align: ' + this.textAlign + '; ';
+			this.style += 'vertical-align: ' + this.verticalAlign + '; ';
+		}
+	}
+
+	function _init() {
+		var $diagram = $('#diagram');
+		diagramOffsetLeft = $diagram.offset().left;
+		diagramOffsetTop = $diagram.offset().top;
+
+		procDef = Object.create(ProcDef);
+
+		$('#TASK').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('TASK', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#CENTER_FORWARD_TASK').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('CENTER_FORWARD_TASK', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#SERVICE_TASK').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('SERVICE_TASK', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#STAGE').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('STAGE', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#SUB_PROC').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('SUB_PROC', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#ISOLATE_SUB_PROC').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('ISOLATE_SUB_PROC', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#GATEWAY').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('GATEWAY', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#END').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNodeDef('END', ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+		$('#NOTE').draggable({
+			helper : 'clone',
+			stop : function(e, ui) {
+				procDef.addNoteDef(ui.position.left + $('#diagram').scrollLeft() - diagramOffsetLeft, ui.position.top + $('#diagram').scrollTop() - diagramOffsetTop);
+			}
+		});
+
+		$diagram.bind('mousedown', function(e) {//拖拽批量选择
+			if (e.buttons == 1) {
+				var dragging = true;
+
+				$selectDiv = $('#selectDiv');
+				if ($selectDiv.length == 0) {
+					$selectDiv = $('<div id="selectDiv"></div>');
+					$selectDiv.css('border-style', 'dotted');
+					$selectDiv.css('border-width', '1px');
+					$selectDiv.css('position', 'absolute');
+					$('#diagram').append($selectDiv);
+				}
+				var startX = e.clientX + $('#diagram').scrollLeft() - diagramOffsetLeft;
+				var startY = e.clientY + $('#diagram').scrollTop() - diagramOffsetTop;
+				$selectDiv.css('width', '0px');
+				$selectDiv.css('height', '0px');
+				$selectDiv.show();
+
+				$(document).bind('mousemove', (function(e) {
+					if (dragging) {
+						var endX = e.clientX + $('#diagram').scrollLeft() - diagramOffsetLeft;
+						var endY = e.clientY + $('#diagram').scrollTop() - diagramOffsetTop;
+
+						if (startX <= endX) {
+							$selectDiv.css('left', startX + 'px');
+							$selectDiv.css('width', (endX - startX) + 'px');
+						} else {
+							$selectDiv.css('left', endX + 'px');
+							$selectDiv.css('width', (startX - endX) + 'px');
+						}
+						if (startY <= endY) {
+							$selectDiv.css('top', startY + 'px');
+							$selectDiv.css('height', (endY - startY) + 'px');
+						} else {
+							$selectDiv.css('top', endY + 'px');
+							$selectDiv.css('height', (startY - endY) + 'px');
+						}
+					}
+				}));
+
+				$(document).bind('mouseup', (function(e) {
+					if (dragging) {
+						var $nodeDefDiv = _findNodeDefDiv($(e.toElement));
+						if ($nodeDefDiv != null) {
+							var targetNodeDef = procDef.getNodeDef($nodeDefDiv.attr('id'));
+							if (sourceNodeDef != targetNodeDef) {
+								procDef.addFlowDef(sourceNodeDef, targetNodeDef, false);
+							}
+						}
+					}
+
+					//解除绑定
+					dragging = false;
+					$(document).unbind('mousemove');
+					$(document).unbind('mouseup');
+					$selectDiv.hide();
+
+					procDef.deselectAll();
+
+					var selectDivLeft = parseInt($selectDiv.css('left').substring(0, $selectDiv.css('left').length - 2));
+					var selectDivRight = selectDivLeft + parseInt($selectDiv.css('width').substring(0, $selectDiv.css('width').length - 2));
+					var selectDivTop = parseInt($selectDiv.css('top').substring(0, $selectDiv.css('top').length - 2));
+					var selectDivBottom = selectDivTop + parseInt($selectDiv.css('height').substring(0, $selectDiv.css('height').length - 2));
+
+					var left = 0;
+					var right = 0;
+					var top = 0;
+					var bottom = 0;
+
+					var nodeDef;
+					var $nodeDefOuter;
+					for (var i = 0; i < procDef.nodeDefList.length; i++) {
+						nodeDef = procDef.nodeDefList[i];
+						$nodeDefOuter = $('#' + nodeDef.nodeDefId);
+
+						left = parseInt($nodeDefOuter.css('left').substring(0, $nodeDefOuter.css('left').length - 2));
+						right = left + parseInt($nodeDefOuter.css('width').substring(0, $nodeDefOuter.css('width').length - 2));
+						top = parseInt($nodeDefOuter.css('top').substring(0, $nodeDefOuter.css('top').length - 2));
+						bottom = top + parseInt($nodeDefOuter.css('height').substring(0, $nodeDefOuter.css('height').length - 2));
+
+						if (_contain(selectDivLeft, selectDivRight, selectDivTop, selectDivBottom, left, right, top, bottom)) {
+							nodeDef.setSelected();
+						}
+					}
+
+					var noteDef;
+					var $noteDefOuter;
+					for (var i = 0; i < procDef.noteDefList.length; i++) {
+						noteDef = procDef.noteDefList[i];
+						$noteDefOuter = $('#' + noteDef.noteDefId);
+
+						left = parseInt($noteDefOuter.css('left').substring(0, $noteDefOuter.css('left').length - 2));
+						right = left + parseInt($noteDefOuter.css('width').substring(0, $noteDefOuter.css('width').length - 2));
+						top = parseInt($noteDefOuter.css('top').substring(0, $noteDefOuter.css('top').length - 2));
+						bottom = top + parseInt($noteDefOuter.css('height').substring(0, $noteDefOuter.css('height').length - 2));
+
+						if (_contain(selectDivLeft, selectDivRight, selectDivTop, selectDivBottom, left, right, top, bottom)) {
+							noteDef.setSelected();
+						}
+					}
+
+					$multipulSelected = $('div[selected="selected"]');
+				}));
+			}
+		});
+	}
+
+	function _contain(selectDivLeft, selectDivRight, selectDivTop, selectDivBottom, left, right, top, bottom) {
+		if (selectDivLeft <= left && left <= selectDivRight && selectDivTop <= top && top <= selectDivBottom) {
+			return true;
+		}
+		if (selectDivLeft <= right && right <= selectDivRight && selectDivTop <= top && top <= selectDivBottom) {
+			return true;
+		}
+		if (selectDivLeft <= left && left <= selectDivRight && selectDivTop <= bottom && bottom <= selectDivBottom) {
+			return true;
+		}
+		if (selectDivLeft <= right && right <= selectDivRight && selectDivTop <= bottom && bottom <= selectDivBottom) {
+			return true;
+		}
+		return false;
+	}
+
+	function _moveMultipulSelected(ui) {
+		var offsetX;
+		var offsetY;
+
+		if (ui.helper.context.getAttribute('type') == 'nodeDef') {
+			var nodeDef = procDef.getNodeDef(ui.helper.context.id);
+			offsetX = ui.position.left - nodeDef.shape.left;
+			offsetY = ui.position.top - nodeDef.shape.top;
+		}
+		if (ui.helper.context.getAttribute('type') == 'noteDef') {
+			var noteDef = procDef.getNoteDef(ui.helper.context.id);
+			offsetX = ui.position.left - noteDef.shape.left;
+			offsetY = ui.position.top - noteDef.shape.top;
+		}
+
+		if ($multipulSelected != null) {
+			for (var i = 0; i < $multipulSelected.length; i++) {
+				if ($multipulSelected.eq(i).attr('type') == 'nodeDef') {
+					nodeDef = procDef.getNodeDef($multipulSelected.eq(i).attr('id'));
+					nodeDef.shape.left = nodeDef.shape.left + offsetX;
+					nodeDef.shape.top = nodeDef.shape.top + offsetY;
+					nodeDef.shape.updateStyle();
+					nodeDef.updateLayout();
+				}
+				if ($multipulSelected.eq(i).attr('type') == 'noteDef') {
+					noteDef = procDef.getNoteDef($multipulSelected.eq(i).attr('id'));
+					noteDef.shape.left = noteDef.shape.left + offsetX;
+					noteDef.shape.top = noteDef.shape.top + offsetY;
+					noteDef.shape.updateStyle();
+					noteDef.updateLayout();
+				}
+			}
+		}
+
+		procDef.updateAllFlowDefLayout();
+	}
+
+	function _hideAllAttr() {
+		$('#procDefAttrDiv').hide();
+		$('#nodeDefAttrDiv').hide();
+		$('#noteDefAttrDiv').hide();
+		$('#flowDefAttrDiv').hide();
+		$('#procVarDefDiv').hide();
+	}
+
+	//显示procDef属性值
+	function _preUpdateProcDefAttr() {
+		_hideAllAttr();
+
+		var procDefAttrDiv = $('#procDefAttrDiv');
+
+		procDefAttrDiv.show();
+
+		//填充属性值
+		procDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in procDef) {//填充属性值
+				$(this).val(procDef[$(this).attr('name')]);
+			}
+		});
+	}
+
+	function _updateProcDefAttr() {
+		var procDefAttrDiv = $('#procDefAttrDiv');
+
+		procDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in procDef) {//修改属性值
+				procDef[$(this).attr('name')] = $(this).val();
+			}
+		});
+	}
+
+	//显示nodeDef属性值
+	function _preUpdateNodeDefAttr(nodeDef) {
+		_hideAllAttr();
+
+		procDef.deselectAll();
+		nodeDef.setSelected();
+
+		var nodeDefAttrDiv = $('#nodeDefAttrDiv');
+
+		nodeDefAttrDiv.show();
+
+		//填充属性值
+		nodeDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in nodeDef) {//填充属性值
+				$(this).val(nodeDef[$(this).attr('name')]);
+			} else {//填充shape中属性值
+				$(this).val(nodeDef.shape[$(this).attr('name')]);
+			}
+		});
+	}
+
+	function _updateNodeDefAttr() {
+		var nodeDefAttrDiv = $('#nodeDefAttrDiv');
+
+		var $inputs = nodeDefAttrDiv.find('input,select');
+		var $input;
+		for (var i = 0; i < $inputs.length; i++) {//检查录入
+			$input = $($inputs[i]);
+			if ($input.attr('class') == 'required' && $input.val() == '') {
+				alert('errors.inputRequired');
+				return;
+			}
+		}
+
+		var nodeDefId = nodeDefAttrDiv.find('input[name="nodeDefId"]').val();
+		var nodeCode = nodeDefAttrDiv.find('input[name="nodeCode"]').val();
+		var nodeDef = procDef.getNodeDef(nodeDefId);
+		if (procDef.duplicateNodeCode(nodeDef, nodeCode)) {//检查编码重复
+			alert('errors.duplicatedCode');
+			return;
+		}
+
+		var oriNodeCode = null;
+		if (nodeCode != nodeDef.nodeCode) {
+			oriNodeCode = nodeDef.nodeCode;
+		}
+
+		$inputs.each(function(index, value) {
+			if ($(this).attr('name') in nodeDef) {//修改属性值
+				nodeDef[$(this).attr('name')] = $(this).val();
+			} else {//修改shape中属性值
+				if ($(this).attr('name') == 'stub' || $(this).attr('name') == 'textLineIndex' || $(this).attr('name') == 'textWidth' || $(this).attr('name') == 'textHeight' || $(this).attr('name') == 'textOffsetX' || $(this).attr('name') == 'textOffsetY' || $(this).attr('name') == 'left' || $(this).attr('name') == 'top' || $(this).attr('name') == 'width' || $(this).attr('name') == 'height' || $(this).attr('name') == 'borderWidth' || $(this).attr('name') == 'borderRadius') {
+					nodeDef.shape[$(this).attr('name')] = parseInt($(this).val());
+				} else {
+					nodeDef.shape[$(this).attr('name')] = $(this).val();
+				}
+			}
+		});
+		nodeDef.shape.updateStyle();
+
+		//更新流转中的nodeCode
+		if (oriNodeCode != null) {
+			var flowDef;
+			for (var i = 0; i < procDef.flowDefList.length; i++) {
+				flowDef = procDef.flowDefList[i];
+
+				if (flowDef.sourceNodeCode == oriNodeCode) {
+					flowDef.sourceNodeCode = nodeCode;
+				}
+				if (flowDef.targetNodeCode == oriNodeCode) {
+					flowDef.targetNodeCode = nodeCode;
+				}
+			}
+		}
+
+		nodeDef.updateLayout();
+		procDef.updateAllFlowDefLayout();
+	}
+
+	function _removeNodeDef() {
+		var nodeDefAttrDiv = $('#nodeDefAttrDiv');
+
+		var nodeDefId = nodeDefAttrDiv.find('input[name="nodeDefId"]').val();
+		var nodeDef = procDef.getNodeDef(nodeDefId);
+		procDef.removeNodeDef(nodeDef);
+	}
+
+	//显示noteDef属性值
+	function _preUpdateNoteDefAttr(noteDef) {
+		_hideAllAttr();
+
+		procDef.deselectAll();
+		noteDef.setSelected();
+
+		var noteDefAttrDiv = $('#noteDefAttrDiv');
+
+		noteDefAttrDiv.show();
+
+		//填充属性值
+		noteDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in noteDef) {//填充属性值
+				$(this).val(noteDef[$(this).attr('name')]);
+			} else {//填充shape中属性值
+				$(this).val(noteDef.shape[$(this).attr('name')]);
+			}
+		});
+	}
+
+	function _updateNoteDefAttr() {
+		var noteDefAttrDiv = $('#noteDefAttrDiv');
+
+		var $inputs = noteDefAttrDiv.find('input,select');
+		var $input;
+		for (var i = 0; i < $inputs.length; i++) {//检查录入
+			$input = $($inputs[i]);
+			if ($input.attr('class') == 'required' && $input.val() == '') {
+				alert('errors.inputRequired');
+				return;
+			}
+		}
+
+		var noteDefId = noteDefAttrDiv.find('input[name="noteDefId"]').val();
+		var noteCode = noteDefAttrDiv.find('input[name="noteCode"]').val();
+		var noteDef = procDef.getNoteDef(noteDefId);
+		if (procDef.duplicateNoteCode(noteDef, noteCode)) {//检查编码重复
+			alert('errors.duplicatedCode');
+			return;
+		}
+
+		noteDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in noteDef) {//修改属性值
+				noteDef[$(this).attr('name')] = $(this).val();
+			} else {//修改shape中属性值
+				if ($(this).attr('name') == 'stub' || $(this).attr('name') == 'textLineIndex' || $(this).attr('name') == 'textWidth' || $(this).attr('name') == 'textHeight' || $(this).attr('name') == 'textOffsetX' || $(this).attr('name') == 'textOffsetY' || $(this).attr('name') == 'left' || $(this).attr('name') == 'top' || $(this).attr('name') == 'width' || $(this).attr('name') == 'height' || $(this).attr('name') == 'borderWidth' || $(this).attr('name') == 'borderRadius') {
+					noteDef.shape[$(this).attr('name')] = parseInt($(this).val());
+				} else {
+					noteDef.shape[$(this).attr('name')] = $(this).val();
+				}
+			}
+		});
+		noteDef.shape.updateStyle();
+
+		noteDef.updateLayout();
+	}
+
+	function _removeNoteDef() {
+		var noteDefAttrDiv = $('#noteDefAttrDiv');
+
+		var noteDefId = noteDefAttrDiv.find('input[name="noteDefId"]').val();
+		var noteDef = procDef.getNoteDef(noteDefId);
+		procDef.removeNoteDef(noteDef);
+	}
+
+	//显示flowDef属性值
+	function _preUpdateFlowDefAttr(flowDef) {
+		_hideAllAttr();
+
+		procDef.deselectAll();
+		flowDef.setSelected();
+
+		var flowDefAttrDiv = $('#flowDefAttrDiv');
+
+		flowDefAttrDiv.show();
+
+		//填充属性值
+		flowDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in flowDef) {//填充属性值
+				$(this).val(flowDef[$(this).attr('name')]);
+			} else {//填充shape中属性值
+				$(this).val(flowDef.shape[$(this).attr('name')]);
+			}
+		});
+	}
+
+	function _updateFlowDefAttr() {
+		var flowDefAttrDiv = $('#flowDefAttrDiv');
+
+		var flowDefId = flowDefAttrDiv.find('input[name="flowDefId"]').val();
+		var flowDef = procDef.getFlowDef(flowDefId);
+
+		flowDefAttrDiv.find('input,select').each(function(index, value) {
+			if ($(this).attr('name') in flowDef) {//修改属性值
+				flowDef[$(this).attr('name')] = $(this).val();
+			} else {//修改shape中属性值
+				if ($(this).attr('name') == 'stub' || $(this).attr('name') == 'textLineIndex' || $(this).attr('name') == 'textWidth' || $(this).attr('name') == 'textHeight' || $(this).attr('name') == 'textOffsetX' || $(this).attr('name') == 'textOffsetY' || $(this).attr('name') == 'left' || $(this).attr('name') == 'top' || $(this).attr('name') == 'width' || $(this).attr('name') == 'height' || $(this).attr('name') == 'borderWidth' || $(this).attr('name') == 'borderRadius') {
+					flowDef.shape[$(this).attr('name')] = parseInt($(this).val());
+				} else {
+					flowDef.shape[$(this).attr('name')] = $(this).val();
+				}
+			}
+		});
+		flowDef.shape.updateStyle();
+
+		flowDef.updateLayout();
+	}
+
+	function _removeFlowDef() {
+		var flowDefAttrDiv = $('#flowDefAttrDiv');
+
+		var flowDefId = flowDefAttrDiv.find('input[name="flowDefId"]').val();
+		var flowDef = procDef.getFlowDef(flowDefId);
+		procDef.removeFlowDef(flowDef);
+	}
+
+	//显示procDef属性值
+	function _preUpdateProcVarDef() {
+		_hideAllAttr();
+
+		var procVarDefDiv = $('#procVarDefDiv');
+
+		procVarDefDiv.show();
+
+		//填充属性值
+		procVarDefDiv.find('input,select').each(function(index, value) {
+			if (index % 3 == 0) {
+				$(this).val('STRING');
+			} else {
+				$(this).val('');
+			}
+		});
+
+		var inputs = procVarDefDiv.find('input,select');
+		for (var i = 0; i < procDef.procVarDefList.length; i++) {
+			var procVarDef = procDef.procVarDefList[i];
+			$(inputs[i * 3]).val(procVarDef['varType']);
+			$(inputs[i * 3 + 1]).val(procVarDef['varName']);
+			$(inputs[i * 3 + 2]).val(procVarDef['value']);
+		}
+	}
+
+	function _updateProcVarDef() {
+		var procVarDefDiv = $('#procVarDefDiv');
+
+		var inputs = procVarDefDiv.find('input,select');
+		procDef.procVarDefList = new Array();
+		for (var i = 0; i < inputs.size(); i = i + 3) {
+			if ($(inputs[i + 1]).val() != '') {
+				var procVarDef = {
+					'varType' : $(inputs[i]).val(),
+					'varName' : $(inputs[i + 1]).val(),
+					'value' : $(inputs[i + 2]).val()
+				}
+				procDef.procVarDefList.push(procVarDef);
+			}
+		}
+	}
+
+	function _preImportProcDefModel() {
+		$('#importDiv').show();
+		$('#importProcDefModel').focus();
+	}
+
+	function _preExportProcDefModel() {
+		var _procDef = new Object();
+		var keys;
+		keys = Object.keys(procDef.__proto__);
+		for (var i = 0; i < keys.length; i++) {//导入原型数据
+			_procDef[keys[i]] = procDef.__proto__[keys[i]];
+		}
+		keys = Object.keys(procDef);
+		for (var i = 0; i < keys.length; i++) {//导入修改过的对象数据，覆盖原型数据 
+			_procDef[keys[i]] = procDef[keys[i]];
+		}
+
+		var json = JSON.stringify(_procDef, function(key, value) {
+			if (key == 'left' || key == 'top' || key == 'width' || key == 'height' || key == 'borderStyle' || key == 'borderWidth' || key == 'borderRadius' || key == 'borderColor' || key == 'backgroundColor' || key == 'fontFamily' || key == 'fontWeight' || key == 'fontSize' || key == 'color' || key == 'textAlign' || key == 'verticalAlign' || key == 'selected' || key == 'nodeDefId' || key == 'noteDefId' || key == 'flowDefId') {
+				return undefined;
+			}
+			if (value == '') {
+				return undefined;
+			}
+			return value;
+		}, 4);
+
+		$('#exportProcDefModel').val(json);
+		$('#exportDiv').show();
+	}
+
+	function _copyProcDefModel() {
+		$('#exportProcDefModel').select();
+		document.execCommand('copy');
+		$('#exportDiv').hide();
+	}
+
+	function _closeImportDiv() {
+		$('#importDiv').hide();
+	}
+
+	function _closeExportDiv() {
+		$('#exportDiv').hide();
+	}
+
+	function _importProcDefModel() {
+		$('#diagram').empty();
+
+		procDef = Object.create(ProcDef);
+
+		var _procDef = JSON.parse($('#importProcDefModel').val());
+		Object.keys(_procDef).forEach(function(key) {//复制流程定义属性
+			procDef[key] = _procDef[key];
+		});
+
+		for (var i = 0; i < procDef.nodeDefList.length; i++) {//复制节点定义
+			var nodeDef = Object.create(NodeDef);//创建nodeDef
+			nodeDef.nodeDefId = _getUuid();
+			nodeDef.shape = Object.create(Shape);
+			var _nodeDef = procDef.nodeDefList[i];
+			Object.keys(_nodeDef).forEach(function(key) {//复制节点定义属性
+				if (key == 'shape') {
+					var _shape = _nodeDef['shape'];
+					Object.keys(_shape).forEach(function(shapeKey) {//复制节点定义属性
+						if (shapeKey == 'stub' || shapeKey == 'textLineIndex' || shapeKey == 'textWidth' || shapeKey == 'textHeight' || shapeKey == 'textOffsetX' || shapeKey == 'textOffsetY') {
+							nodeDef.shape[shapeKey] = parseInt(_shape[shapeKey]);
+						} else {
+							nodeDef.shape[shapeKey] = _shape[shapeKey];
+						}
+					});
+				} else {
+					nodeDef[key] = _nodeDef[key];
+				}
+			});
+			_importStyle(nodeDef);//导入样式属性
+
+			procDef.nodeDefList[i] = nodeDef;
+			nodeDef.updateLayout();
+		}
+		for (var i = 0; i < procDef.noteDefList.length; i++) {//复制流转定义
+			var noteDef = Object.create(NoteDef);//创建noteDef
+			noteDef.noteDefId = _getUuid();
+			noteDef.shape = Object.create(Shape);
+			var _noteDef = procDef.noteDefList[i];
+			Object.keys(_noteDef).forEach(function(key) {//复制节点定义属性
+				if (key == 'shape') {
+					var _shape = _noteDef['shape'];
+					Object.keys(_shape).forEach(function(shapeKey) {//复制节点定义属性
+						if (shapeKey == 'stub' || shapeKey == 'textLineIndex' || shapeKey == 'textWidth' || shapeKey == 'textHeight' || shapeKey == 'textOffsetX' || shapeKey == 'textOffsetY') {
+							noteDef.shape[shapeKey] = parseInt(_shape[shapeKey]);
+						} else {
+							noteDef.shape[shapeKey] = _shape[shapeKey];
+						}
+					});
+				} else {
+					noteDef[key] = _noteDef[key];
+				}
+			});
+			_importStyle(noteDef);//导入样式属性
+
+			procDef.noteDefList[i] = noteDef;
+			noteDef.updateLayout();
+		}
+		for (var i = 0; i < procDef.flowDefList.length; i++) {//复制流转定义
+			var flowDef = Object.create(FlowDef);//创建flowDef
+			flowDef.flowDefId = _getUuid();
+			flowDef.shape = Object.create(Shape);
+			var _flowDef = procDef.flowDefList[i];
+			Object.keys(_flowDef).forEach(function(key) {//复制节点定义属性
+				if (key == 'shape') {
+					var _shape = _flowDef['shape'];
+					Object.keys(_shape).forEach(function(shapeKey) {//复制节点定义属性
+						if (shapeKey == 'stub' || shapeKey == 'textLineIndex' || shapeKey == 'textWidth' || shapeKey == 'textHeight' || shapeKey == 'textOffsetX' || shapeKey == 'textOffsetY') {
+							flowDef.shape[shapeKey] = parseInt(_shape[shapeKey]);
+						} else {
+							flowDef.shape[shapeKey] = _shape[shapeKey];
+						}
+					});
+				} else {
+					flowDef[key] = _flowDef[key];
+				}
+			});
+			_importStyle(flowDef);//导入样式属性
+
+			procDef.flowDefList[i] = flowDef;
+			flowDef.updateLayout();
+		}
+		for (var i = 0; i < procDef.procVarDefList.length; i++) {
+			if (procDef.procVarDefList[i]['varType'] == null) {
+				procDef.procVarDefList[i]['varType'] = 'STRING';
+			}
+		}
+
+		$('#importDiv').hide();
+
+		_preUpdateProcDefAttr();
+	}
+
+	function _importStyle(obj) {
+		if (!obj.shape.style) {
+			return;
+		}
+
+		var styles = obj.shape.style.split(';');
+		for (var j = 0; j < styles.length; j++) {
+			if (styles[j].trim() != '') {
+				var rules = styles[j].trim().split(':');
+				var property = rules[0].trim();
+				if (property == 'border-style') {
+					property = 'borderStyle';
+				}
+				if (property == 'border-width') {
+					property = 'borderWidth';
+				}
+				if (property == 'border-radius') {
+					property = 'borderRadius';
+				}
+				if (property == 'border-color') {
+					property = 'borderColor';
+				}
+				if (property == 'background-color') {
+					property = 'backgroundColor';
+				}
+				if (property == 'font-family') {
+					property = 'fontFamily';
+				}
+				if (property == 'font-weight') {
+					property = 'fontWeight';
+				}
+				if (property == 'font-size') {
+					property = 'fontSize';
+				}
+				if (property == 'text-align') {
+					property = 'textAlign';
+				}
+				if (property == 'vertical-align') {
+					property = 'verticalAlign';
+				}
+				if (property == 'left' || property == 'top' || property == 'width' || property == 'height' || property == 'borderWidth' || property == 'borderRadius') {
+					obj.shape[property] = parseInt(rules[1].trim());
+				} else {
+					obj.shape[property] = rules[1].trim();
+				}
+			}
+		}
+	}
+
+	function _findNodeDefDiv($element) {
+		if ($element == null || $element.length == 0) {
+			return null;
+		} else {
+			if ('nodeDef' == $element.attr('type')) {
+				return $element;
+			} else {
+				return _findNodeDefDiv($element.parent());
+			}
+		}
+	}
+
+	function _reverseDirection(direction) {// 反方向
+		if (direction == 'N') {
+			return 'S';
+		}
+		if (direction == 'E') {
+			return 'W';
+		}
+		if (direction == 'S') {
+			return 'N';
+		}
+		if (direction == 'W') {
+			return 'E';
+		}
+
+		return null;
+	}
+
+	function _isSameDirection(startPoint, endPoint, startDirection) {// 终点是否在起点方向的同向一侧
+		if (startDirection == 'N' && endPoint.y <= startPoint.y) {
+			return true;
+		}
+		if (startDirection == 'E' && endPoint.x >= startPoint.x) {
+			return true;
+		}
+		if (startDirection == 'S' && endPoint.y >= startPoint.y) {
+			return true;
+		}
+		if (startDirection == 'W' && endPoint.x <= startPoint.x) {
+			return true;
+		}
+
+		return false;
+	}
+
+	function _isSubjectToEndStub(startStubPoint, endStubPoint, startDirection, endDirection) {// 以终点折点为准
+		if (startDirection == 'N') {
+			if ((endDirection == 'N') || (endDirection == 'E' && endStubPoint.x <= startStubPoint.x) || (endDirection == 'W' && endStubPoint.x >= startStubPoint.x)) {
+				return true;
+			}
+		}
+		if (startDirection == 'E') {
+			if ((endDirection == 'E') || (endDirection == 'N' && endStubPoint.y >= startStubPoint.y) || (endDirection == 'S' && endStubPoint.y <= startStubPoint.y)) {
+				return true;
+			}
+		}
+		if (startDirection == 'S') {
+			if ((endDirection == 'S') || (endDirection == 'E' && endStubPoint.x <= startStubPoint.x) || (endDirection == 'W' && endStubPoint.x >= startStubPoint.x)) {
+				return true;
+			}
+		}
+		if (startDirection == 'W') {
+			if ((endDirection == 'W') || (endDirection == 'N' && endStubPoint.y >= startStubPoint.y) || (endDirection == 'S' && endStubPoint.y <= startStubPoint.y)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function _getUuid() {
+		return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	}
+</script>
+</head>
+<body onload="_init()">
+	<table border="1" cellspacing="0" cellpadding="0" style="width: 100%; height: 100%; font-size: 13px">
+		<tr>
+			<td valign="top" style="width: 150px;">
+				<p></p>
+				<div id="TASK" style="width: 100px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">TASK</div>
+				</div>
+				<p></p>
+				<div id="CENTER_FORWARD_TASK" style="width: 100px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">CENTER FORWARD TASK</div>
+				</div>
+				<p></p>
+				<div id="SERVICE_TASK" style="width: 100px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">SERVICE TASK</div>
+				</div>
+				<p></p>
+				<div id="STAGE" style="width: 100px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">STAGE</div>
+				</div>
+				<p></p>
+				<div id="SUB_PROC" style="width: 100px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">SUB PROC</div>
+				</div>
+				<p></p>
+				<div id="ISOLATE_SUB_PROC" style="width: 100px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">ISOLATE SUB PROC</div>
+				</div>
+				<p></p>
+				<div id="GATEWAY" style="width: 100px; height: 50px; margin: 0px auto; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); border: 1px solid black; border-radius: 10px; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">GATEWAY</div>
+				</div>
+				<p></p>
+				<div id="END" style="width: 50px; height: 50px; margin: 0px auto; border: 1px solid black; border-radius: 50% 50% 50% 50%; box-shadow: 1px 1px; background: #ffffc8; cursor: pointer; user-select: none;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle;">END</div>
+				</div>
+				<p></p>
+				<div id="NOTE" style="width: 100px; height: 50px; margin: 0px auto; cursor: pointer;">
+					<div style="width: 100px; height: 50px; font-size: 13px; display: table-cell; text-align: center; vertical-align: middle; user-select: none;">NOTE</div>
+				</div>
+			</td>
+			<td>
+				<div id="diagram" style="height: 100%; position: relative; overflow: scroll"></div>
+			</td>
+			<td valign="top" style="width: 600px;">
+				<div id="procDefAttrDiv" style="height: 100%; overflow: scroll;">
+					<table style="width: 100%">
+						<tr>
+							<td colspan="2">
+								<button type="button" onClick="_updateProcDefAttr()">修改</button>
+								<button type="button" onClick="_preUpdateProcVarDef()">流程变量定义</button>
+								<button type="button" onClick="_preImportProcDefModel()">导入</button>
+								<button type="button" onClick="_preExportProcDefModel()">导出</button> <span style="position: absolute; right: 20px">流程定义</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width: 150px">流程定义编码:</td>
+							<td><input name="procDefCode" type="text" class="required" /></td>
+						</tr>
+						<tr>
+							<td align="right">流程定义名称:</td>
+							<td><input name="procDefName" type="text" class="required" /></td>
+						</tr>
+						<tr>
+							<td align="right">流程定义分类:</td>
+							<td><input name="procDefCat" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">流程定义图宽度:</td>
+							<td><input name="procDefDiagramWidth" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">流程定义图高度:</td>
+							<td><input name="procDefDiagramHeight" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">备注:</td>
+							<td><input name="memo" type="text" /></td>
+						</tr>
+					</table>
+				</div>
+				<div id="nodeDefAttrDiv" style="display: none; height: 100%; overflow: scroll;">
+					<table style="width: 100%">
+						<tr>
+							<td colspan="2">
+								<button type="button" onClick="_updateNodeDefAttr()">修改</button>
+								<button type="button" onClick="_removeNodeDef()">删除</button>
+								<button type="button" onClick="_preUpdateProcDefAttr()">流程定义</button> <span style="position: absolute; right: 20px">节点定义</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width: 150px"></td>
+							<td><input name="nodeDefId" type="hidden" /></td>
+						</tr>
+						<tr>
+							<td align="right">节点类型:</td>
+							<td><input name="nodeType" type="text" readonly="true" /></td>
+						</tr>
+						<tr>
+							<td align="right">节点编码:</td>
+							<td><input name="nodeCode" type="text" class="required" /></td>
+						</tr>
+						<tr>
+							<td align="right">节点名称:</td>
+							<td><input name="nodeName" type="text" class="required" /></td>
+						</tr>
+						<tr>
+							<td align="right">上级节点编码:</td>
+							<td><input name="parentNodeCode" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">候选人:</td>
+							<td><input name="candidateAssignee" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">候选子流程定义:</td>
+							<td><input name="candidateSubProcDef" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">完成表达式:</td>
+							<td><input name="completeExpression" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">完成后返回前一个节点:</td>
+							<td><select name="completeReturn">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">排他:</td>
+							<td><select name="exclusive">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">自动完成相同办理人任务:</td>
+							<td><select name="autoCompleteSameAssignee">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">自动完成没有办理人节点:</td>
+							<td><select name="autoCompleteEmptyAssignee">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">通知:</td>
+							<td><select name="inform">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">办理人:</td>
+							<td><input name="assignee" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">办理子流程定义:</td>
+							<td><input name="assignSubProcDef" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">业务行为:</td>
+							<td><input name="action" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">截止日期:</td>
+							<td><input name="dueDate" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">认领:</td>
+							<td><select name="claim">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">可转发:</td>
+							<td><select name="forwardable">
+									<option value="0">0</option>
+									<option value="1">1</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">优先级:</td>
+							<td><input name="priority" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">左边缘x坐标:</td>
+							<td><input name="left" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">上边缘y坐标:</td>
+							<td><input name="top" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">宽度:</td>
+							<td><input name="width" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">高度:</td>
+							<td><input name="height" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框类型:</td>
+							<td><input name="borderStyle" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框宽度:</td>
+							<td><input name="borderWidth" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框圆角:</td>
+							<td><input name="borderRadius" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框颜色:</td>
+							<td><input name="borderColor" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">背景颜色:</td>
+							<td><input name="backgroundColor" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本横向偏移:</td>
+							<td><input name="textOffsetX" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本纵向偏移:</td>
+							<td><input name="textOffsetY" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体:</td>
+							<td><input name="fontFamily" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体粗细:</td>
+							<td><input name="fontWeight" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体大小:</td>
+							<td><input name="fontSize" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文字颜色:</td>
+							<td><input name="color" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文字横向对齐:</td>
+							<td><select name="textAlign">
+									<option value="left">left</option>
+									<option value="center">center</option>
+									<option value="right">right</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">文字纵向对齐:</td>
+							<td><select name="verticalAlign">
+									<option value="top">top</option>
+									<option value="middle">middle</option>
+									<option value="bottom">bottom</option>
+							</select></td>
+						</tr>
+					</table>
+				</div>
+				<div id="noteDefAttrDiv" style="display: none; height: 100%; overflow: scroll;">
+					<table style="width: 100%">
+						<tr>
+							<td colspan="2">
+								<button type="button" onClick="_updateNoteDefAttr()">修改</button>
+								<button type="button" onClick="_removeNoteDef()">删除</button>
+								<button type="button" onClick="_preUpdateProcDefAttr()">流程定义</button> <span style="position: absolute; right: 20px">注释定义</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width: 150px"></td>
+							<td><input name="noteDefId" type="hidden" /></td>
+						</tr>
+						<tr>
+							<td align="right">节点编码:</td>
+							<td><input name="noteCode" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">节点名称:</td>
+							<td><input name="noteName" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">是否为动态:</td>
+							<td><input name="dynamic" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">左边缘x坐标:</td>
+							<td><input name="left" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">上边缘y坐标:</td>
+							<td><input name="top" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">宽度:</td>
+							<td><input name="width" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">高度:</td>
+							<td><input name="height" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框类型:</td>
+							<td><input name="borderStyle" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框宽度:</td>
+							<td><input name="borderWidth" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框圆角:</td>
+							<td><input name="borderRadius" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">边框颜色:</td>
+							<td><input name="borderColor" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">背景颜色:</td>
+							<td><input name="backgroundColor" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本横向偏移:</td>
+							<td><input name="textOffsetX" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本纵向偏移:</td>
+							<td><input name="textOffsetY" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体:</td>
+							<td><input name="fontFamily" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体粗细:</td>
+							<td><input name="fontWeight" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体大小:</td>
+							<td><input name="fontSize" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文字颜色:</td>
+							<td><input name="color" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文字横向对齐:</td>
+							<td><select name="textAlign">
+									<option value="left">left</option>
+									<option value="center">center</option>
+									<option value="right">right</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td align="right">文字纵向对齐:</td>
+							<td><select name="verticalAlign">
+									<option value="top">top</option>
+									<option value="middle">middle</option>
+									<option value="bottom">bottom</option>
+							</select></td>
+						</tr>
+					</table>
+				</div>
+				<div id="flowDefAttrDiv" style="display: none; height: 100%; overflow: scroll;">
+					<table style="width: 100%">
+						<tr>
+							<td colspan="2">
+								<button type="button" onClick="_updateFlowDefAttr()">修改</button>
+								<button type="button" onClick="_removeFlowDef()">删除</button>
+								<button type="button" onClick="_preUpdateProcDefAttr()">流程定义</button> <span style="position: absolute; right: 20px">流转定义</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width: 150px"></td>
+							<td><input name="flowDefId" type="hidden" /></td>
+						</tr>
+						<tr>
+							<td align="right">流转编码:</td>
+							<td><input name="flowCode" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">流转名称:</td>
+							<td><input name="flowName" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">来源节点编码:</td>
+							<td><input name="sourceNodeCode" type="text" class="required" /></td>
+						</tr>
+						<tr>
+							<td align="right">目标节点编码:</td>
+							<td><input name="targetNodeCode" type="text" class="required" /></td>
+						</tr>
+						<tr>
+							<td align="right">流转表达式:</td>
+							<td><input name="conditionExpression" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">折线路径:</td>
+							<td><input name="linePath" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">连线两端截线的最小长度:</td>
+							<td><input name="stub" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本所在折线段下标:</td>
+							<td><input name="textLineIndex" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本最大宽度:</td>
+							<td><input name="textWidth" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本最大高度:</td>
+							<td><input name="textHeight" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本横向偏移:</td>
+							<td><input name="textOffsetX" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文本纵向偏移:</td>
+							<td><input name="textOffsetY" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体:</td>
+							<td><input name="fontFamily" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体粗细:</td>
+							<td><input name="fontWeight" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">字体大小:</td>
+							<td><input name="fontSize" type="text" /></td>
+						</tr>
+						<tr>
+							<td align="right">文字颜色:</td>
+							<td><input name="color" type="text" /></td>
+						</tr>
+					</table>
+				</div>
+				<div id="procVarDefDiv" style="display: none; height: 100%; overflow: scroll;">
+					<table style="width: 100%">
+						<tr>
+							<td colspan="3">
+								<button type="button" onClick="_updateProcVarDef()">修改</button>
+								<button type="button" onClick="_preUpdateProcDefAttr()">流程定义</button> <span style="position: absolute; right: 20px">流程变量定义</span>
+							</td>
+						</tr>
+						<tr>
+							<th style="width: 15%">变量类型</th>
+							<th style="width: 25%">变量名称</th>
+							<th style="width: 80%">值</th>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+						<tr>
+							<td><select name="varType">
+									<option value="STRING">STRING</option>
+									<option value="OBJECT">OBJECT</option>
+							</select></td>
+							<td><input name="varName" type="text" /></td>
+							<td><input name="value" type="text" /></td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div id="importDiv" style="position: absolute; width: 80%; height: 80%; top: 0px; right: 0px; bottom: 0px; left: 0px; margin: auto; padding: 10px; border: 1px solid; text-align: center; background-color: #ffffc8; display: none;">
+		<button type="button" onClick="_importProcDefModel()">导入</button>
+		<button type="button" onClick="_closeImportDiv()">关闭</button>
+		<br /> <br />
+		<textarea id="importProcDefModel" style="width: 98%; height: 92%;"></textarea>
+	</div>
+	<div id="exportDiv" style="position: absolute; width: 80%; height: 80%; top: 0px; right: 0px; bottom: 0px; left: 0px; margin: auto; padding: 10px; border: 1px solid; text-align: center; background-color: #ffffc8; display: none;">
+		<button type="button" onClick="_copyProcDefModel()">复制</button>
+		<button type="button" onClick="_closeExportDiv()">关闭</button>
+		<br /> <br />
+		<textarea id="exportProcDefModel" style="width: 98%; height: 92%;"></textarea>
+	</div>
+	<svg> <defs> <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"> <path d="M 0,0 L 10,5 L 0,10 Z" /></marker></defs></svg>
+</body>
+</html>
