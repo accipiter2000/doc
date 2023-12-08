@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+	<display-name>Doc</display-name>
+	<welcome-file-list>
+		<welcome-file>index.do</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- 跨域配置CORS -->
+	<filter>
+		<!-- The CORS filter with parameters -->
+		<filter-name>CORSFilter</filter-name>
+		<filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+		<!-- Note: All parameters are options, if omitted the CORS Filter will fall back to the respective default values. -->
+		<!-- 是否允许http请求 -->
+		<init-param>
+			<param-name>cors.allowGenericHttpRequests</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- 允许跨域的域名（发送请求至该项目的地址、请求源） 构成（http://域名:端口号），比如（http://192.168.191.115:8080） -->
+		<init-param>
+			<param-name>cors.allowOrigin</param-name>
+			<!-- *，表示：允许所有跨域请求，这样的后果是：当需要客户端请求携带cookie时，浏览器无法携带cookie至服务器 可以在servlet中动态设置：response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin")); 这，同样是允许所有跨域请求，servlet的设置会覆盖该属性设置。 但是，当实际测试后发现，这里的*永远指向的是请求头的Origin的值，所以不需要再进行额外的设置。 -->
+			<param-value>*</param-value>
+		</init-param>
+		<!-- 允许子域 -->
+		<init-param>
+			<param-name>cors.allowSubdomains</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<!-- 允许的请求方式（非简单请求必须添加OPTIONS，因为"预检"请求用的请求方法是OPTIONS，表示这个请求是用来询问的。） -->
+		<init-param>
+			<param-name>cors.supportedMethods</param-name>
+			<param-value>GET, HEAD, POST, OPTIONS,PUT</param-value>
+		</init-param>
+		<!-- 允许的请求头参数，不能超出范围 -->
+		<init-param>
+			<param-name>cors.supportedHeaders</param-name>
+			<param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified</param-value>
+		</init-param>
+		<!-- 自定义暴露自己的请求头（自定义设置后Response Headers里会显示Access-Control-Expose-Headers及值） CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个基本字段：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma； 如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。 -->
+		<init-param>
+			<param-name>cors.exposedHeaders</param-name>
+			<!--这里可以添加一些自己的暴露Headers -->
+			<param-value>X-Test-1, X-Test-2</param-value>
+		</init-param>
+		<!-- 允许客户端给服务器发送cookie，如果不允许，删除该属性即可。（携带证书访问） -->
+		<init-param>
+			<param-name>cors.supportsCredentials</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- 设定一次预检请求的有效期，单位为秒;该回应到期前不会再发出另一条预检请求。 -->
+		<init-param>
+			<param-name>cors.maxAge</param-name>
+			<param-value>3600</param-value>
+		</init-param>
+	</filter>
+	<!-- CORS Filter mapping -->
+	<filter-mapping>
+		<filter-name>CORSFilter</filter-name>
+		<!-- 可自定义设置可供访问的项目路径 -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<listener>
+		<listener-class>com.opendynamic.OdSessionListener</listener-class>
+	</listener>
+	<session-config>
+		<session-timeout>20</session-timeout>
+	</session-config>
+</web-app>
