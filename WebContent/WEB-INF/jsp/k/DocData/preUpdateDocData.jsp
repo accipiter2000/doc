@@ -405,8 +405,8 @@
 
 		var pdfUrl = 'loadPdfDocFile.do?DOC_ID_=' + DOC_ID_;
 		PDFJS.getDocument(pdfUrl).then(function getPdf(pdf) {
-			for (var i = 0; i <= pdf.numPages; i++) {
-				_renderPage(pdf, i);
+			for (var i = 0; i < pdf.numPages; i++) {
+				_renderPage(pdf, i + 1);
 			}
 		});
 	}
