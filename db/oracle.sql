@@ -1,5 +1,5 @@
 prompt PL/SQL Developer Export User Objects for user DOC@DOC
-prompt Created by Administrator on 2023Äê12ÔÂ8ÈÕ
+prompt Created by Administrator on 2023å¹´12æœˆ8æ—¥
 set define off
 spool 1.log
 
@@ -24,31 +24,31 @@ create table CB_CODE
 )
 ;
 comment on table CB_CODE
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column CB_CODE.code_id_
-  is '´úÂëID';
+  is 'ä»£ç ID';
 comment on column CB_CODE.parent_code_id_
-  is 'ÉÏ¼¶´úÂëID';
+  is 'ä¸Šçº§ä»£ç ID';
 comment on column CB_CODE.category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column CB_CODE.code_
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column CB_CODE.name_
-  is 'Ãû³Æ';
+  is 'åç§°';
 comment on column CB_CODE.ext_attr_1_
-  is 'À©Õ¹ÊôĞÔ1';
+  is 'æ‰©å±•å±æ€§1';
 comment on column CB_CODE.ext_attr_2_
-  is 'À©Õ¹ÊôĞÔ2';
+  is 'æ‰©å±•å±æ€§2';
 comment on column CB_CODE.ext_attr_3_
-  is 'À©Õ¹ÊôĞÔ3';
+  is 'æ‰©å±•å±æ€§3';
 comment on column CB_CODE.ext_attr_4_
-  is 'À©Õ¹ÊôĞÔ4';
+  is 'æ‰©å±•å±æ€§4';
 comment on column CB_CODE.ext_attr_5_
-  is 'À©Õ¹ÊôĞÔ5';
+  is 'æ‰©å±•å±æ€§5';
 comment on column CB_CODE.ext_attr_6_
-  is 'À©Õ¹ÊôĞÔ6';
+  is 'æ‰©å±•å±æ€§6';
 comment on column CB_CODE.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 alter table CB_CODE
   add constraint PK_CODE primary key (CODE_ID_);
 alter table CB_CODE
@@ -69,13 +69,13 @@ create table CB_CUSTOM_THEME
 )
 ;
 comment on table CB_CUSTOM_THEME
-  is '¶¨ÖÆÖ÷Ìâ';
+  is 'å®šåˆ¶ä¸»é¢˜';
 comment on column CB_CUSTOM_THEME.custom_theme_id_
-  is '¶¨ÖÆÖ÷ÌâID';
+  is 'å®šåˆ¶ä¸»é¢˜ID';
 comment on column CB_CUSTOM_THEME.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column CB_CUSTOM_THEME.css_href_
-  is 'CSSÁ´½Ó';
+  is 'CSSé“¾æ¥';
 alter table CB_CUSTOM_THEME
   add constraint PK_CUSTOM_THEME primary key (CUSTOM_THEME_ID_);
 alter table CB_CUSTOM_THEME
@@ -99,25 +99,25 @@ create table CB_DASHBOARD_MODULE
 )
 ;
 comment on table CB_DASHBOARD_MODULE
-  is 'ÒÇ±íÅÌÄ£¿é';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—';
 comment on column CB_DASHBOARD_MODULE.dashboard_module_id_
-  is 'ÒÇ±íÅÌÄ£¿éID';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—ID';
 comment on column CB_DASHBOARD_MODULE.dashboard_module_name_
-  is 'ÒÇ±íÅÌÄ£¿éÃû³Æ';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—åç§°';
 comment on column CB_DASHBOARD_MODULE.dashboard_module_type_
-  is 'ÒÇ±íÅÌÄ£¿éÀàĞÍ';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—ç±»å‹';
 comment on column CB_DASHBOARD_MODULE.default_url_
-  is 'Ä¬ÈÏÁ´½Ó';
+  is 'é»˜è®¤é“¾æ¥';
 comment on column CB_DASHBOARD_MODULE.default_width_
-  is 'Ä¬ÈÏ¿í¶È';
+  is 'é»˜è®¤å®½åº¦';
 comment on column CB_DASHBOARD_MODULE.default_height_
-  is 'Ä¬ÈÏ¸ß¶È';
+  is 'é»˜è®¤é«˜åº¦';
 comment on column CB_DASHBOARD_MODULE.dashboard_module_tag_
-  is 'ÒÇ±íÅÌÄ£¿é±êÇ©';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—æ ‡ç­¾';
 comment on column CB_DASHBOARD_MODULE.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column CB_DASHBOARD_MODULE.dashboard_module_status_
-  is 'ÒÇ±íÅÌÄ£¿é×´Ì¬';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—çŠ¶æ€';
 alter table CB_DASHBOARD_MODULE
   add constraint PK_DASHBOARD_MODULE primary key (DASHBOARD_MODULE_ID_);
 
@@ -138,23 +138,23 @@ create table CB_DASHBOARD
 )
 ;
 comment on table CB_DASHBOARD
-  is 'ÒÇ±íÅÌ';
+  is 'ä»ªè¡¨ç›˜';
 comment on column CB_DASHBOARD.dashboard_id_
-  is 'ÒÇ±íÅÌID';
+  is 'ä»ªè¡¨ç›˜ID';
 comment on column CB_DASHBOARD.dashboard_module_id_
-  is 'ÒÇ±íÅÌÄ£¿éID';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—ID';
 comment on column CB_DASHBOARD.posi_emp_id_
-  is '¸ÚÎ»ÈËÔ±ID';
+  is 'å²—ä½äººå‘˜ID';
 comment on column CB_DASHBOARD.dashboard_module_name_
-  is 'ÒÇ±íÅÌÄ£¿éÃû³Æ';
+  is 'ä»ªè¡¨ç›˜æ¨¡å—åç§°';
 comment on column CB_DASHBOARD.url_
-  is 'Á´½Ó';
+  is 'é“¾æ¥';
 comment on column CB_DASHBOARD.width_
-  is '¿í¶È';
+  is 'å®½åº¦';
 comment on column CB_DASHBOARD.height_
-  is '¸ß¶È';
+  is 'é«˜åº¦';
 comment on column CB_DASHBOARD.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 alter table CB_DASHBOARD
   add constraint PK_DASHBOARD primary key (DASHBOARD_ID_);
 alter table CB_DASHBOARD
@@ -178,23 +178,23 @@ create table CB_DUTY_MENU
 )
 compress for all operations;
 comment on table CB_DUTY_MENU
-  is 'Ö°Îñ²Ëµ¥';
+  is 'èŒåŠ¡èœå•';
 comment on column CB_DUTY_MENU.duty_menu_id_
-  is 'Ö°Îñ²Ëµ¥ID';
+  is 'èŒåŠ¡èœå•ID';
 comment on column CB_DUTY_MENU.duty_id_
-  is 'Ö°ÎñID';
+  is 'èŒåŠ¡ID';
 comment on column CB_DUTY_MENU.duty_name_
-  is 'Ö°ÎñÃû³Æ';
+  is 'èŒåŠ¡åç§°';
 comment on column CB_DUTY_MENU.menu_id_
-  is '²Ëµ¥ID';
+  is 'èœå•ID';
 comment on column CB_DUTY_MENU.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column CB_DUTY_MENU.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column CB_DUTY_MENU.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column CB_DUTY_MENU.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 create index IX_DUTY_MENU_DUTY on CB_DUTY_MENU (DUTY_ID_);
 alter table CB_DUTY_MENU
   add constraint PK_DUTY_MENU primary key (DUTY_MENU_ID_);
@@ -227,41 +227,41 @@ create table CB_LOG
 )
 ;
 comment on table CB_LOG
-  is 'ÈÕÖ¾';
+  is 'æ—¥å¿—';
 comment on column CB_LOG.log_id_
-  is 'ÈÕÖ¾ID';
+  is 'æ—¥å¿—ID';
 comment on column CB_LOG.category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column CB_LOG.ip_
   is 'IP';
 comment on column CB_LOG.url_
-  is 'µ÷ÓÃURL';
+  is 'è°ƒç”¨URL';
 comment on column CB_LOG.action_
-  is 'µ÷ÓÃ¿ØÖÆ²ã½Ó¿Ú';
+  is 'è°ƒç”¨æ§åˆ¶å±‚æ¥å£';
 comment on column CB_LOG.parameter_map_
-  is 'µ÷ÓÃ²ÎÊı';
+  is 'è°ƒç”¨å‚æ•°';
 comment on column CB_LOG.business_key_
-  is 'ÒµÎñÖ÷¼ü';
+  is 'ä¸šåŠ¡ä¸»é”®';
 comment on column CB_LOG.error_
-  is '´íÎó';
+  is 'é”™è¯¯';
 comment on column CB_LOG.message_
-  is 'ĞÅÏ¢';
+  is 'ä¿¡æ¯';
 comment on column CB_LOG.org_id_
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column CB_LOG.org_name_
-  is '»ú¹¹Ãû³Æ';
+  is 'æœºæ„åç§°';
 comment on column CB_LOG.posi_id_
-  is '¸ÚÎ»ID';
+  is 'å²—ä½ID';
 comment on column CB_LOG.posi_name_
-  is '¸ÚÎ»Ãû³Æ';
+  is 'å²—ä½åç§°';
 comment on column CB_LOG.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column CB_LOG.emp_name_
-  is 'ÈËÔ±Ãû³Æ';
+  is 'äººå‘˜åç§°';
 comment on column CB_LOG.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column CB_LOG.user_agent_
-  is 'ÓÃ»§´úÀí';
+  is 'ç”¨æˆ·ä»£ç†';
 create index IX_LOG_ACTION on CB_LOG (ACTION_);
 create index IX_LOG_BUSINESS_KEY on CB_LOG (BUSINESS_KEY_);
 create index IX_LOG_CREATION_DATE on CB_LOG (CREATION_DATE_);
@@ -289,31 +289,31 @@ create table CB_MENU
 )
 ;
 comment on table CB_MENU
-  is '²Ëµ¥';
+  is 'èœå•';
 comment on column CB_MENU.menu_id_
-  is '²Ëµ¥ID';
+  is 'èœå•ID';
 comment on column CB_MENU.parent_menu_id_
-  is 'ÉÏ¼¶²Ëµ¥ID';
+  is 'ä¸Šçº§èœå•ID';
 comment on column CB_MENU.menu_name_
-  is '²Ëµ¥Ãû³Æ';
+  is 'èœå•åç§°';
 comment on column CB_MENU.menu_type_
-  is '²Ëµ¥ÀàĞÍ';
+  is 'èœå•ç±»å‹';
 comment on column CB_MENU.url_
-  is 'Á´½ÓµØÖ·';
+  is 'é“¾æ¥åœ°å€';
 comment on column CB_MENU.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column CB_MENU.menu_status_
-  is '²Ëµ¥×´Ì¬';
+  is 'èœå•çŠ¶æ€';
 comment on column CB_MENU.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column CB_MENU.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column CB_MENU.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column CB_MENU.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 comment on column CB_MENU.icon_
-  is 'Í¼±êµØÖ·';
+  is 'å›¾æ ‡åœ°å€';
 alter table CB_MENU
   add constraint PK_MENU primary key (MENU_ID_);
 alter table CB_MENU
@@ -342,33 +342,33 @@ create table CB_NOTICE
 )
 ;
 comment on table CB_NOTICE
-  is 'Í¨Öª';
+  is 'é€šçŸ¥';
 comment on column CB_NOTICE.notice_id_
-  is 'Í¨ÖªID';
+  is 'é€šçŸ¥ID';
 comment on column CB_NOTICE.posi_emp_id_
-  is '¸ÚÎ»ÈËÔ±ID';
+  is 'å²—ä½äººå‘˜ID';
 comment on column CB_NOTICE.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column CB_NOTICE.emp_code_
-  is 'ÈËÔ±±àÂë';
+  is 'äººå‘˜ç¼–ç ';
 comment on column CB_NOTICE.emp_name_
-  is 'ÈËÔ±Ãû³Æ';
+  is 'äººå‘˜åç§°';
 comment on column CB_NOTICE.content_
-  is 'ÄÚÈİ';
+  is 'å†…å®¹';
 comment on column CB_NOTICE.source_
-  is 'À´Ô´';
+  is 'æ¥æº';
 comment on column CB_NOTICE.identity_
-  is 'ÁîÅÆ';
+  is 'ä»¤ç‰Œ';
 comment on column CB_NOTICE.redirect_url_
-  is 'ÖØ¶¨ÏòÁ´½Ó';
+  is 'é‡å®šå‘é“¾æ¥';
 comment on column CB_NOTICE.biz_url_
-  is 'ÒµÎñÁ´½Ó';
+  is 'ä¸šåŠ¡é“¾æ¥';
 comment on column CB_NOTICE.exp_date_
-  is '¹ıÆÚÈÕÆÚ';
+  is 'è¿‡æœŸæ—¥æœŸ';
 comment on column CB_NOTICE.notice_status_
-  is 'Í¨Öª×´Ì¬';
+  is 'é€šçŸ¥çŠ¶æ€';
 comment on column CB_NOTICE.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table CB_NOTICE
   add constraint PK_ALERT primary key (NOTICE_ID_);
 
@@ -390,25 +390,25 @@ create table CB_POSI_EMP_MENU
 )
 ;
 comment on table CB_POSI_EMP_MENU
-  is '¸ÚÎ»ÈËÔ±²Ëµ¥';
+  is 'å²—ä½äººå‘˜èœå•';
 comment on column CB_POSI_EMP_MENU.posi_emp_menu_id_
-  is '¸ÚÎ»ÈËÔ±²Ëµ¥ID';
+  is 'å²—ä½äººå‘˜èœå•ID';
 comment on column CB_POSI_EMP_MENU.posi_emp_id_
-  is '¸ÚÎ»ÈËÔ±ID';
+  is 'å²—ä½äººå‘˜ID';
 comment on column CB_POSI_EMP_MENU.posi_name_
-  is '¸ÚÎ»Ãû³Æ';
+  is 'å²—ä½åç§°';
 comment on column CB_POSI_EMP_MENU.emp_name_
-  is 'ÈËÔ±Ãû³Æ';
+  is 'äººå‘˜åç§°';
 comment on column CB_POSI_EMP_MENU.menu_id_
-  is '²Ëµ¥ID';
+  is 'èœå•ID';
 comment on column CB_POSI_EMP_MENU.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column CB_POSI_EMP_MENU.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column CB_POSI_EMP_MENU.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column CB_POSI_EMP_MENU.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 create index IX_POSI_EMP_MENU_POSI on CB_POSI_EMP_MENU (POSI_EMP_ID_);
 alter table CB_POSI_EMP_MENU
   add constraint PK_POSI_EMP_MENU primary key (POSI_EMP_MENU_ID_);
@@ -430,23 +430,23 @@ create table CB_POSI_MENU
 )
 ;
 comment on table CB_POSI_MENU
-  is '¸ÚÎ»²Ëµ¥';
+  is 'å²—ä½èœå•';
 comment on column CB_POSI_MENU.posi_menu_id_
-  is '¸ÚÎ»²Ëµ¥ID';
+  is 'å²—ä½èœå•ID';
 comment on column CB_POSI_MENU.posi_id_
-  is '¸ÚÎ»ID';
+  is 'å²—ä½ID';
 comment on column CB_POSI_MENU.posi_name_
-  is '¸ÚÎ»Ãû³Æ';
+  is 'å²—ä½åç§°';
 comment on column CB_POSI_MENU.menu_id_
-  is '²Ëµ¥ID';
+  is 'èœå•ID';
 comment on column CB_POSI_MENU.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column CB_POSI_MENU.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column CB_POSI_MENU.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column CB_POSI_MENU.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 create index IX_POSI_MENU_POSI on CB_POSI_MENU (POSI_ID_);
 alter table CB_POSI_MENU
   add constraint PK_POSI_MENU primary key (POSI_MENU_ID_);
@@ -473,33 +473,33 @@ create table CB_RIDER
 )
 ;
 comment on table CB_RIDER
-  is '¸½¼ş';
+  is 'é™„ä»¶';
 comment on column CB_RIDER.rider_id_
-  is '¸½¼şID';
+  is 'é™„ä»¶ID';
 comment on column CB_RIDER.obj_id_
-  is '¶ÔÏóID';
+  is 'å¯¹è±¡ID';
 comment on column CB_RIDER.rider_file_
-  is '¸½¼şÎÄ¼ş';
+  is 'é™„ä»¶æ–‡ä»¶';
 comment on column CB_RIDER.rider_file_name_
-  is '¸½¼şÎÄ¼şÃû³Æ';
+  is 'é™„ä»¶æ–‡ä»¶åç§°';
 comment on column CB_RIDER.rider_file_length_
-  is '¸½¼şÎÄ¼ş³¤¶È';
+  is 'é™„ä»¶æ–‡ä»¶é•¿åº¦';
 comment on column CB_RIDER.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column CB_RIDER.rider_tag_
-  is '¸½¼ş±êÇ©';
+  is 'é™„ä»¶æ ‡ç­¾';
 comment on column CB_RIDER.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column CB_RIDER.rider_status_
-  is '¸½¼ş×´Ì¬';
+  is 'é™„ä»¶çŠ¶æ€';
 comment on column CB_RIDER.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column CB_RIDER.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column CB_RIDER.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column CB_RIDER.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table CB_RIDER
   add constraint PK_RIDER primary key (RIDER_ID_);
 
@@ -516,15 +516,15 @@ create table CB_TAG
 )
 ;
 comment on table CB_TAG
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column CB_TAG.tag_id_
-  is '±êÇ©ID';
+  is 'æ ‡ç­¾ID';
 comment on column CB_TAG.obj_id_
-  is '¶ÔÏóID';
+  is 'å¯¹è±¡ID';
 comment on column CB_TAG.obj_type_
-  is '¶ÔÏóÀàĞÍ';
+  is 'å¯¹è±¡ç±»å‹';
 comment on column CB_TAG.tag_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 alter table CB_TAG
   add constraint PK_TAG primary key (TAG_ID_);
 
@@ -542,17 +542,17 @@ create table CB_WORKING_CALENDAR
 )
 ;
 comment on table CB_WORKING_CALENDAR
-  is '¹¤×÷ÈÕÀú';
+  is 'å·¥ä½œæ—¥å†';
 comment on column CB_WORKING_CALENDAR.working_calendar_id_
-  is '¹¤×÷ÈÕÀúID';
+  is 'å·¥ä½œæ—¥å†ID';
 comment on column CB_WORKING_CALENDAR.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column CB_WORKING_CALENDAR.date_
-  is 'ÈÕÆÚ';
+  is 'æ—¥æœŸ';
 comment on column CB_WORKING_CALENDAR.working_day_
-  is '¹¤×÷ÈÕ';
+  is 'å·¥ä½œæ—¥';
 comment on column CB_WORKING_CALENDAR.mark_
-  is '±ê×¢';
+  is 'æ ‡æ³¨';
 alter table CB_WORKING_CALENDAR
   add constraint PK_WORKING_CALENDAR primary key (WORKING_CALENDAR_ID_);
 alter table CB_WORKING_CALENDAR
@@ -584,41 +584,41 @@ create table FF_PROC_DEF
 )
 ;
 comment on table FF_PROC_DEF
-  is 'Á÷³Ì¶¨Òå';
+  is 'æµç¨‹å®šä¹‰';
 comment on column FF_PROC_DEF.proc_def_id_
-  is 'Á÷³Ì¶¨ÒåID';
+  is 'æµç¨‹å®šä¹‰ID';
 comment on column FF_PROC_DEF.proc_def_code_
-  is 'Á÷³Ì¶¨Òå±àÂë';
+  is 'æµç¨‹å®šä¹‰ç¼–ç ';
 comment on column FF_PROC_DEF.proc_def_name_
-  is 'Á÷³Ì¶¨ÒåÃû³Æ';
+  is 'æµç¨‹å®šä¹‰åç§°';
 comment on column FF_PROC_DEF.proc_def_cat_
-  is 'Á÷³Ì¶¨Òå·ÖÀà';
+  is 'æµç¨‹å®šä¹‰åˆ†ç±»';
 comment on column FF_PROC_DEF.proc_def_model_
-  is 'Á÷³Ì¶¨ÒåÄ£ĞÍ';
+  is 'æµç¨‹å®šä¹‰æ¨¡å‹';
 comment on column FF_PROC_DEF.proc_def_diagram_file_
-  is 'Á÷³Ì¶¨ÒåÍ¼ÎÄ¼ş';
+  is 'æµç¨‹å®šä¹‰å›¾æ–‡ä»¶';
 comment on column FF_PROC_DEF.proc_def_diagram_file_name_
-  is 'Á÷³Ì¶¨ÒåÍ¼ÎÄ¼şÃû³Æ';
+  is 'æµç¨‹å®šä¹‰å›¾æ–‡ä»¶åç§°';
 comment on column FF_PROC_DEF.proc_def_diagram_file_length_
-  is 'Á÷³Ì¶¨ÒåÍ¼ÎÄ¼ş³¤¶È';
+  is 'æµç¨‹å®šä¹‰å›¾æ–‡ä»¶é•¿åº¦';
 comment on column FF_PROC_DEF.proc_def_diagram_width_
-  is 'Á÷³Ì¶¨ÒåÍ¼¿í¶È';
+  is 'æµç¨‹å®šä¹‰å›¾å®½åº¦';
 comment on column FF_PROC_DEF.proc_def_diagram_height_
-  is 'Á÷³Ì¶¨ÒåÍ¼¸ß¶È';
+  is 'æµç¨‹å®šä¹‰å›¾é«˜åº¦';
 comment on column FF_PROC_DEF.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column FF_PROC_DEF.version_
-  is '°æ±¾';
+  is 'ç‰ˆæœ¬';
 comment on column FF_PROC_DEF.proc_def_status_
-  is 'Á÷³Ì¶¨Òå×´Ì¬';
+  is 'æµç¨‹å®šä¹‰çŠ¶æ€';
 comment on column FF_PROC_DEF.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column FF_PROC_DEF.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column FF_PROC_DEF.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column FF_PROC_DEF.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table FF_PROC_DEF
   add constraint PK_FF_PROC_DEF primary key (PROC_DEF_ID_);
 alter table FF_PROC_DEF
@@ -645,31 +645,31 @@ create table FF_ADJUST_PROC_DEF
 )
 ;
 comment on table FF_ADJUST_PROC_DEF
-  is 'µ÷ÕûÁ÷³Ì¶¨Òå';
+  is 'è°ƒæ•´æµç¨‹å®šä¹‰';
 comment on column FF_ADJUST_PROC_DEF.adjust_proc_def_id_
-  is 'µ÷ÕûÁ÷³Ì¶¨ÒåID';
+  is 'è°ƒæ•´æµç¨‹å®šä¹‰ID';
 comment on column FF_ADJUST_PROC_DEF.proc_def_id_
-  is 'Á÷³Ì¶¨ÒåID';
+  is 'æµç¨‹å®šä¹‰ID';
 comment on column FF_ADJUST_PROC_DEF.proc_def_model_
-  is 'Á÷³Ì¶¨ÒåÄ£ĞÍ';
+  is 'æµç¨‹å®šä¹‰æ¨¡å‹';
 comment on column FF_ADJUST_PROC_DEF.proc_def_diagram_file_
-  is 'Á÷³Ì¶¨ÒåÍ¼ÎÄ¼ş';
+  is 'æµç¨‹å®šä¹‰å›¾æ–‡ä»¶';
 comment on column FF_ADJUST_PROC_DEF.proc_def_diagram_file_name_
-  is 'Á÷³Ì¶¨ÒåÍ¼ÎÄ¼şÃû³Æ';
+  is 'æµç¨‹å®šä¹‰å›¾æ–‡ä»¶åç§°';
 comment on column FF_ADJUST_PROC_DEF.proc_def_diagram_file_length_
-  is 'Á÷³Ì¶¨ÒåÍ¼ÎÄ¼ş³¤¶È';
+  is 'æµç¨‹å®šä¹‰å›¾æ–‡ä»¶é•¿åº¦';
 comment on column FF_ADJUST_PROC_DEF.proc_def_diagram_width_
-  is 'Á÷³Ì¶¨ÒåÍ¼¿í¶È';
+  is 'æµç¨‹å®šä¹‰å›¾å®½åº¦';
 comment on column FF_ADJUST_PROC_DEF.proc_def_diagram_height_
-  is 'Á÷³Ì¶¨ÒåÍ¼¸ß¶È';
+  is 'æµç¨‹å®šä¹‰å›¾é«˜åº¦';
 comment on column FF_ADJUST_PROC_DEF.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column FF_ADJUST_PROC_DEF.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column FF_ADJUST_PROC_DEF.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column FF_ADJUST_PROC_DEF.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table FF_ADJUST_PROC_DEF
   add constraint PK_FF_ADJUST_PROC_DEF primary key (ADJUST_PROC_DEF_ID_);
 alter table FF_ADJUST_PROC_DEF
@@ -692,21 +692,21 @@ create table FF_DELEGATE
 )
 ;
 comment on table FF_DELEGATE
-  is '´úÀí';
+  is 'ä»£ç†';
 comment on column FF_DELEGATE.delegate_id_
-  is '´úÀíID';
+  is 'ä»£ç†ID';
 comment on column FF_DELEGATE.assignee_
-  is '°ìÀíÈË';
+  is 'åŠç†äºº';
 comment on column FF_DELEGATE.assignee_name_
-  is '°ìÀíÈËÃû³Æ';
+  is 'åŠç†äººåç§°';
 comment on column FF_DELEGATE.delegator_
-  is '´úÀíÈË';
+  is 'ä»£ç†äºº';
 comment on column FF_DELEGATE.delegator_name_
-  is '´úÀíÈËÃû³Æ';
+  is 'ä»£ç†äººåç§°';
 comment on column FF_DELEGATE.start_date_
-  is '¿ªÊ¼ÈÕÆÚ';
+  is 'å¼€å§‹æ—¥æœŸ';
 comment on column FF_DELEGATE.end_date_
-  is '½áÊøÈÕÆÚ';
+  is 'ç»“æŸæ—¥æœŸ';
 alter table FF_DELEGATE
   add constraint PK_FF_DELEGATE primary key (DELEGATE_ID_);
 
@@ -735,39 +735,39 @@ create table FF_PROC
 )
 ;
 comment on table FF_PROC
-  is 'Á÷³Ì';
+  is 'æµç¨‹';
 comment on column FF_PROC.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column FF_PROC.proc_def_id_
-  is 'Á÷³Ì¶¨ÒåID';
+  is 'æµç¨‹å®šä¹‰ID';
 comment on column FF_PROC.adjust_proc_def_id_
-  is 'µ÷ÕûÁ÷³Ì¶¨ÒåID';
+  is 'è°ƒæ•´æµç¨‹å®šä¹‰ID';
 comment on column FF_PROC.isolate_sub_proc_node_id_
-  is '¶ÀÁ¢×ÓÁ÷³ÌËùÊô½ÚµãID';
+  is 'ç‹¬ç«‹å­æµç¨‹æ‰€å±èŠ‚ç‚¹ID';
 comment on column FF_PROC.biz_id_
-  is 'ÒµÎñÖ÷¼ü';
+  is 'ä¸šåŠ¡ä¸»é”®';
 comment on column FF_PROC.biz_type_
-  is 'ÒµÎñÀàĞÍ';
+  is 'ä¸šåŠ¡ç±»å‹';
 comment on column FF_PROC.biz_code_
-  is 'ÒµÎñ±àÂë';
+  is 'ä¸šåŠ¡ç¼–ç ';
 comment on column FF_PROC.biz_name_
-  is 'ÒµÎñÃû³Æ';
+  is 'ä¸šåŠ¡åç§°';
 comment on column FF_PROC.biz_desc_
-  is 'ÒµÎñ±¸×¢';
+  is 'ä¸šåŠ¡å¤‡æ³¨';
 comment on column FF_PROC.proc_start_user_
-  is 'Á÷³Ì¿ªÊ¼ÈËÔ±';
+  is 'æµç¨‹å¼€å§‹äººå‘˜';
 comment on column FF_PROC.proc_start_user_name_
-  is 'Á÷³Ì¿ªÊ¼ÈËÔ±Ãû³Æ';
+  is 'æµç¨‹å¼€å§‹äººå‘˜åç§°';
 comment on column FF_PROC.proc_end_user_
-  is 'Á÷³ÌÍê³ÉÈËÔ±';
+  is 'æµç¨‹å®Œæˆäººå‘˜';
 comment on column FF_PROC.proc_end_user_name_
-  is 'Á÷³ÌÍê³ÉÈËÔ±Ãû³Æ';
+  is 'æµç¨‹å®Œæˆäººå‘˜åç§°';
 comment on column FF_PROC.proc_end_date_
-  is 'Á÷³ÌÍê³ÉÈÕÆÚ';
+  is 'æµç¨‹å®Œæˆæ—¥æœŸ';
 comment on column FF_PROC.proc_status_
-  is 'Á÷³Ì×´Ì¬';
+  is 'æµç¨‹çŠ¶æ€';
 comment on column FF_PROC.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 create index FK_PROC_DEF on FF_PROC (PROC_DEF_ID_);
 alter table FF_PROC
   add constraint PK_FF_PROC primary key (PROC_ID_);
@@ -817,73 +817,73 @@ create table FF_NODE
 )
 ;
 comment on table FF_NODE
-  is '½Úµã';
+  is 'èŠ‚ç‚¹';
 comment on column FF_NODE.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_NODE.parent_node_id_
-  is 'ÉÏ¼¶½ÚµãID';
+  is 'ä¸Šçº§èŠ‚ç‚¹ID';
 comment on column FF_NODE.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column FF_NODE.previous_node_ids_
-  is 'Ç°½ÚµãIDs';
+  is 'å‰èŠ‚ç‚¹IDs';
 comment on column FF_NODE.last_complete_node_ids_
-  is '×îºóÍê³É½ÚµãIDs';
+  is 'æœ€åå®ŒæˆèŠ‚ç‚¹IDs';
 comment on column FF_NODE.sub_proc_def_id_
-  is '×ÓÁ÷³Ì¶¨ÒåID';
+  is 'å­æµç¨‹å®šä¹‰ID';
 comment on column FF_NODE.adjust_sub_proc_def_id_
-  is 'µ÷Õû×ÓÁ÷³Ì¶¨ÒåID';
+  is 'è°ƒæ•´å­æµç¨‹å®šä¹‰ID';
 comment on column FF_NODE.node_type_
-  is '½ÚµãÀàĞÍ';
+  is 'èŠ‚ç‚¹ç±»å‹';
 comment on column FF_NODE.node_code_
-  is '½Úµã±àÂë';
+  is 'èŠ‚ç‚¹ç¼–ç ';
 comment on column FF_NODE.node_name_
-  is '½ÚµãÃû³Æ';
+  is 'èŠ‚ç‚¹åç§°';
 comment on column FF_NODE.parent_node_code_
-  is 'ÉÏ¼¶½Úµã±àÂë';
+  is 'ä¸Šçº§èŠ‚ç‚¹ç¼–ç ';
 comment on column FF_NODE.candidate_assignee_
-  is 'ºòÑ¡ÈË';
+  is 'å€™é€‰äºº';
 comment on column FF_NODE.complete_expression_
-  is 'Íê³É±í´ïÊ½';
+  is 'å®Œæˆè¡¨è¾¾å¼';
 comment on column FF_NODE.complete_return_
-  is 'Íê³Éºó·µ»ØÇ°Ò»¸ö½Úµã';
+  is 'å®Œæˆåè¿”å›å‰ä¸€ä¸ªèŠ‚ç‚¹';
 comment on column FF_NODE.exclusive_
-  is 'ÅÅËû';
+  is 'æ’ä»–';
 comment on column FF_NODE.auto_complete_same_assignee_
-  is '×Ô¶¯Íê³ÉÏàÍ¬°ìÀíÈËÈÎÎñ';
+  is 'è‡ªåŠ¨å®Œæˆç›¸åŒåŠç†äººä»»åŠ¡';
 comment on column FF_NODE.auto_complete_empty_assignee_
-  is '×Ô¶¯Íê³ÉÃ»ÓĞ°ìÀíÈË½Úµã';
+  is 'è‡ªåŠ¨å®Œæˆæ²¡æœ‰åŠç†äººèŠ‚ç‚¹';
 comment on column FF_NODE.inform_
-  is 'Í¨Öª';
+  is 'é€šçŸ¥';
 comment on column FF_NODE.assignee_
-  is '°ìÀíÈË';
+  is 'åŠç†äºº';
 comment on column FF_NODE.action_
-  is 'ÒµÎñĞĞÎª';
+  is 'ä¸šåŠ¡è¡Œä¸º';
 comment on column FF_NODE.due_date_
-  is '½ØÖ¹ÈÕÆÚ';
+  is 'æˆªæ­¢æ—¥æœŸ';
 comment on column FF_NODE.claim_
-  is 'ÈÏÁì';
+  is 'è®¤é¢†';
 comment on column FF_NODE.forwardable_
-  is '¿É×ª·¢';
+  is 'å¯è½¬å‘';
 comment on column FF_NODE.priority_
-  is 'ÓÅÏÈ¼¶';
+  is 'ä¼˜å…ˆçº§';
 comment on column FF_NODE.node_end_user_
-  is '½ÚµãÍê³ÉÈËÔ±';
+  is 'èŠ‚ç‚¹å®Œæˆäººå‘˜';
 comment on column FF_NODE.node_end_user_name_
-  is '½ÚµãÍê³ÉÈËÔ±Ãû³Æ';
+  is 'èŠ‚ç‚¹å®Œæˆäººå‘˜åç§°';
 comment on column FF_NODE.node_end_date_
-  is '½ÚµãÍê³ÉÈÕÆÚ';
+  is 'èŠ‚ç‚¹å®Œæˆæ—¥æœŸ';
 comment on column FF_NODE.next_candidate_
-  is 'ÏÂ¸öºòÑ¡ÈË';
+  is 'ä¸‹ä¸ªå€™é€‰äºº';
 comment on column FF_NODE.isolate_sub_proc_def_code_
-  is '¶ÀÁ¢×ÓÁ÷³Ì¶¨Òå±àÂë';
+  is 'ç‹¬ç«‹å­æµç¨‹å®šä¹‰ç¼–ç ';
 comment on column FF_NODE.isolate_sub_proc_candidate_
-  is '¶ÀÁ¢×ÓÁ÷³ÌºòÑ¡ÈË';
+  is 'ç‹¬ç«‹å­æµç¨‹å€™é€‰äºº';
 comment on column FF_NODE.isolate_sub_proc_status_
-  is '¶ÀÁ¢×ÓÁ÷³Ì×´Ì¬';
+  is 'ç‹¬ç«‹å­æµç¨‹çŠ¶æ€';
 comment on column FF_NODE.node_status_
-  is '½Úµã×´Ì¬';
+  is 'èŠ‚ç‚¹çŠ¶æ€';
 comment on column FF_NODE.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table FF_NODE
   add constraint PK_FF_NODE primary key (NODE_ID_);
 alter table FF_NODE
@@ -918,27 +918,27 @@ create table FF_OPERATION
 )
 ;
 comment on table FF_OPERATION
-  is '²Ù×÷';
+  is 'æ“ä½œ';
 comment on column FF_OPERATION.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 comment on column FF_OPERATION.operation_
-  is '²Ù×÷';
+  is 'æ“ä½œ';
 comment on column FF_OPERATION.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column FF_OPERATION.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_OPERATION.task_id_
-  is 'ÈÎÎñID';
+  is 'ä»»åŠ¡ID';
 comment on column FF_OPERATION.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column FF_OPERATION.operator_
-  is '²Ù×÷ÈË';
+  is 'æ“ä½œäºº';
 comment on column FF_OPERATION.operator_name_
-  is '²Ù×÷ÈËÃû³Æ';
+  is 'æ“ä½œäººåç§°';
 comment on column FF_OPERATION.operation_date_
-  is '²Ù×÷ÈÕÆÚ';
+  is 'æ“ä½œæ—¥æœŸ';
 comment on column FF_OPERATION.operation_status_
-  is '²Ù×÷×´Ì¬';
+  is 'æ“ä½œçŠ¶æ€';
 alter table FF_OPERATION
   add constraint FF_FF_OPERATION primary key (OPERATION_ID_);
 
@@ -990,85 +990,85 @@ create table FF_NODE_OP
 )
 ;
 comment on table FF_NODE_OP
-  is '½Úµã²Ù×÷';
+  is 'èŠ‚ç‚¹æ“ä½œ';
 comment on column FF_NODE_OP.node_op_id_
-  is '½Úµã²Ù×÷ID';
+  is 'èŠ‚ç‚¹æ“ä½œID';
 comment on column FF_NODE_OP.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 comment on column FF_NODE_OP.operation_type_
-  is '²Ù×÷ÀàĞÍ';
+  is 'æ“ä½œç±»å‹';
 comment on column FF_NODE_OP.operation_order_
-  is '²Ù×÷Ë³Ğò';
+  is 'æ“ä½œé¡ºåº';
 comment on column FF_NODE_OP.operation_date_
-  is '²Ù×÷ÈÕÆÚ';
+  is 'æ“ä½œæ—¥æœŸ';
 comment on column FF_NODE_OP.operation_status_
-  is '²Ù×÷×´Ì¬';
+  is 'æ“ä½œçŠ¶æ€';
 comment on column FF_NODE_OP.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_NODE_OP.parent_node_id_
-  is 'ÉÏ¼¶½ÚµãID';
+  is 'ä¸Šçº§èŠ‚ç‚¹ID';
 comment on column FF_NODE_OP.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column FF_NODE_OP.previous_node_ids_
-  is 'Ç°½ÚµãIDs';
+  is 'å‰èŠ‚ç‚¹IDs';
 comment on column FF_NODE_OP.last_complete_node_ids_
-  is '×îºóÍê³É½ÚµãIDs';
+  is 'æœ€åå®ŒæˆèŠ‚ç‚¹IDs';
 comment on column FF_NODE_OP.sub_proc_def_id_
-  is '×ÓÁ÷³Ì¶¨ÒåID';
+  is 'å­æµç¨‹å®šä¹‰ID';
 comment on column FF_NODE_OP.adjust_sub_proc_def_id_
-  is 'µ÷Õû×ÓÁ÷³Ì¶¨ÒåID';
+  is 'è°ƒæ•´å­æµç¨‹å®šä¹‰ID';
 comment on column FF_NODE_OP.node_type_
-  is '½ÚµãÀàĞÍ';
+  is 'èŠ‚ç‚¹ç±»å‹';
 comment on column FF_NODE_OP.node_code_
-  is '½Úµã±àÂë';
+  is 'èŠ‚ç‚¹ç¼–ç ';
 comment on column FF_NODE_OP.node_name_
-  is '½ÚµãÃû³Æ';
+  is 'èŠ‚ç‚¹åç§°';
 comment on column FF_NODE_OP.parent_node_code_
-  is 'ÉÏ¼¶½Úµã±àÂë';
+  is 'ä¸Šçº§èŠ‚ç‚¹ç¼–ç ';
 comment on column FF_NODE_OP.candidate_assignee_
-  is 'ºòÑ¡ÈË';
+  is 'å€™é€‰äºº';
 comment on column FF_NODE_OP.complete_expression_
-  is 'Íê³É±í´ïÊ½';
+  is 'å®Œæˆè¡¨è¾¾å¼';
 comment on column FF_NODE_OP.complete_return_
-  is 'Íê³Éºó·µ»ØÇ°Ò»¸ö½Úµã';
+  is 'å®Œæˆåè¿”å›å‰ä¸€ä¸ªèŠ‚ç‚¹';
 comment on column FF_NODE_OP.exclusive_
-  is 'ÅÅËû';
+  is 'æ’ä»–';
 comment on column FF_NODE_OP.auto_complete_same_assignee_
-  is '×Ô¶¯Íê³ÉÏàÍ¬°ìÀíÈËÈÎÎñ';
+  is 'è‡ªåŠ¨å®Œæˆç›¸åŒåŠç†äººä»»åŠ¡';
 comment on column FF_NODE_OP.auto_complete_empty_assignee_
-  is '×Ô¶¯Íê³ÉÃ»ÓĞ°ìÀíÈË½Úµã';
+  is 'è‡ªåŠ¨å®Œæˆæ²¡æœ‰åŠç†äººèŠ‚ç‚¹';
 comment on column FF_NODE_OP.inform_
-  is 'Í¨Öª';
+  is 'é€šçŸ¥';
 comment on column FF_NODE_OP.assignee_
-  is '°ìÀíÈË';
+  is 'åŠç†äºº';
 comment on column FF_NODE_OP.action_
-  is 'ÒµÎñĞĞÎª';
+  is 'ä¸šåŠ¡è¡Œä¸º';
 comment on column FF_NODE_OP.due_date_
-  is '½ØÖ¹ÈÕÆÚ';
+  is 'æˆªæ­¢æ—¥æœŸ';
 comment on column FF_NODE_OP.claim_
-  is 'ÈÏÁì';
+  is 'è®¤é¢†';
 comment on column FF_NODE_OP.forwardable_
-  is '¿É×ª·¢';
+  is 'å¯è½¬å‘';
 comment on column FF_NODE_OP.priority_
-  is 'ÓÅÏÈ¼¶';
+  is 'ä¼˜å…ˆçº§';
 comment on column FF_NODE_OP.node_end_user_
-  is '½ÚµãÍê³ÉÈËÔ±';
+  is 'èŠ‚ç‚¹å®Œæˆäººå‘˜';
 comment on column FF_NODE_OP.node_end_user_name_
-  is '½ÚµãÍê³ÉÈËÔ±Ãû³Æ';
+  is 'èŠ‚ç‚¹å®Œæˆäººå‘˜åç§°';
 comment on column FF_NODE_OP.node_end_date_
-  is '½ÚµãÍê³ÉÈÕÆÚ';
+  is 'èŠ‚ç‚¹å®Œæˆæ—¥æœŸ';
 comment on column FF_NODE_OP.next_candidate_
-  is 'ÏÂ¸öºòÑ¡ÈË';
+  is 'ä¸‹ä¸ªå€™é€‰äºº';
 comment on column FF_NODE_OP.isolate_sub_proc_def_code_
-  is '¶ÀÁ¢×ÓÁ÷³Ì¶¨Òå±àÂë';
+  is 'ç‹¬ç«‹å­æµç¨‹å®šä¹‰ç¼–ç ';
 comment on column FF_NODE_OP.isolate_sub_proc_candidate_
-  is '¶ÀÁ¢×ÓÁ÷³ÌºòÑ¡ÈË';
+  is 'ç‹¬ç«‹å­æµç¨‹å€™é€‰äºº';
 comment on column FF_NODE_OP.isolate_sub_proc_status_
-  is '¶ÀÁ¢×ÓÁ÷³Ì×´Ì¬';
+  is 'ç‹¬ç«‹å­æµç¨‹çŠ¶æ€';
 comment on column FF_NODE_OP.node_status_
-  is '½Úµã×´Ì¬';
+  is 'èŠ‚ç‚¹çŠ¶æ€';
 comment on column FF_NODE_OP.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table FF_NODE_OP
   add constraint PK_FF_NODE_OP primary key (NODE_OP_ID_);
 alter table FF_NODE_OP
@@ -1091,21 +1091,21 @@ create table FF_NODE_VAR
 )
 ;
 comment on table FF_NODE_VAR
-  is '½Úµã±äÁ¿';
+  is 'èŠ‚ç‚¹å˜é‡';
 comment on column FF_NODE_VAR.node_var_id_
-  is '½Úµã±äÁ¿ID';
+  is 'èŠ‚ç‚¹å˜é‡ID';
 comment on column FF_NODE_VAR.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_NODE_VAR.var_type_
-  is '±äÁ¿ÀàĞÍ';
+  is 'å˜é‡ç±»å‹';
 comment on column FF_NODE_VAR.var_name_
-  is '±äÁ¿Ãû³Æ';
+  is 'å˜é‡åç§°';
 comment on column FF_NODE_VAR.value_
-  is 'Öµ';
+  is 'å€¼';
 comment on column FF_NODE_VAR.obj_
-  is '¶ÔÏó';
+  is 'å¯¹è±¡';
 comment on column FF_NODE_VAR.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 create index IX_SUB_PROC_VAR_NAME on FF_NODE_VAR (VAR_NAME_);
 create index IX_SUB_PROC_VAR_VALUE on FF_NODE_VAR (VALUE_);
 alter table FF_NODE_VAR
@@ -1133,33 +1133,33 @@ create table FF_NODE_VAR_OP
 )
 ;
 comment on table FF_NODE_VAR_OP
-  is '½Úµã±äÁ¿²Ù×÷';
+  is 'èŠ‚ç‚¹å˜é‡æ“ä½œ';
 comment on column FF_NODE_VAR_OP.node_var_op_id_
-  is '½Úµã±äÁ¿²Ù×÷ID';
+  is 'èŠ‚ç‚¹å˜é‡æ“ä½œID';
 comment on column FF_NODE_VAR_OP.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 comment on column FF_NODE_VAR_OP.operation_type_
-  is '²Ù×÷ÀàĞÍ';
+  is 'æ“ä½œç±»å‹';
 comment on column FF_NODE_VAR_OP.operation_order_
-  is '²Ù×÷Ë³Ğò';
+  is 'æ“ä½œé¡ºåº';
 comment on column FF_NODE_VAR_OP.operation_date_
-  is '²Ù×÷ÈÕÆÚ';
+  is 'æ“ä½œæ—¥æœŸ';
 comment on column FF_NODE_VAR_OP.operation_status_
-  is '²Ù×÷×´Ì¬';
+  is 'æ“ä½œçŠ¶æ€';
 comment on column FF_NODE_VAR_OP.node_var_id_
-  is '½Úµã±äÁ¿ID';
+  is 'èŠ‚ç‚¹å˜é‡ID';
 comment on column FF_NODE_VAR_OP.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_NODE_VAR_OP.var_type_
-  is '±äÁ¿ÀàĞÍ';
+  is 'å˜é‡ç±»å‹';
 comment on column FF_NODE_VAR_OP.var_name_
-  is '±äÁ¿Ãû³Æ';
+  is 'å˜é‡åç§°';
 comment on column FF_NODE_VAR_OP.value_
-  is 'Öµ';
+  is 'å€¼';
 comment on column FF_NODE_VAR_OP.obj_
-  is '¶ÔÏó';
+  is 'å¯¹è±¡';
 comment on column FF_NODE_VAR_OP.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table FF_NODE_VAR_OP
   add constraint PK_FF_NODE_VAR_OP primary key (NODE_VAR_OP_ID_);
 alter table FF_NODE_VAR_OP
@@ -1179,15 +1179,15 @@ create table FF_OPERATION_FOLLOW_UP
 )
 ;
 comment on table FF_OPERATION_FOLLOW_UP
-  is '²Ù×÷ºóĞø';
+  is 'æ“ä½œåç»­';
 comment on column FF_OPERATION_FOLLOW_UP.operation_follow_up_id_
-  is '²Ù×÷ºóĞøID';
+  is 'æ“ä½œåç»­ID';
 comment on column FF_OPERATION_FOLLOW_UP.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 comment on column FF_OPERATION_FOLLOW_UP.follow_up_operation_id_
-  is 'ºóĞø²Ù×÷ID';
+  is 'åç»­æ“ä½œID';
 comment on column FF_OPERATION_FOLLOW_UP.operation_date_
-  is '²Ù×÷ÈÕÆÚ';
+  is 'æ“ä½œæ—¥æœŸ';
 alter table FF_OPERATION_FOLLOW_UP
   add constraint PK_FF_OPERATION_FOLOW_UP primary key (OPERATION_FOLLOW_UP_ID_);
 alter table FF_OPERATION_FOLLOW_UP
@@ -1228,51 +1228,51 @@ create table FF_PROC_OP
 )
 ;
 comment on table FF_PROC_OP
-  is 'Á÷³Ì²Ù×÷';
+  is 'æµç¨‹æ“ä½œ';
 comment on column FF_PROC_OP.proc_op_id_
-  is 'Á÷³Ì²Ù×÷ID';
+  is 'æµç¨‹æ“ä½œID';
 comment on column FF_PROC_OP.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 comment on column FF_PROC_OP.operation_type_
-  is '²Ù×÷ÀàĞÍ';
+  is 'æ“ä½œç±»å‹';
 comment on column FF_PROC_OP.operation_order_
-  is '²Ù×÷Ë³Ğò';
+  is 'æ“ä½œé¡ºåº';
 comment on column FF_PROC_OP.operation_date_
-  is '²Ù×÷ÈÕÆÚ';
+  is 'æ“ä½œæ—¥æœŸ';
 comment on column FF_PROC_OP.operation_status_
-  is '²Ù×÷×´Ì¬';
+  is 'æ“ä½œçŠ¶æ€';
 comment on column FF_PROC_OP.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column FF_PROC_OP.proc_def_id_
-  is 'Á÷³Ì¶¨ÒåID';
+  is 'æµç¨‹å®šä¹‰ID';
 comment on column FF_PROC_OP.adjust_proc_def_id_
-  is 'µ÷ÕûÁ÷³Ì¶¨ÒåID';
+  is 'è°ƒæ•´æµç¨‹å®šä¹‰ID';
 comment on column FF_PROC_OP.isolate_sub_proc_node_id_
-  is '¶ÀÁ¢×ÓÁ÷³ÌËùÊô½ÚµãID';
+  is 'ç‹¬ç«‹å­æµç¨‹æ‰€å±èŠ‚ç‚¹ID';
 comment on column FF_PROC_OP.biz_id_
-  is 'ÒµÎñÖ÷¼ü';
+  is 'ä¸šåŠ¡ä¸»é”®';
 comment on column FF_PROC_OP.biz_type_
-  is 'ÒµÎñÀàĞÍ';
+  is 'ä¸šåŠ¡ç±»å‹';
 comment on column FF_PROC_OP.biz_code_
-  is 'ÒµÎñ±àÂë';
+  is 'ä¸šåŠ¡ç¼–ç ';
 comment on column FF_PROC_OP.biz_name_
-  is 'ÒµÎñÃû³Æ';
+  is 'ä¸šåŠ¡åç§°';
 comment on column FF_PROC_OP.biz_desc_
-  is 'ÒµÎñ±¸×¢';
+  is 'ä¸šåŠ¡å¤‡æ³¨';
 comment on column FF_PROC_OP.proc_start_user_
-  is 'Á÷³Ì¿ªÊ¼ÈËÔ±';
+  is 'æµç¨‹å¼€å§‹äººå‘˜';
 comment on column FF_PROC_OP.proc_start_user_name_
-  is 'Á÷³Ì¿ªÊ¼ÈËÔ±Ãû³Æ';
+  is 'æµç¨‹å¼€å§‹äººå‘˜åç§°';
 comment on column FF_PROC_OP.proc_end_user_
-  is 'Á÷³ÌÍê³ÉÈËÔ±';
+  is 'æµç¨‹å®Œæˆäººå‘˜';
 comment on column FF_PROC_OP.proc_end_user_name_
-  is 'Á÷³ÌÍê³ÉÈËÔ±Ãû³Æ';
+  is 'æµç¨‹å®Œæˆäººå‘˜åç§°';
 comment on column FF_PROC_OP.proc_end_date_
-  is 'Á÷³ÌÍê³ÉÈÕÆÚ';
+  is 'æµç¨‹å®Œæˆæ—¥æœŸ';
 comment on column FF_PROC_OP.proc_status_
-  is 'Á÷³Ì×´Ì¬';
+  is 'æµç¨‹çŠ¶æ€';
 comment on column FF_PROC_OP.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table FF_PROC_OP
   add constraint PK_FF_PROC_OP primary key (PROC_OP_ID_);
 alter table FF_PROC_OP
@@ -1306,43 +1306,43 @@ create table FF_TASK
 )
 ;
 comment on table FF_TASK
-  is 'ÈÎÎñ';
+  is 'ä»»åŠ¡';
 comment on column FF_TASK.task_id_
-  is 'ÈÎÎñID';
+  is 'ä»»åŠ¡ID';
 comment on column FF_TASK.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_TASK.previous_task_id_
-  is 'Ç°Ò»¸öÈÎÎñID';
+  is 'å‰ä¸€ä¸ªä»»åŠ¡ID';
 comment on column FF_TASK.task_type_
-  is 'ÈÎÎñÀàĞÍ';
+  is 'ä»»åŠ¡ç±»å‹';
 comment on column FF_TASK.assignee_
-  is '°ìÀíÈË';
+  is 'åŠç†äºº';
 comment on column FF_TASK.assignee_name_
-  is '°ìÀíÈËÃû³Æ';
+  is 'åŠç†äººåç§°';
 comment on column FF_TASK.action_
-  is 'ÒµÎñĞĞÎª';
+  is 'ä¸šåŠ¡è¡Œä¸º';
 comment on column FF_TASK.due_date_
-  is '½ØÖ¹ÈÕÆÚ';
+  is 'æˆªæ­¢æ—¥æœŸ';
 comment on column FF_TASK.claim_
-  is 'ÈÏÁì';
+  is 'è®¤é¢†';
 comment on column FF_TASK.forwardable_
-  is '¿É×ª·¢';
+  is 'å¯è½¬å‘';
 comment on column FF_TASK.priority_
-  is 'ÓÅÏÈ¼¶';
+  is 'ä¼˜å…ˆçº§';
 comment on column FF_TASK.forward_status_
-  is '×ª·¢×´Ì¬';
+  is 'è½¬å‘çŠ¶æ€';
 comment on column FF_TASK.task_end_user_
-  is 'ÈÎÎñÍê³ÉÈËÔ±';
+  is 'ä»»åŠ¡å®Œæˆäººå‘˜';
 comment on column FF_TASK.task_end_user_name_
-  is 'ÈÎÎñÍê³ÉÈËÔ±Ãû³Æ';
+  is 'ä»»åŠ¡å®Œæˆäººå‘˜åç§°';
 comment on column FF_TASK.task_end_date_
-  is 'ÈÎÎñÍê³ÉÈÕÆÚ';
+  is 'ä»»åŠ¡å®Œæˆæ—¥æœŸ';
 comment on column FF_TASK.next_candidate_
-  is 'ÏÂ¸öºòÑ¡ÈË';
+  is 'ä¸‹ä¸ªå€™é€‰äºº';
 comment on column FF_TASK.task_status_
-  is 'ÈÎÎñ×´Ì¬';
+  is 'ä»»åŠ¡çŠ¶æ€';
 comment on column FF_TASK.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table FF_TASK
   add constraint PK_FF_TASK primary key (TASK_ID_);
 alter table FF_TASK
@@ -1385,55 +1385,55 @@ create table FF_TASK_OP
 )
 ;
 comment on table FF_TASK_OP
-  is 'ÈÎÎñ²Ù×÷';
+  is 'ä»»åŠ¡æ“ä½œ';
 comment on column FF_TASK_OP.task_op_id_
-  is 'ÈÎÎñ²Ù×÷ID';
+  is 'ä»»åŠ¡æ“ä½œID';
 comment on column FF_TASK_OP.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 comment on column FF_TASK_OP.operation_type_
-  is '²Ù×÷ÀàĞÍ';
+  is 'æ“ä½œç±»å‹';
 comment on column FF_TASK_OP.operation_order_
-  is '²Ù×÷Ë³Ğò';
+  is 'æ“ä½œé¡ºåº';
 comment on column FF_TASK_OP.operation_date_
-  is '²Ù×÷ÈÕÆÚ';
+  is 'æ“ä½œæ—¥æœŸ';
 comment on column FF_TASK_OP.operation_status_
-  is '²Ù×÷×´Ì¬';
+  is 'æ“ä½œçŠ¶æ€';
 comment on column FF_TASK_OP.task_id_
-  is 'ÈÎÎñID';
+  is 'ä»»åŠ¡ID';
 comment on column FF_TASK_OP.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column FF_TASK_OP.previous_task_id_
-  is 'Ç°Ò»¸öÈÎÎñID';
+  is 'å‰ä¸€ä¸ªä»»åŠ¡ID';
 comment on column FF_TASK_OP.task_type_
-  is 'ÈÎÎñÀàĞÍ';
+  is 'ä»»åŠ¡ç±»å‹';
 comment on column FF_TASK_OP.assignee_
-  is '°ìÀíÈË';
+  is 'åŠç†äºº';
 comment on column FF_TASK_OP.assignee_name_
-  is '°ìÀíÈËÃû³Æ';
+  is 'åŠç†äººåç§°';
 comment on column FF_TASK_OP.action_
-  is 'ÒµÎñĞĞÎª';
+  is 'ä¸šåŠ¡è¡Œä¸º';
 comment on column FF_TASK_OP.due_date_
-  is '½ØÖ¹ÈÕÆÚ';
+  is 'æˆªæ­¢æ—¥æœŸ';
 comment on column FF_TASK_OP.claim_
-  is 'ÈÏÁì';
+  is 'è®¤é¢†';
 comment on column FF_TASK_OP.forwardable_
-  is '¿É×ª·¢';
+  is 'å¯è½¬å‘';
 comment on column FF_TASK_OP.priority_
-  is 'ÓÅÏÈ¼¶';
+  is 'ä¼˜å…ˆçº§';
 comment on column FF_TASK_OP.forward_status_
-  is '×ª·¢×´Ì¬';
+  is 'è½¬å‘çŠ¶æ€';
 comment on column FF_TASK_OP.task_end_user_
-  is 'ÈÎÎñÍê³ÉÈËÔ±';
+  is 'ä»»åŠ¡å®Œæˆäººå‘˜';
 comment on column FF_TASK_OP.task_end_user_name_
-  is 'ÈÎÎñÍê³ÉÈËÔ±Ãû³Æ';
+  is 'ä»»åŠ¡å®Œæˆäººå‘˜åç§°';
 comment on column FF_TASK_OP.task_end_date_
-  is 'ÈÎÎñÍê³ÉÈÕÆÚ';
+  is 'ä»»åŠ¡å®Œæˆæ—¥æœŸ';
 comment on column FF_TASK_OP.next_candidate_
-  is 'ÏÂ¸öºòÑ¡ÈË';
+  is 'ä¸‹ä¸ªå€™é€‰äºº';
 comment on column FF_TASK_OP.task_status_
-  is 'ÈÎÎñ×´Ì¬';
+  is 'ä»»åŠ¡çŠ¶æ€';
 comment on column FF_TASK_OP.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table FF_TASK_OP
   add constraint PK_FF_TASK_OP primary key (TASK_OP_ID_);
 alter table FF_TASK_OP
@@ -1476,61 +1476,61 @@ create table K_APPROVAL_MEMO
 )
 ;
 comment on table K_APPROVAL_MEMO
-  is 'ÉóÅúÒâ¼û';
+  is 'å®¡æ‰¹æ„è§';
 comment on column K_APPROVAL_MEMO.approval_memo_id_
-  is 'ÉóÅúÒâ¼ûID';
+  is 'å®¡æ‰¹æ„è§ID';
 comment on column K_APPROVAL_MEMO.task_id_
-  is 'ÈÎÎñID';
+  is 'ä»»åŠ¡ID';
 comment on column K_APPROVAL_MEMO.previous_task_id_
-  is 'Ç°Ò»¸öÈÎÎñID';
+  is 'å‰ä¸€ä¸ªä»»åŠ¡ID';
 comment on column K_APPROVAL_MEMO.node_id_
-  is '½ÚµãID';
+  is 'èŠ‚ç‚¹ID';
 comment on column K_APPROVAL_MEMO.node_type_
-  is '½ÚµãÀàĞÍ';
+  is 'èŠ‚ç‚¹ç±»å‹';
 comment on column K_APPROVAL_MEMO.node_name_
-  is '½ÚµãÃû³Æ';
+  is 'èŠ‚ç‚¹åç§°';
 comment on column K_APPROVAL_MEMO.parent_node_id_
-  is 'ÉÏ¼¶½ÚµãID';
+  is 'ä¸Šçº§èŠ‚ç‚¹ID';
 comment on column K_APPROVAL_MEMO.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column K_APPROVAL_MEMO.biz_id_
-  is 'ÒµÎñID';
+  is 'ä¸šåŠ¡ID';
 comment on column K_APPROVAL_MEMO.assignee_
-  is '°ìÀíÈË';
+  is 'åŠç†äºº';
 comment on column K_APPROVAL_MEMO.assignee_code_
-  is '°ìÀíÈË±àÂë';
+  is 'åŠç†äººç¼–ç ';
 comment on column K_APPROVAL_MEMO.assignee_name_
-  is '°ìÀíÈËÃû³Æ';
+  is 'åŠç†äººåç§°';
 comment on column K_APPROVAL_MEMO.executor_
-  is 'Ö´ĞĞÈË';
+  is 'æ‰§è¡Œäºº';
 comment on column K_APPROVAL_MEMO.executor_code_
-  is 'Ö´ĞĞÈË±àÂë';
+  is 'æ‰§è¡Œäººç¼–ç ';
 comment on column K_APPROVAL_MEMO.executor_name_
-  is 'Ö´ĞĞÈËÃû³Æ';
+  is 'æ‰§è¡Œäººåç§°';
 comment on column K_APPROVAL_MEMO.org_id_
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column K_APPROVAL_MEMO.org_name_
-  is '»ú¹¹Ãû³Æ';
+  is 'æœºæ„åç§°';
 comment on column K_APPROVAL_MEMO.com_id_
-  is '¹«Ë¾ID';
+  is 'å…¬å¸ID';
 comment on column K_APPROVAL_MEMO.com_name_
-  is '¹«Ë¾Ãû³Æ';
+  is 'å…¬å¸åç§°';
 comment on column K_APPROVAL_MEMO.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column K_APPROVAL_MEMO.due_date_
-  is '½ØÖ¹ÈÕÆÚ';
+  is 'æˆªæ­¢æ—¥æœŸ';
 comment on column K_APPROVAL_MEMO.approval_memo_type_
-  is 'ÉóÅúÒâ¼ûÀàĞÍ';
+  is 'å®¡æ‰¹æ„è§ç±»å‹';
 comment on column K_APPROVAL_MEMO.approval_memo_
-  is 'ÉóÅúÒâ¼û';
+  is 'å®¡æ‰¹æ„è§';
 comment on column K_APPROVAL_MEMO.approval_date_
-  is 'ÉóÅúÈÕÆÚ';
+  is 'å®¡æ‰¹æ—¥æœŸ';
 comment on column K_APPROVAL_MEMO.approval_memo_source_
-  is 'ÉóÅúÒâ¼ûÊı¾İÔ´';
+  is 'å®¡æ‰¹æ„è§æ•°æ®æº';
 comment on column K_APPROVAL_MEMO.approval_memo_status_
-  is 'ÉóÅú×´Ì¬';
+  is 'å®¡æ‰¹çŠ¶æ€';
 comment on column K_APPROVAL_MEMO.operation_id_
-  is '²Ù×÷ID';
+  is 'æ“ä½œID';
 alter table K_APPROVAL_MEMO
   add constraint PK_APPROVAL_MEMO primary key (APPROVAL_MEMO_ID_);
 
@@ -1548,17 +1548,17 @@ create table K_CUSTOM_APPROVAL_MEMO
 )
 ;
 comment on table K_CUSTOM_APPROVAL_MEMO
-  is '³£ÓÃÉóÅúÒâ¼û';
+  is 'å¸¸ç”¨å®¡æ‰¹æ„è§';
 comment on column K_CUSTOM_APPROVAL_MEMO.custom_approval_memo_id_
-  is '³£ÓÃÉóÅúÒâ¼ûID';
+  is 'å¸¸ç”¨å®¡æ‰¹æ„è§ID';
 comment on column K_CUSTOM_APPROVAL_MEMO.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column K_CUSTOM_APPROVAL_MEMO.approval_memo_
-  is 'ÉóÅúÒâ¼û';
+  is 'å®¡æ‰¹æ„è§';
 comment on column K_CUSTOM_APPROVAL_MEMO.default_
-  is 'È±Ê¡';
+  is 'ç¼ºçœ';
 comment on column K_CUSTOM_APPROVAL_MEMO.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 alter table K_CUSTOM_APPROVAL_MEMO
   add constraint PK_CUSTOM_APPROVAL_MEMO primary key (CUSTOM_APPROVAL_MEMO_ID_);
 
@@ -1574,13 +1574,13 @@ create table K_CUSTOM_DOC_TYPE
 )
 ;
 comment on table K_CUSTOM_DOC_TYPE
-  is '³£ÓÃ¹«ÎÄÀàĞÍ';
+  is 'å¸¸ç”¨å…¬æ–‡ç±»å‹';
 comment on column K_CUSTOM_DOC_TYPE.custom_doc_type_id_
-  is '³£ÓÃ¹«ÎÄÀàĞÍID';
+  is 'å¸¸ç”¨å…¬æ–‡ç±»å‹ID';
 comment on column K_CUSTOM_DOC_TYPE.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column K_CUSTOM_DOC_TYPE.doc_type_id_
-  is '¹«ÎÄÀàĞÍID';
+  is 'å…¬æ–‡ç±»å‹ID';
 alter table K_CUSTOM_DOC_TYPE
   add constraint PK_CUSTOM_DOC_TYPE primary key (CUSTOM_DOC_TYPE_ID_);
 alter table K_CUSTOM_DOC_TYPE
@@ -1624,65 +1624,65 @@ create table K_DOC
 )
 ;
 comment on table K_DOC
-  is '¹«ÎÄ';
+  is 'å…¬æ–‡';
 comment on column K_DOC.doc_id_
-  is '¹«ÎÄID';
+  is 'å…¬æ–‡ID';
 comment on column K_DOC.doc_code_
-  is '¹«ÎÄ±àÂë';
+  is 'å…¬æ–‡ç¼–ç ';
 comment on column K_DOC.doc_name_
-  is '¹«ÎÄÃû³Æ';
+  is 'å…¬æ–‡åç§°';
 comment on column K_DOC.doc_type_name_
-  is '¹«ÎÄÀàĞÍÃû³Æ';
+  is 'å…¬æ–‡ç±»å‹åç§°';
 comment on column K_DOC.owner_id_
-  is 'ËùÓĞÈËID';
+  is 'æ‰€æœ‰äººID';
 comment on column K_DOC.owner_name_
-  is 'ËùÓĞÈËÃû³Æ';
+  is 'æ‰€æœ‰äººåç§°';
 comment on column K_DOC.owner_org_id_
-  is 'ËùÓĞ»ú¹¹ID';
+  is 'æ‰€æœ‰æœºæ„ID';
 comment on column K_DOC.owner_org_name_
-  is 'ËùÓĞ»ú¹¹Ãû³Æ';
+  is 'æ‰€æœ‰æœºæ„åç§°';
 comment on column K_DOC.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column K_DOC.template_file_
-  is 'Ä£°æÎÄ¼ş';
+  is 'æ¨¡ç‰ˆæ–‡ä»¶';
 comment on column K_DOC.template_file_name_
-  is 'Ä£°æÎÄ¼şÃû³Æ';
+  is 'æ¨¡ç‰ˆæ–‡ä»¶åç§°';
 comment on column K_DOC.template_file_length_
-  is 'Ä£°æÎÄ¼ş³¤¶È';
+  is 'æ¨¡ç‰ˆæ–‡ä»¶é•¿åº¦';
 comment on column K_DOC.doc_file_
-  is '¹«ÎÄÎÄ¼ş';
+  is 'å…¬æ–‡æ–‡ä»¶';
 comment on column K_DOC.doc_file_name_
-  is '¹«ÎÄÎÄ¼şÃû³Æ';
+  is 'å…¬æ–‡æ–‡ä»¶åç§°';
 comment on column K_DOC.doc_file_length_
-  is '¹«ÎÄÎÄ¼ş³¤¶È';
+  is 'å…¬æ–‡æ–‡ä»¶é•¿åº¦';
 comment on column K_DOC.html_
   is 'HTML';
 comment on column K_DOC.bookmark_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column K_DOC.index_
-  is '¶¨Î»';
+  is 'å®šä½';
 comment on column K_DOC.using_template_
-  is 'Ê¹ÓÃÄ£°åÉú³É';
+  is 'ä½¿ç”¨æ¨¡æ¿ç”Ÿæˆ';
 comment on column K_DOC.proc_def_code_
-  is 'Á÷³Ì¶¨Òå±àÂë';
+  is 'æµç¨‹å®šä¹‰ç¼–ç ';
 comment on column K_DOC.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column K_DOC.proc_status_
-  is 'Á÷³Ì×´Ì¬(0²İ¸å/1ÉóÅúÖĞ/8ÉóÅú²µ»Ø/9ÉóÅúÍ¨¹ı)';
+  is 'æµç¨‹çŠ¶æ€(0è‰ç¨¿/1å®¡æ‰¹ä¸­/8å®¡æ‰¹é©³å›/9å®¡æ‰¹é€šè¿‡)';
 comment on column K_DOC.version_
-  is '°æ±¾';
+  is 'ç‰ˆæœ¬';
 comment on column K_DOC.doc_status_
-  is '¹«ÎÄ×´Ì¬(1ÉúĞ§/0·ÏÆú)';
+  is 'å…¬æ–‡çŠ¶æ€(1ç”Ÿæ•ˆ/0åºŸå¼ƒ)';
 comment on column K_DOC.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column K_DOC.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column K_DOC.effective_date_
-  is 'ÉúĞ§ÈÕÆÚ';
+  is 'ç”Ÿæ•ˆæ—¥æœŸ';
 comment on column K_DOC.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column K_DOC.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table K_DOC
   add constraint PK_DOC primary key (DOC_ID_);
 alter table K_DOC
@@ -1703,19 +1703,19 @@ create table K_DOC_DATA
 )
 ;
 comment on table K_DOC_DATA
-  is '¹«ÎÄÊı¾İ';
+  is 'å…¬æ–‡æ•°æ®';
 comment on column K_DOC_DATA.doc_data_id_
-  is '¹«ÎÄÊı¾İID';
+  is 'å…¬æ–‡æ•°æ®ID';
 comment on column K_DOC_DATA.doc_id_
-  is '¹«ÎÄID';
+  is 'å…¬æ–‡ID';
 comment on column K_DOC_DATA.bookmark_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column K_DOC_DATA.value_
-  is 'ÄÚÈİ';
+  is 'å†…å®¹';
 comment on column K_DOC_DATA.data_type_
-  is 'Êı¾İÀàĞÍ';
+  is 'æ•°æ®ç±»å‹';
 comment on column K_DOC_DATA.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 alter table K_DOC_DATA
   add constraint PK_DOC_DATA primary key (DOC_DATA_ID_);
 alter table K_DOC_DATA
@@ -1740,25 +1740,25 @@ create table K_DOC_DATA_HIS
 )
 ;
 comment on table K_DOC_DATA_HIS
-  is '¹«ÎÄÊı¾İÀúÊ·';
+  is 'å…¬æ–‡æ•°æ®å†å²';
 comment on column K_DOC_DATA_HIS.doc_data_his_id_
-  is '¹«ÎÄÊı¾İÀúÊ·ID';
+  is 'å…¬æ–‡æ•°æ®å†å²ID';
 comment on column K_DOC_DATA_HIS.doc_data_id_
-  is '¹«ÎÄÊı¾İID';
+  is 'å…¬æ–‡æ•°æ®ID';
 comment on column K_DOC_DATA_HIS.doc_id_
-  is '¹«ÎÄID';
+  is 'å…¬æ–‡ID';
 comment on column K_DOC_DATA_HIS.bookmark_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column K_DOC_DATA_HIS.value_
-  is 'ÄÚÈİ';
+  is 'å†…å®¹';
 comment on column K_DOC_DATA_HIS.data_type_
-  is 'Êı¾İÀàĞÍ';
+  is 'æ•°æ®ç±»å‹';
 comment on column K_DOC_DATA_HIS.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column K_DOC_DATA_HIS.version_
-  is '°æ±¾';
+  is 'ç‰ˆæœ¬';
 comment on column K_DOC_DATA_HIS.his_date_
-  is 'ÀúÊ·ÈÕÆÚ';
+  is 'å†å²æ—¥æœŸ';
 alter table K_DOC_DATA_HIS
   add constraint PK_DOC_DATA_HIS primary key (DOC_DATA_HIS_ID_);
 alter table K_DOC_DATA_HIS
@@ -1808,75 +1808,75 @@ create table K_DOC_HIS
 )
 ;
 comment on table K_DOC_HIS
-  is '¹«ÎÄÀúÊ·';
+  is 'å…¬æ–‡å†å²';
 comment on column K_DOC_HIS.doc_his_id_
-  is '¹«ÎÄÀúÊ·ID';
+  is 'å…¬æ–‡å†å²ID';
 comment on column K_DOC_HIS.doc_id_
-  is '¹«ÎÄID';
+  is 'å…¬æ–‡ID';
 comment on column K_DOC_HIS.doc_code_
-  is '¹«ÎÄ±àÂë';
+  is 'å…¬æ–‡ç¼–ç ';
 comment on column K_DOC_HIS.doc_name_
-  is '¹«ÎÄÃû³Æ';
+  is 'å…¬æ–‡åç§°';
 comment on column K_DOC_HIS.doc_type_name_
-  is '¹«ÎÄÀàĞÍÃû³Æ';
+  is 'å…¬æ–‡ç±»å‹åç§°';
 comment on column K_DOC_HIS.owner_id_
-  is 'ËùÓĞÈËID';
+  is 'æ‰€æœ‰äººID';
 comment on column K_DOC_HIS.owner_name_
-  is 'ËùÓĞÈËÃû³Æ';
+  is 'æ‰€æœ‰äººåç§°';
 comment on column K_DOC_HIS.owner_org_id_
-  is 'ËùÓĞ»ú¹¹ID';
+  is 'æ‰€æœ‰æœºæ„ID';
 comment on column K_DOC_HIS.owner_org_name_
-  is 'ËùÓĞ»ú¹¹Ãû³Æ';
+  is 'æ‰€æœ‰æœºæ„åç§°';
 comment on column K_DOC_HIS.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column K_DOC_HIS.template_file_
-  is 'Ä£°æÎÄ¼ş';
+  is 'æ¨¡ç‰ˆæ–‡ä»¶';
 comment on column K_DOC_HIS.template_file_name_
-  is 'Ä£°æÎÄ¼şÃû³Æ';
+  is 'æ¨¡ç‰ˆæ–‡ä»¶åç§°';
 comment on column K_DOC_HIS.template_file_length_
-  is 'Ä£°æÎÄ¼ş³¤¶È';
+  is 'æ¨¡ç‰ˆæ–‡ä»¶é•¿åº¦';
 comment on column K_DOC_HIS.doc_file_
-  is '¹«ÎÄÎÄ¼ş';
+  is 'å…¬æ–‡æ–‡ä»¶';
 comment on column K_DOC_HIS.doc_file_name_
-  is '¹«ÎÄÎÄ¼şÃû³Æ';
+  is 'å…¬æ–‡æ–‡ä»¶åç§°';
 comment on column K_DOC_HIS.doc_file_length_
-  is '¹«ÎÄÎÄ¼ş³¤¶È';
+  is 'å…¬æ–‡æ–‡ä»¶é•¿åº¦';
 comment on column K_DOC_HIS.html_
   is 'HTML';
 comment on column K_DOC_HIS.bookmark_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column K_DOC_HIS.index_
-  is '¶¨Î»';
+  is 'å®šä½';
 comment on column K_DOC_HIS.using_template_
-  is 'Ê¹ÓÃÄ£°åÉú³É';
+  is 'ä½¿ç”¨æ¨¡æ¿ç”Ÿæˆ';
 comment on column K_DOC_HIS.proc_def_code_
-  is 'Á÷³Ì¶¨Òå±àÂë';
+  is 'æµç¨‹å®šä¹‰ç¼–ç ';
 comment on column K_DOC_HIS.proc_id_
-  is 'Á÷³ÌID';
+  is 'æµç¨‹ID';
 comment on column K_DOC_HIS.proc_status_
-  is 'Á÷³Ì×´Ì¬(0²İ¸å/1ÉóÅúÖĞ/8ÉóÅú²µ»Ø/9ÉóÅúÍ¨¹ı)';
+  is 'æµç¨‹çŠ¶æ€(0è‰ç¨¿/1å®¡æ‰¹ä¸­/8å®¡æ‰¹é©³å›/9å®¡æ‰¹é€šè¿‡)';
 comment on column K_DOC_HIS.version_
-  is '°æ±¾';
+  is 'ç‰ˆæœ¬';
 comment on column K_DOC_HIS.doc_status_
-  is '¹«ÎÄ×´Ì¬(1ÉúĞ§/0·ÏÆú)';
+  is 'å…¬æ–‡çŠ¶æ€(1ç”Ÿæ•ˆ/0åºŸå¼ƒ)';
 comment on column K_DOC_HIS.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column K_DOC_HIS.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column K_DOC_HIS.effective_date_
-  is 'ÉúĞ§ÈÕÆÚ';
+  is 'ç”Ÿæ•ˆæ—¥æœŸ';
 comment on column K_DOC_HIS.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column K_DOC_HIS.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 comment on column K_DOC_HIS.his_date_
-  is 'ÀúÊ·ÈÕÆÚ';
+  is 'å†å²æ—¥æœŸ';
 comment on column K_DOC_HIS.doc_file_diff_
-  is '¹«ÎÄÎÄ¼şÇø±ğ';
+  is 'å…¬æ–‡æ–‡ä»¶åŒºåˆ«';
 comment on column K_DOC_HIS.doc_data_diff_
-  is '¹«ÎÄÊı¾İÇø±ğ';
+  is 'å…¬æ–‡æ•°æ®åŒºåˆ«';
 comment on column K_DOC_HIS.doc_rider_diff_
-  is '¹«ÎÄ¸½¼şÇø±ğ';
+  is 'å…¬æ–‡é™„ä»¶åŒºåˆ«';
 alter table K_DOC_HIS
   add constraint PK_DOC_HIS primary key (DOC_HIS_ID_);
 alter table K_DOC_HIS
@@ -1901,27 +1901,27 @@ create table K_DOC_RIDER
 )
 ;
 comment on table K_DOC_RIDER
-  is '¹«ÎÄ¸½¼ş';
+  is 'å…¬æ–‡é™„ä»¶';
 comment on column K_DOC_RIDER.doc_rider_id_
-  is '¹«ÎÄ¸½¼şID';
+  is 'å…¬æ–‡é™„ä»¶ID';
 comment on column K_DOC_RIDER.doc_id_
-  is '¹«ÎÄID';
+  is 'å…¬æ–‡ID';
 comment on column K_DOC_RIDER.doc_rider_file_
-  is '¹«ÎÄ¸½¼şÎÄ¼ş';
+  is 'å…¬æ–‡é™„ä»¶æ–‡ä»¶';
 comment on column K_DOC_RIDER.doc_rider_file_name_
-  is '¹«ÎÄ¸½¼şÎÄ¼şÃû³Æ';
+  is 'å…¬æ–‡é™„ä»¶æ–‡ä»¶åç§°';
 comment on column K_DOC_RIDER.doc_rider_file_length_
-  is '¹«ÎÄ¸½¼şÎÄ¼ş³¤¶È';
+  is 'å…¬æ–‡é™„ä»¶æ–‡ä»¶é•¿åº¦';
 comment on column K_DOC_RIDER.md5_
   is 'MD5';
 comment on column K_DOC_RIDER.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column K_DOC_RIDER.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column K_DOC_RIDER.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column K_DOC_RIDER.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table K_DOC_RIDER
   add constraint PK_DOC_RIDER primary key (DOC_RIDER_ID_);
 alter table K_DOC_RIDER
@@ -1950,33 +1950,33 @@ create table K_DOC_RIDER_HIS
 )
 ;
 comment on table K_DOC_RIDER_HIS
-  is '¹«ÎÄ¸½¼şÀúÊ·';
+  is 'å…¬æ–‡é™„ä»¶å†å²';
 comment on column K_DOC_RIDER_HIS.doc_rider_his_id_
-  is '¹«ÎÄ¸½¼şÀúÊ·ID';
+  is 'å…¬æ–‡é™„ä»¶å†å²ID';
 comment on column K_DOC_RIDER_HIS.doc_rider_id_
-  is '¹«ÎÄ¸½¼şID';
+  is 'å…¬æ–‡é™„ä»¶ID';
 comment on column K_DOC_RIDER_HIS.doc_id_
-  is '¹«ÎÄID';
+  is 'å…¬æ–‡ID';
 comment on column K_DOC_RIDER_HIS.doc_rider_file_
-  is '¹«ÎÄ¸½¼şÎÄ¼ş';
+  is 'å…¬æ–‡é™„ä»¶æ–‡ä»¶';
 comment on column K_DOC_RIDER_HIS.doc_rider_file_name_
-  is '¹«ÎÄ¸½¼şÎÄ¼şÃû³Æ';
+  is 'å…¬æ–‡é™„ä»¶æ–‡ä»¶åç§°';
 comment on column K_DOC_RIDER_HIS.doc_rider_file_length_
-  is '¹«ÎÄ¸½¼şÎÄ¼ş³¤¶È';
+  is 'å…¬æ–‡é™„ä»¶æ–‡ä»¶é•¿åº¦';
 comment on column K_DOC_RIDER_HIS.md5_
   is 'MD5';
 comment on column K_DOC_RIDER_HIS.version_
-  is '°æ±¾';
+  is 'ç‰ˆæœ¬';
 comment on column K_DOC_RIDER_HIS.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column K_DOC_RIDER_HIS.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column K_DOC_RIDER_HIS.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column K_DOC_RIDER_HIS.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 comment on column K_DOC_RIDER_HIS.his_date_
-  is 'ÀúÊ·ÈÕÆÚ';
+  is 'å†å²æ—¥æœŸ';
 create index IX_CONTRACT_RIDER_HIS_CONTRACT on K_DOC_RIDER_HIS (DOC_ID_);
 alter table K_DOC_RIDER_HIS
   add constraint PK_DOC_RIDER_HIS primary key (DOC_RIDER_HIS_ID_);
@@ -2012,41 +2012,41 @@ create table K_DOC_TYPE
 )
 ;
 comment on table K_DOC_TYPE
-  is '¹«ÎÄÀàĞÍ';
+  is 'å…¬æ–‡ç±»å‹';
 comment on column K_DOC_TYPE.doc_type_id_
-  is '¹«ÎÄÀàĞÍID';
+  is 'å…¬æ–‡ç±»å‹ID';
 comment on column K_DOC_TYPE.doc_type_name_
-  is '¹«ÎÄÀàĞÍÃû³Æ';
+  is 'å…¬æ–‡ç±»å‹åç§°';
 comment on column K_DOC_TYPE.template_file_
-  is 'Ä£°åÎÄ¼ş';
+  is 'æ¨¡æ¿æ–‡ä»¶';
 comment on column K_DOC_TYPE.template_file_name_
-  is 'Ä£°åÎÄ¼şÃû³Æ';
+  is 'æ¨¡æ¿æ–‡ä»¶åç§°';
 comment on column K_DOC_TYPE.template_file_length_
-  is 'Ä£°åÎÄ¼ş³¤¶È';
+  is 'æ¨¡æ¿æ–‡ä»¶é•¿åº¦';
 comment on column K_DOC_TYPE.html_
   is 'HTML';
 comment on column K_DOC_TYPE.bookmark_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column K_DOC_TYPE.index_
-  is '¶¨Î»';
+  is 'å®šä½';
 comment on column K_DOC_TYPE.using_template_
-  is 'Ê¹ÓÃÄ£°åÉú³É¹«ÎÄ';
+  is 'ä½¿ç”¨æ¨¡æ¿ç”Ÿæˆå…¬æ–‡';
 comment on column K_DOC_TYPE.proc_def_code_
-  is 'Á÷³Ì¶¨Òå±àÂë';
+  is 'æµç¨‹å®šä¹‰ç¼–ç ';
 comment on column K_DOC_TYPE.desc_
-  is 'ÃèÊö';
+  is 'æè¿°';
 comment on column K_DOC_TYPE.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column K_DOC_TYPE.doc_type_status_
-  is '¹«ÎÄÀàĞÍ×´Ì¬';
+  is 'å…¬æ–‡ç±»å‹çŠ¶æ€';
 comment on column K_DOC_TYPE.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column K_DOC_TYPE.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column K_DOC_TYPE.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column K_DOC_TYPE.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table K_DOC_TYPE
   add constraint PK_DOC_TYPE primary key (DOC_TYPE_ID_);
 alter table K_DOC_TYPE
@@ -2073,31 +2073,31 @@ create table OM_CODE
 )
 ;
 comment on table OM_CODE
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column OM_CODE.code_id_
-  is '´úÂëID';
+  is 'ä»£ç ID';
 comment on column OM_CODE.parent_code_id_
-  is 'ÉÏ¼¶´úÂëID';
+  is 'ä¸Šçº§ä»£ç ID';
 comment on column OM_CODE.category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_CODE.code_
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column OM_CODE.name_
-  is 'Ãû³Æ';
+  is 'åç§°';
 comment on column OM_CODE.ext_attr_1_
-  is 'À©Õ¹ÊôĞÔ1';
+  is 'æ‰©å±•å±æ€§1';
 comment on column OM_CODE.ext_attr_2_
-  is 'À©Õ¹ÊôĞÔ2';
+  is 'æ‰©å±•å±æ€§2';
 comment on column OM_CODE.ext_attr_3_
-  is 'À©Õ¹ÊôĞÔ3';
+  is 'æ‰©å±•å±æ€§3';
 comment on column OM_CODE.ext_attr_4_
-  is 'À©Õ¹ÊôĞÔ4';
+  is 'æ‰©å±•å±æ€§4';
 comment on column OM_CODE.ext_attr_5_
-  is 'À©Õ¹ÊôĞÔ5';
+  is 'æ‰©å±•å±æ€§5';
 comment on column OM_CODE.ext_attr_6_
-  is 'À©Õ¹ÊôĞÔ6';
+  is 'æ‰©å±•å±æ€§6';
 comment on column OM_CODE.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 alter table OM_CODE
   add constraint PK_OM_CODE primary key (CODE_ID_);
 alter table OM_CODE
@@ -2127,31 +2127,31 @@ create table OM_ORGN_SET
 )
 ;
 comment on table OM_ORGN_SET
-  is '×éÖ¯¼Ü¹¹Ì×';
+  is 'ç»„ç»‡æ¶æ„å¥—';
 comment on column OM_ORGN_SET.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_ORGN_SET.parent_orgn_set_id_
-  is 'ÉÏ¼¶×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ä¸Šçº§ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_ORGN_SET.orgn_set_code_
-  is '×éÖ¯¼Ü¹¹Ì×±àÂë';
+  is 'ç»„ç»‡æ¶æ„å¥—ç¼–ç ';
 comment on column OM_ORGN_SET.orgn_set_name_
-  is '×éÖ¯¼Ü¹¹Ì×Ãû³Æ';
+  is 'ç»„ç»‡æ¶æ„å¥—åç§°';
 comment on column OM_ORGN_SET.allow_sync_
-  is 'ÔÊĞíÍ¬²½';
+  is 'å…è®¸åŒæ­¥';
 comment on column OM_ORGN_SET.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_ORGN_SET.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_ORGN_SET.orgn_set_status_
-  is '×éÖ¯¼Ü¹¹Ì××´Ì¬';
+  is 'ç»„ç»‡æ¶æ„å¥—çŠ¶æ€';
 comment on column OM_ORGN_SET.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_ORGN_SET.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_ORGN_SET.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_ORGN_SET.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table OM_ORGN_SET
   add constraint PK_OM_ORGN_SET primary key (ORGN_SET_ID_);
 alter table OM_ORGN_SET
@@ -2190,49 +2190,49 @@ create table OM_DUTY
 )
 ;
 comment on table OM_DUTY
-  is 'Ö°Îñ';
+  is 'èŒåŠ¡';
 comment on column OM_DUTY.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_DUTY.duty_id_
-  is 'Ö°ÎñID';
+  is 'èŒåŠ¡ID';
 comment on column OM_DUTY.duty_code_
-  is 'Ö°Îñ±àÂë';
+  is 'èŒåŠ¡ç¼–ç ';
 comment on column OM_DUTY.duty_name_
-  is 'Ö°ÎñÃû³Æ';
+  is 'èŒåŠ¡åç§°';
 comment on column OM_DUTY.duty_category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_DUTY.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_DUTY.duty_tag_
-  is 'Ö°Îñ±êÇ©';
+  is 'èŒåŠ¡æ ‡ç­¾';
 comment on column OM_DUTY.duty_ext_attr_1_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ1';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§1';
 comment on column OM_DUTY.duty_ext_attr_2_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ2';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§2';
 comment on column OM_DUTY.duty_ext_attr_3_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ3';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§3';
 comment on column OM_DUTY.duty_ext_attr_4_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ4';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§4';
 comment on column OM_DUTY.duty_ext_attr_5_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ5';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§5';
 comment on column OM_DUTY.duty_ext_attr_6_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ6';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§6';
 comment on column OM_DUTY.duty_ext_attr_7_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ7';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§7';
 comment on column OM_DUTY.duty_ext_attr_8_
-  is 'Ö°ÎñÀ©Õ¹ÊôĞÔ8';
+  is 'èŒåŠ¡æ‰©å±•å±æ€§8';
 comment on column OM_DUTY.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_DUTY.duty_status_
-  is 'Ö°Îñ×´Ì¬';
+  is 'èŒåŠ¡çŠ¶æ€';
 comment on column OM_DUTY.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_DUTY.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_DUTY.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_DUTY.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table OM_DUTY
   add constraint OK_OM_DUTY primary key (ORGN_SET_ID_, DUTY_ID_);
 alter table OM_DUTY
@@ -2274,55 +2274,55 @@ create table OM_ORG
 )
 ;
 comment on table OM_ORG
-  is '»ú¹¹';
+  is 'æœºæ„';
 comment on column OM_ORG.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_ORG.org_id_
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column OM_ORG.parent_org_id_
-  is 'ÉÏ¼¶»ú¹¹ID';
+  is 'ä¸Šçº§æœºæ„ID';
 comment on column OM_ORG.org_code_
-  is '»ú¹¹±àÂë';
+  is 'æœºæ„ç¼–ç ';
 comment on column OM_ORG.org_name_
-  is '»ú¹¹Ãû³Æ';
+  is 'æœºæ„åç§°';
 comment on column OM_ORG.org_abbr_name_
-  is '»ú¹¹¼ò³Æ';
+  is 'æœºæ„ç®€ç§°';
 comment on column OM_ORG.org_type_
-  is '»ú¹¹ÀàĞÍ';
+  is 'æœºæ„ç±»å‹';
 comment on column OM_ORG.org_category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_ORG.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_ORG.org_tag_
-  is '»ú¹¹±êÇ©';
+  is 'æœºæ„æ ‡ç­¾';
 comment on column OM_ORG.org_ext_attr_1_
-  is '»ú¹¹À©Õ¹ÊôĞÔ1';
+  is 'æœºæ„æ‰©å±•å±æ€§1';
 comment on column OM_ORG.org_ext_attr_2_
-  is '»ú¹¹À©Õ¹ÊôĞÔ2';
+  is 'æœºæ„æ‰©å±•å±æ€§2';
 comment on column OM_ORG.org_ext_attr_3_
-  is '»ú¹¹À©Õ¹ÊôĞÔ3';
+  is 'æœºæ„æ‰©å±•å±æ€§3';
 comment on column OM_ORG.org_ext_attr_4_
-  is '»ú¹¹À©Õ¹ÊôĞÔ4';
+  is 'æœºæ„æ‰©å±•å±æ€§4';
 comment on column OM_ORG.org_ext_attr_5_
-  is '»ú¹¹À©Õ¹ÊôĞÔ5';
+  is 'æœºæ„æ‰©å±•å±æ€§5';
 comment on column OM_ORG.org_ext_attr_6_
-  is '»ú¹¹À©Õ¹ÊôĞÔ6';
+  is 'æœºæ„æ‰©å±•å±æ€§6';
 comment on column OM_ORG.org_ext_attr_7_
-  is '»ú¹¹À©Õ¹ÊôĞÔ7';
+  is 'æœºæ„æ‰©å±•å±æ€§7';
 comment on column OM_ORG.org_ext_attr_8_
-  is '»ú¹¹À©Õ¹ÊôĞÔ8';
+  is 'æœºæ„æ‰©å±•å±æ€§8';
 comment on column OM_ORG.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_ORG.org_status_
-  is '»ú¹¹×´Ì¬';
+  is 'æœºæ„çŠ¶æ€';
 comment on column OM_ORG.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_ORG.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_ORG.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_ORG.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 create index IX_OM_ORG_ORDER on OM_ORG (ORDER_);
 alter table OM_ORG
   add constraint PK_OM_ORG primary key (ORGN_SET_ID_, ORG_ID_);
@@ -2376,71 +2376,71 @@ create table OM_EMP
 )
 ;
 comment on table OM_EMP
-  is 'ÈËÔ±';
+  is 'äººå‘˜';
 comment on column OM_EMP.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_EMP.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column OM_EMP.org_id_
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column OM_EMP.emp_code_
-  is 'ÈËÔ±±àÂë';
+  is 'äººå‘˜ç¼–ç ';
 comment on column OM_EMP.emp_name_
-  is 'ÈËÔ±Ãû³Æ';
+  is 'äººå‘˜åç§°';
 comment on column OM_EMP.password_
-  is 'ÃÜÂë';
+  is 'å¯†ç ';
 comment on column OM_EMP.password_reset_req_
-  is 'ÃÜÂëÖØÖÃ';
+  is 'å¯†ç é‡ç½®';
 comment on column OM_EMP.party_
-  is 'ÕşÖÎÃæÃ²';
+  is 'æ”¿æ²»é¢è²Œ';
 comment on column OM_EMP.emp_level_
-  is 'Ö°¼¶';
+  is 'èŒçº§';
 comment on column OM_EMP.gender_
-  is 'ĞÔ±ğ';
+  is 'æ€§åˆ«';
 comment on column OM_EMP.birth_date_
-  is '³öÉúÈÕÆÚ';
+  is 'å‡ºç”Ÿæ—¥æœŸ';
 comment on column OM_EMP.tel_
-  is 'µç»°';
+  is 'ç”µè¯';
 comment on column OM_EMP.email_
-  is 'µç×ÓÓÊÏä';
+  is 'ç”µå­é‚®ç®±';
 comment on column OM_EMP.in_date_
-  is 'ÈëÖ°ÈÕÆÚ';
+  is 'å…¥èŒæ—¥æœŸ';
 comment on column OM_EMP.out_date_
-  is 'ÀëÖ°ÈÕÆÚ';
+  is 'ç¦»èŒæ—¥æœŸ';
 comment on column OM_EMP.emp_category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_EMP.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_EMP.emp_tag_
-  is 'ÈËÔ±±êÇ©';
+  is 'äººå‘˜æ ‡ç­¾';
 comment on column OM_EMP.emp_ext_attr_1_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ1';
+  is 'äººå‘˜æ‰©å±•å±æ€§1';
 comment on column OM_EMP.emp_ext_attr_2_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ2';
+  is 'äººå‘˜æ‰©å±•å±æ€§2';
 comment on column OM_EMP.emp_ext_attr_3_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ3';
+  is 'äººå‘˜æ‰©å±•å±æ€§3';
 comment on column OM_EMP.emp_ext_attr_4_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ4';
+  is 'äººå‘˜æ‰©å±•å±æ€§4';
 comment on column OM_EMP.emp_ext_attr_5_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ5';
+  is 'äººå‘˜æ‰©å±•å±æ€§5';
 comment on column OM_EMP.emp_ext_attr_6_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ6';
+  is 'äººå‘˜æ‰©å±•å±æ€§6';
 comment on column OM_EMP.emp_ext_attr_7_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ7';
+  is 'äººå‘˜æ‰©å±•å±æ€§7';
 comment on column OM_EMP.emp_ext_attr_8_
-  is 'ÈËÔ±À©Õ¹ÊôĞÔ8';
+  is 'äººå‘˜æ‰©å±•å±æ€§8';
 comment on column OM_EMP.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_EMP.emp_status_
-  is 'ÈËÔ±×´Ì¬';
+  is 'äººå‘˜çŠ¶æ€';
 comment on column OM_EMP.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_EMP.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column OM_EMP.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_EMP.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 create index IX_OM_EMP_ORDER on OM_EMP (ORDER_);
 alter table OM_EMP
   add constraint PK_OM_EMP primary key (ORGN_SET_ID_, EMP_ID_);
@@ -2484,51 +2484,51 @@ create table OM_EMP_RELATION
 )
 ;
 comment on table OM_EMP_RELATION
-  is 'ÈËÔ±¹ØÏµ';
+  is 'äººå‘˜å…³ç³»';
 comment on column OM_EMP_RELATION.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_EMP_RELATION.emp_relation_id_
-  is 'ÈËÔ±¹ØÏµID';
+  is 'äººå‘˜å…³ç³»ID';
 comment on column OM_EMP_RELATION.upper_emp_id_
-  is 'ÉÏ¼¶ÈËÔ±ID';
+  is 'ä¸Šçº§äººå‘˜ID';
 comment on column OM_EMP_RELATION.lower_emp_id_
-  is 'ÏÂ¼¶ÈËÔ±ID';
+  is 'ä¸‹çº§äººå‘˜ID';
 comment on column OM_EMP_RELATION.emp_relation_
-  is 'ÈËÔ±¹ØÏµ';
+  is 'äººå‘˜å…³ç³»';
 comment on column OM_EMP_RELATION.emp_relation_category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_EMP_RELATION.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_EMP_RELATION.emp_relation_tag_
-  is 'ÈËÔ±¹ØÏµ±êÇ©';
+  is 'äººå‘˜å…³ç³»æ ‡ç­¾';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_1_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ1';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§1';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_2_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ2';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§2';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_3_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ3';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§3';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_4_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ4';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§4';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_5_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ5';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§5';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_6_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ6';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§6';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_7_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ7';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§7';
 comment on column OM_EMP_RELATION.emp_relation_ext_attr_8_
-  is 'ÈËÔ±¹ØÏµÀ©Õ¹ÊôĞÔ8';
+  is 'äººå‘˜å…³ç³»æ‰©å±•å±æ€§8';
 comment on column OM_EMP_RELATION.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_EMP_RELATION.emp_relation_status_
-  is 'ÈËÔ±¹ØÏµ×´Ì¬';
+  is 'äººå‘˜å…³ç³»çŠ¶æ€';
 comment on column OM_EMP_RELATION.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_EMP_RELATION.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_EMP_RELATION.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_EMP_RELATION.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table OM_EMP_RELATION
   add constraint PK_OM_EMP_RELATION primary key (ORGN_SET_ID_, EMP_RELATION_ID_);
 alter table OM_EMP_RELATION
@@ -2569,41 +2569,41 @@ create table OM_LOG
 )
 ;
 comment on table OM_LOG
-  is 'ÈÕÖ¾';
+  is 'æ—¥å¿—';
 comment on column OM_LOG.log_id_
-  is 'ÈÕÖ¾ID';
+  is 'æ—¥å¿—ID';
 comment on column OM_LOG.category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_LOG.ip_
   is 'IP';
 comment on column OM_LOG.user_agent_
-  is 'ÓÃ»§´úÀí';
+  is 'ç”¨æˆ·ä»£ç†';
 comment on column OM_LOG.url_
-  is 'µ÷ÓÃURL';
+  is 'è°ƒç”¨URL';
 comment on column OM_LOG.action_
-  is 'µ÷ÓÃ¿ØÖÆ²ã½Ó¿Ú';
+  is 'è°ƒç”¨æ§åˆ¶å±‚æ¥å£';
 comment on column OM_LOG.parameter_map_
-  is 'µ÷ÓÃ²ÎÊı';
+  is 'è°ƒç”¨å‚æ•°';
 comment on column OM_LOG.business_key_
-  is 'ÒµÎñÖ÷¼ü';
+  is 'ä¸šåŠ¡ä¸»é”®';
 comment on column OM_LOG.error_
-  is '´íÎó';
+  is 'é”™è¯¯';
 comment on column OM_LOG.message_
-  is 'ĞÅÏ¢';
+  is 'ä¿¡æ¯';
 comment on column OM_LOG.org_id_
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column OM_LOG.org_name_
-  is '»ú¹¹Ãû³Æ';
+  is 'æœºæ„åç§°';
 comment on column OM_LOG.posi_id_
-  is '¸ÚÎ»ID';
+  is 'å²—ä½ID';
 comment on column OM_LOG.posi_name_
-  is '¸ÚÎ»Ãû³Æ';
+  is 'å²—ä½åç§°';
 comment on column OM_LOG.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column OM_LOG.emp_name_
-  is 'ÈËÔ±Ãû³Æ';
+  is 'äººå‘˜åç§°';
 comment on column OM_LOG.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 alter table OM_LOG
   add constraint PK_OM_LOG primary key (LOG_ID_);
 
@@ -2630,35 +2630,35 @@ create table OM_MAIN_SERVER
 )
 ;
 comment on table OM_MAIN_SERVER
-  is 'Ö÷·şÎñÆ÷';
+  is 'ä¸»æœåŠ¡å™¨';
 comment on column OM_MAIN_SERVER.main_server_id_
-  is 'Ö÷·şÎñÆ÷ID';
+  is 'ä¸»æœåŠ¡å™¨ID';
 comment on column OM_MAIN_SERVER.main_server_name_
-  is 'Ö÷·şÎñÆ÷Ãû³Æ';
+  is 'ä¸»æœåŠ¡å™¨åç§°';
 comment on column OM_MAIN_SERVER.driver_class_name_
-  is 'Çı¶¯ÀàÃû³Æ';
+  is 'é©±åŠ¨ç±»åç§°';
 comment on column OM_MAIN_SERVER.url_
-  is 'Á´½Ó';
+  is 'é“¾æ¥';
 comment on column OM_MAIN_SERVER.username_
-  is 'ÓÃ»§Ãû';
+  is 'ç”¨æˆ·å';
 comment on column OM_MAIN_SERVER.password_
-  is 'ÃÜÂë';
+  is 'å¯†ç ';
 comment on column OM_MAIN_SERVER.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_MAIN_SERVER.last_sync_date_
-  is 'ÉÏ´ÎÍ¬²½ÈÕÆÚ';
+  is 'ä¸Šæ¬¡åŒæ­¥æ—¥æœŸ';
 comment on column OM_MAIN_SERVER.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_MAIN_SERVER.main_server_status_
-  is 'Ö÷·şÎñÆ÷×´Ì¬';
+  is 'ä¸»æœåŠ¡å™¨çŠ¶æ€';
 comment on column OM_MAIN_SERVER.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_MAIN_SERVER.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_MAIN_SERVER.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_MAIN_SERVER.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table OM_MAIN_SERVER
   add constraint PK_OM_MAIN_SERVER primary key (MAIN_SERVER_ID_);
 alter table OM_MAIN_SERVER
@@ -2687,35 +2687,35 @@ create table OM_MIRROR_SERVER
 )
 ;
 comment on table OM_MIRROR_SERVER
-  is '¾µÏñ·şÎñÆ÷';
+  is 'é•œåƒæœåŠ¡å™¨';
 comment on column OM_MIRROR_SERVER.mirror_server_id_
-  is '¾µÏñ·şÎñÆ÷ID';
+  is 'é•œåƒæœåŠ¡å™¨ID';
 comment on column OM_MIRROR_SERVER.mirror_server_name_
-  is '¾µÏñ·şÎñÆ÷Ãû³Æ';
+  is 'é•œåƒæœåŠ¡å™¨åç§°';
 comment on column OM_MIRROR_SERVER.driver_class_name_
-  is 'Çı¶¯ÀàÃû³Æ';
+  is 'é©±åŠ¨ç±»åç§°';
 comment on column OM_MIRROR_SERVER.url_
-  is 'Á´½Ó';
+  is 'é“¾æ¥';
 comment on column OM_MIRROR_SERVER.username_
-  is 'ÓÃ»§Ãû';
+  is 'ç”¨æˆ·å';
 comment on column OM_MIRROR_SERVER.password_
-  is 'ÃÜÂë';
+  is 'å¯†ç ';
 comment on column OM_MIRROR_SERVER.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_MIRROR_SERVER.last_sync_date_
-  is 'ÉÏ´ÎÍ¬²½ÈÕÆÚ';
+  is 'ä¸Šæ¬¡åŒæ­¥æ—¥æœŸ';
 comment on column OM_MIRROR_SERVER.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_MIRROR_SERVER.mirror_server_status_
-  is '¾µÏñ·şÎñÆ÷×´Ì¬';
+  is 'é•œåƒæœåŠ¡å™¨çŠ¶æ€';
 comment on column OM_MIRROR_SERVER.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_MIRROR_SERVER.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_MIRROR_SERVER.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_MIRROR_SERVER.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table OM_MIRROR_SERVER
   add constraint PK_OM_MIRROR_SERVER primary key (MIRROR_SERVER_ID_);
 alter table OM_MIRROR_SERVER
@@ -2754,55 +2754,55 @@ create table OM_POSI
 )
 ;
 comment on table OM_POSI
-  is '¸ÚÎ»';
+  is 'å²—ä½';
 comment on column OM_POSI.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_POSI.posi_id_
-  is '¸ÚÎ»ID';
+  is 'å²—ä½ID';
 comment on column OM_POSI.org_id_
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column OM_POSI.duty_id_
-  is 'Ö°ÎñID';
+  is 'èŒåŠ¡ID';
 comment on column OM_POSI.posi_code_
-  is '¸ÚÎ»±àÂë';
+  is 'å²—ä½ç¼–ç ';
 comment on column OM_POSI.posi_name_
-  is '¸ÚÎ»Ãû³Æ';
+  is 'å²—ä½åç§°';
 comment on column OM_POSI.org_leader_type_
-  is '»ú¹¹Áìµ¼ÀàĞÍ';
+  is 'æœºæ„é¢†å¯¼ç±»å‹';
 comment on column OM_POSI.posi_category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_POSI.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_POSI.posi_tag_
-  is '¸ÚÎ»±êÇ©';
+  is 'å²—ä½æ ‡ç­¾';
 comment on column OM_POSI.posi_ext_attr_1_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ1';
+  is 'å²—ä½æ‰©å±•å±æ€§1';
 comment on column OM_POSI.posi_ext_attr_2_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ2';
+  is 'å²—ä½æ‰©å±•å±æ€§2';
 comment on column OM_POSI.posi_ext_attr_3_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ3';
+  is 'å²—ä½æ‰©å±•å±æ€§3';
 comment on column OM_POSI.posi_ext_attr_4_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ4';
+  is 'å²—ä½æ‰©å±•å±æ€§4';
 comment on column OM_POSI.posi_ext_attr_5_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ5';
+  is 'å²—ä½æ‰©å±•å±æ€§5';
 comment on column OM_POSI.posi_ext_attr_6_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ6';
+  is 'å²—ä½æ‰©å±•å±æ€§6';
 comment on column OM_POSI.posi_ext_attr_7_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ7';
+  is 'å²—ä½æ‰©å±•å±æ€§7';
 comment on column OM_POSI.posi_ext_attr_8_
-  is '¸ÚÎ»À©Õ¹ÊôĞÔ8';
+  is 'å²—ä½æ‰©å±•å±æ€§8';
 comment on column OM_POSI.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_POSI.posi_status_
-  is '¸ÚÎ»×´Ì¬';
+  is 'å²—ä½çŠ¶æ€';
 comment on column OM_POSI.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_POSI.update_date_
-  is 'ĞŞ¸ÄÈÕÆÚ';
+  is 'ä¿®æ”¹æ—¥æœŸ';
 comment on column OM_POSI.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_POSI.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 alter table OM_POSI
   add constraint PK_OM_POSI primary key (ORGN_SET_ID_, POSI_ID_);
 alter table OM_POSI
@@ -2850,51 +2850,51 @@ create table OM_POSI_EMP
 )
 ;
 comment on table OM_POSI_EMP
-  is '¸ÚÎ»ÈËÔ±';
+  is 'å²—ä½äººå‘˜';
 comment on column OM_POSI_EMP.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_POSI_EMP.posi_emp_id_
-  is '¸ÚÎ»ÈËÔ±ID';
+  is 'å²—ä½äººå‘˜ID';
 comment on column OM_POSI_EMP.posi_id_
-  is '¸ÚÎ»ID';
+  is 'å²—ä½ID';
 comment on column OM_POSI_EMP.emp_id_
-  is 'ÈËÔ±ID';
+  is 'äººå‘˜ID';
 comment on column OM_POSI_EMP.main_
-  is 'Ö÷¸ÚÎ»';
+  is 'ä¸»å²—ä½';
 comment on column OM_POSI_EMP.posi_emp_category_
-  is '·ÖÀà';
+  is 'åˆ†ç±»';
 comment on column OM_POSI_EMP.memo_
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column OM_POSI_EMP.posi_emp_tag_
-  is '¸ÚÎ»ÈËÔ±±êÇ©';
+  is 'å²—ä½äººå‘˜æ ‡ç­¾';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_1_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ1';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§1';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_2_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ2';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§2';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_3_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ3';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§3';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_4_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ4';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§4';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_5_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ5';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§5';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_6_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ6';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§6';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_7_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ7';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§7';
 comment on column OM_POSI_EMP.posi_emp_ext_attr_8_
-  is '¸ÚÎ»ÈËÔ±À©Õ¹ÊôĞÔ8';
+  is 'å²—ä½äººå‘˜æ‰©å±•å±æ€§8';
 comment on column OM_POSI_EMP.order_
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column OM_POSI_EMP.posi_emp_status_
-  is '¸ÚÎ»ÈËÔ±×´Ì¬';
+  is 'å²—ä½äººå‘˜çŠ¶æ€';
 comment on column OM_POSI_EMP.creation_date_
-  is '´´½¨ÈÕÆÚ';
+  is 'åˆ›å»ºæ—¥æœŸ';
 comment on column OM_POSI_EMP.update_date_
-  is '¸üĞÂÈÕÆÚ';
+  is 'æ›´æ–°æ—¥æœŸ';
 comment on column OM_POSI_EMP.operator_id_
-  is '²Ù×÷ÈËÔ±ID';
+  is 'æ“ä½œäººå‘˜ID';
 comment on column OM_POSI_EMP.operator_name_
-  is '²Ù×÷ÈËÔ±Ãû³Æ';
+  is 'æ“ä½œäººå‘˜åç§°';
 create index IX_POSI_EMP_EMP on OM_POSI_EMP (EMP_ID_);
 create index IX_POSI_EMP_POSI on OM_POSI_EMP (POSI_ID_);
 alter table OM_POSI_EMP
@@ -2925,17 +2925,17 @@ create table OM_TAG
 )
 ;
 comment on table OM_TAG
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 comment on column OM_TAG.orgn_set_id_
-  is '×éÖ¯¼Ü¹¹Ì×ID';
+  is 'ç»„ç»‡æ¶æ„å¥—ID';
 comment on column OM_TAG.tag_id_
-  is '±êÇ©ID';
+  is 'æ ‡ç­¾ID';
 comment on column OM_TAG.obj_id_
-  is '¶ÔÏóID';
+  is 'å¯¹è±¡ID';
 comment on column OM_TAG.obj_type_
-  is '¶ÔÏóÀàĞÍ';
+  is 'å¯¹è±¡ç±»å‹';
 comment on column OM_TAG.tag_
-  is '±êÇ©';
+  is 'æ ‡ç­¾';
 alter table OM_TAG
   add constraint PK_OM_TAG primary key (ORGN_SET_ID_, TAG_ID_);
 alter table OM_TAG
