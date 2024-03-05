@@ -84,7 +84,7 @@ public class PosiMenuServiceImpl implements PosiMenuService {
             paramMap.put("POSI_ID_", POSI_ID_);
         }
         if (StringUtils.isNotEmpty(POSI_NAME_)) {
-            sql += " and POSI_NAME_like concat('%',:POSI_NAME_,'%')";
+            sql += " and POSI_NAME_ like concat('%',:POSI_NAME_,'%')";
             paramMap.put("POSI_NAME_", POSI_NAME_);
         }
         if (StringUtils.isNotEmpty(MENU_ID_)) {
@@ -96,7 +96,7 @@ public class PosiMenuServiceImpl implements PosiMenuService {
             paramMap.put("PARENT_MENU_ID_", PARENT_MENU_ID_);
         }
         if (StringUtils.isNotEmpty(MENU_NAME_)) {
-            sql += " and MENU_NAME_like concat('%',:MENU_NAME_,'%')";
+            sql += " and MENU_NAME_ like concat('%',:MENU_NAME_,'%')";
             paramMap.put("MENU_NAME_", MENU_NAME_);
         }
         if (MENU_TYPE_LIST != null && MENU_TYPE_LIST.size() > 0) {
@@ -147,7 +147,7 @@ public class PosiMenuServiceImpl implements PosiMenuService {
 
     @Override
     public int insertPosiMenu(String POSI_MENU_ID_, String POSI_ID_, String POSI_NAME_, String MENU_ID_, Date CREATION_DATE_, Date UPDATE_DATE_, String OPERATOR_ID_, String OPERATOR_NAME_) {
-        String sql = "insert into CB_POSI_MENU (POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_POSI_MENU (POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_);
     }
 
@@ -157,7 +157,7 @@ public class PosiMenuServiceImpl implements PosiMenuService {
             return 0;
         }
 
-        String sql = "insert into CB_POSI_MENU (POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_POSI_MENU (POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?)";
         for (int i = 0; i < POSI_ID_LIST.size(); i++) {
             final String POSI_ID_ = POSI_ID_LIST.get(i);
             final String POSI_NAME_ = POSI_NAME_LIST.get(i);
@@ -186,7 +186,7 @@ public class PosiMenuServiceImpl implements PosiMenuService {
 
     @Override
     public int updatePosiMenu(String POSI_MENU_ID_, String POSI_ID_, String POSI_NAME_, String MENU_ID_, Date UPDATE_DATE_, String OPERATOR_ID_, String OPERATOR_NAME_) {
-        String sql = "update CB_POSI_MENU set POSI_ID_ = NULLIF(?, ''), POSI_NAME_ = NULLIF(?, ''), MENU_ID_ = NULLIF(?, ''), UPDATE_DATE_ = NULLIF(?, ''), OPERATOR_ID_ = NULLIF(?, ''), OPERATOR_NAME_ = NULLIF(?, '') where POSI_MENU_ID_ = ?";
+        String sql = "update CB_POSI_MENU set POSI_ID_ = ?, POSI_NAME_ = ?, MENU_ID_ = ?, UPDATE_DATE_ = ?, OPERATOR_ID_ = ?, OPERATOR_NAME_ = ? where POSI_MENU_ID_ = ?";
         return msJdbcTemplate.update(sql, POSI_ID_, POSI_NAME_, MENU_ID_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_, POSI_MENU_ID_);
     }
 
@@ -198,7 +198,7 @@ public class PosiMenuServiceImpl implements PosiMenuService {
             return 0;
         }
 
-        String sql = "insert into CB_POSI_MENU (POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_POSI_MENU (POSI_MENU_ID_, POSI_ID_, POSI_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?)";
         BatchPreparedStatementSetter batch = new BatchPreparedStatementSetter() {
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setString(1, OdUtils.getUuid());

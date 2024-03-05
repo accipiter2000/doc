@@ -99,7 +99,7 @@ public class LogServiceImpl implements LogService {
             paramMap.put("ORG_ID_", ORG_ID_);
         }
         if (StringUtils.isNotEmpty(ORG_NAME_)) {
-            sql += " and ORG_NAME_like concat('%',:ORG_NAME_,'%')";
+            sql += " and ORG_NAME_ like concat('%',:ORG_NAME_,'%')";
             paramMap.put("ORG_NAME_", ORG_NAME_);
         }
         if (StringUtils.isNotEmpty(POSI_ID_)) {
@@ -107,7 +107,7 @@ public class LogServiceImpl implements LogService {
             paramMap.put("POSI_ID_", POSI_ID_);
         }
         if (StringUtils.isNotEmpty(POSI_NAME_)) {
-            sql += " and POSI_NAME_like concat('%',:POSI_NAME_,'%')";
+            sql += " and POSI_NAME_ like concat('%',:POSI_NAME_,'%')";
             paramMap.put("POSI_NAME_", POSI_NAME_);
         }
         if (StringUtils.isNotEmpty(EMP_ID_)) {
@@ -115,7 +115,7 @@ public class LogServiceImpl implements LogService {
             paramMap.put("EMP_ID_", EMP_ID_);
         }
         if (StringUtils.isNotEmpty(EMP_NAME_)) {
-            sql += " and EMP_NAME_like concat('%',:EMP_NAME_,'%')";
+            sql += " and EMP_NAME_ like concat('%',:EMP_NAME_,'%')";
             paramMap.put("EMP_NAME_", EMP_NAME_);
         }
         if (FROM_CREATION_DATE_ != null) {
@@ -162,13 +162,13 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public int insertLog(String LOG_ID_, String CATEGORY_, String IP_, String USER_AGENT_, String URL_, String ACTION_, String PARAMETER_MAP_, String BUSINESS_KEY_, String ERROR_, String MESSAGE_, String ORG_ID_, String ORG_NAME_, String POSI_ID_, String POSI_NAME_, String EMP_ID_, String EMP_NAME_, Date CREATION_DATE_) {
-        String sql = "insert into CB_LOG (LOG_ID_, CATEGORY_, IP_, USER_AGENT_, URL_, ACTION_, PARAMETER_MAP_, BUSINESS_KEY_, ERROR_, MESSAGE_, ORG_ID_, ORG_NAME_, POSI_ID_, POSI_NAME_, EMP_ID_, EMP_NAME_, CREATION_DATE_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_LOG (LOG_ID_, CATEGORY_, IP_, USER_AGENT_, URL_, ACTION_, PARAMETER_MAP_, BUSINESS_KEY_, ERROR_, MESSAGE_, ORG_ID_, ORG_NAME_, POSI_ID_, POSI_NAME_, EMP_ID_, EMP_NAME_, CREATION_DATE_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, LOG_ID_, CATEGORY_, IP_, USER_AGENT_, URL_, ACTION_, PARAMETER_MAP_, BUSINESS_KEY_, ERROR_, MESSAGE_, ORG_ID_, ORG_NAME_, POSI_ID_, POSI_NAME_, EMP_ID_, EMP_NAME_, CREATION_DATE_);
     }
 
     @Override
     public int updateLog(String LOG_ID_, String CATEGORY_, String IP_, String USER_AGENT_, String URL_, String ACTION_, String PARAMETER_MAP_, String BUSINESS_KEY_, String ERROR_, String MESSAGE_, String ORG_ID_, String ORG_NAME_, String POSI_ID_, String POSI_NAME_, String EMP_ID_, String EMP_NAME_) {
-        String sql = "update CB_LOG set CATEGORY_ = NULLIF(?, ''), IP_ = NULLIF(?, ''), USER_AGENT_ = NULLIF(?, ''), URL_ = NULLIF(?, ''), ACTION_ = NULLIF(?, ''), PARAMETER_MAP_ = NULLIF(?, ''), BUSINESS_KEY_ = NULLIF(?, ''), ERROR_ = NULLIF(?, ''), MESSAGE_ = NULLIF(?, ''), ORG_ID_ = NULLIF(?, ''), ORG_NAME_ = NULLIF(?, ''), POSI_ID_ = NULLIF(?, ''), POSI_NAME_ = NULLIF(?, ''), EMP_ID_ = NULLIF(?, ''), EMP_NAME_ = NULLIF(?, '') where LOG_ID_ = ?";
+        String sql = "update CB_LOG set CATEGORY_ = ?, IP_ = ?, USER_AGENT_ = ?, URL_ = ?, ACTION_ = ?, PARAMETER_MAP_ = ?, BUSINESS_KEY_ = ?, ERROR_ = ?, MESSAGE_ = ?, ORG_ID_ = ?, ORG_NAME_ = ?, POSI_ID_ = ?, POSI_NAME_ = ?, EMP_ID_ = ?, EMP_NAME_ = ? where LOG_ID_ = ?";
         return msJdbcTemplate.update(sql, CATEGORY_, IP_, USER_AGENT_, URL_, ACTION_, PARAMETER_MAP_, BUSINESS_KEY_, ERROR_, MESSAGE_, ORG_ID_, ORG_NAME_, POSI_ID_, POSI_NAME_, EMP_ID_, EMP_NAME_, LOG_ID_);
     }
 

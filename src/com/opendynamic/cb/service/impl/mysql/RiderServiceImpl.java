@@ -102,7 +102,7 @@ public class RiderServiceImpl implements RiderService {
             paramMap.put("OBJ_ID_", OBJ_ID_);
         }
         if (StringUtils.isNotEmpty(RIDER_FILE_NAME_)) {
-            sql += " and RIDER_FILE_NAME_like concat('%',:RIDER_FILE_NAME_,'%')";
+            sql += " and RIDER_FILE_NAME_ like concat('%',:RIDER_FILE_NAME_,'%')";
             paramMap.put("RIDER_FILE_NAME_", RIDER_FILE_NAME_);
         }
         if (StringUtils.isNotEmpty(RIDER_TAG_)) {
@@ -162,7 +162,7 @@ public class RiderServiceImpl implements RiderService {
         RIDER_TAG_ = StringUtils.join(tagService.splitTag(RIDER_TAG_), ",");
         tagService.updateTagByObjId(RIDER_ID_, "RIDER", RIDER_TAG_);
 
-        String sql = "insert into CB_RIDER (RIDER_ID_, OBJ_ID_, RIDER_FILE_, RIDER_FILE_NAME_, RIDER_FILE_LENGTH_, MEMO_, RIDER_TAG_, ORDER_, RIDER_STATUS_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_RIDER (RIDER_ID_, OBJ_ID_, RIDER_FILE_, RIDER_FILE_NAME_, RIDER_FILE_LENGTH_, MEMO_, RIDER_TAG_, ORDER_, RIDER_STATUS_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, new Object[] { RIDER_ID_, OBJ_ID_, new SqlLobValue(RIDER_FILE_, RIDER_FILE_LENGTH_, new DefaultLobHandler()), RIDER_FILE_NAME_, RIDER_FILE_LENGTH_, MEMO_, RIDER_TAG_, ORDER_, RIDER_STATUS_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_ }, new int[] { Types.VARCHAR, Types.VARCHAR, Types.BLOB, Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR });
     }
 

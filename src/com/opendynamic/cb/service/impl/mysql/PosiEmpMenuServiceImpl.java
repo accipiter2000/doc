@@ -84,11 +84,11 @@ public class PosiEmpMenuServiceImpl implements PosiEmpMenuService {
             paramMap.put("POSI_EMP_ID_", POSI_EMP_ID_);
         }
         if (StringUtils.isNotEmpty(POSI_NAME_)) {
-            sql += " and POSI_NAME_like concat('%',:POSI_NAME_,'%')";
+            sql += " and POSI_NAME_ like concat('%',:POSI_NAME_,'%')";
             paramMap.put("POSI_NAME_", POSI_NAME_);
         }
         if (StringUtils.isNotEmpty(EMP_NAME_)) {
-            sql += " and EMP_NAME_like concat('%',:EMP_NAME_,'%')";
+            sql += " and EMP_NAME_ like concat('%',:EMP_NAME_,'%')";
             paramMap.put("EMP_NAME_", EMP_NAME_);
         }
         if (StringUtils.isNotEmpty(MENU_ID_)) {
@@ -100,7 +100,7 @@ public class PosiEmpMenuServiceImpl implements PosiEmpMenuService {
             paramMap.put("PARENT_MENU_ID_", PARENT_MENU_ID_);
         }
         if (StringUtils.isNotEmpty(MENU_NAME_)) {
-            sql += " and MENU_NAME_like concat('%',:MENU_NAME_,'%')";
+            sql += " and MENU_NAME_ like concat('%',:MENU_NAME_,'%')";
             paramMap.put("MENU_NAME_", MENU_NAME_);
         }
         if (MENU_TYPE_LIST != null && MENU_TYPE_LIST.size() > 0) {
@@ -151,7 +151,7 @@ public class PosiEmpMenuServiceImpl implements PosiEmpMenuService {
 
     @Override
     public int insertPosiEmpMenu(String POSI_EMP_MENU_ID_, String POSI_EMP_ID_, String POSI_NAME_, String EMP_NAME_, String MENU_ID_, Date CREATION_DATE_, Date UPDATE_DATE_, String OPERATOR_ID_, String OPERATOR_NAME_) {
-        String sql = "insert into CB_POSI_EMP_MENU (POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_POSI_EMP_MENU (POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_);
     }
 
@@ -161,7 +161,7 @@ public class PosiEmpMenuServiceImpl implements PosiEmpMenuService {
             return 0;
         }
 
-        String sql = "insert into CB_POSI_EMP_MENU (POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_POSI_EMP_MENU (POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         for (int i = 0; i < POSI_EMP_ID_LIST.size(); i++) {
             final String POSI_EMP_ID_ = POSI_EMP_ID_LIST.get(i);
             final String POSI_NAME_ = POSI_NAME_LIST.get(i);
@@ -192,7 +192,7 @@ public class PosiEmpMenuServiceImpl implements PosiEmpMenuService {
 
     @Override
     public int updatePosiEmpMenu(String POSI_EMP_MENU_ID_, String POSI_EMP_ID_, String POSI_NAME_, String EMP_NAME_, String MENU_ID_, Date UPDATE_DATE_, String OPERATOR_ID_, String OPERATOR_NAME_) {
-        String sql = "update CB_POSI_EMP_MENU set POSI_EMP_ID_ = NULLIF(?, ''), POSI_NAME_ = NULLIF(?, ''), EMP_NAME_ = NULLIF(?, ''), MENU_ID_ = NULLIF(?, ''), UPDATE_DATE_ = NULLIF(?, ''), OPERATOR_ID_ = NULLIF(?, ''), OPERATOR_NAME_ = NULLIF(?, '') where POSI_EMP_MENU_ID_ = ?";
+        String sql = "update CB_POSI_EMP_MENU set POSI_EMP_ID_ = ?, POSI_NAME_ = ?, EMP_NAME_ = ?, MENU_ID_ = ?, UPDATE_DATE_ = ?, OPERATOR_ID_ = ?, OPERATOR_NAME_ = ? where POSI_EMP_MENU_ID_ = ?";
         return msJdbcTemplate.update(sql, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_, POSI_EMP_MENU_ID_);
     }
 
@@ -204,7 +204,7 @@ public class PosiEmpMenuServiceImpl implements PosiEmpMenuService {
             return 0;
         }
 
-        String sql = "insert into CB_POSI_EMP_MENU (POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_POSI_EMP_MENU (POSI_EMP_MENU_ID_, POSI_EMP_ID_, POSI_NAME_, EMP_NAME_, MENU_ID_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         BatchPreparedStatementSetter batch;
         batch = new BatchPreparedStatementSetter() {// 加菜单
             public void setValues(PreparedStatement ps, int i) throws SQLException {

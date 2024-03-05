@@ -89,7 +89,7 @@ public class CodeServiceImpl implements CodeService {
             paramMap.put("CODE_", CODE_);
         }
         if (StringUtils.isNotEmpty(NAME_)) {
-            sql += " and NAME_like concat('%',:NAME_,'%')";
+            sql += " and NAME_ like concat('%',:NAME_,'%')";
             paramMap.put("NAME_", NAME_);
         }
         if (StringUtils.isNotEmpty(EXT_ATTR_1_)) {
@@ -147,7 +147,7 @@ public class CodeServiceImpl implements CodeService {
             paramMap.put("CODE_", CODE_);
         }
         if (StringUtils.isNotEmpty(NAME_)) {
-            sql += " and NAME_like concat('%',:NAME_,'%')";
+            sql += " and NAME_ like concat('%',:NAME_,'%')";
             paramMap.put("NAME_", NAME_);
         }
         if (StringUtils.isNotEmpty(EXT_ATTR_1_)) {
@@ -208,7 +208,7 @@ public class CodeServiceImpl implements CodeService {
             paramMap.put("CODE_", CODE_);
         }
         if (StringUtils.isNotEmpty(NAME_)) {
-            sql += " and NAME_like concat('%',:NAME_,'%')";
+            sql += " and NAME_ like concat('%',:NAME_,'%')";
             paramMap.put("NAME_", NAME_);
         }
         if (StringUtils.isNotEmpty(EXT_ATTR_1_)) {
@@ -284,13 +284,13 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public int insertCode(String CODE_ID_, String PARENT_CODE_ID_, String CATEGORY_, String CODE_, String NAME_, String EXT_ATTR_1_, String EXT_ATTR_2_, String EXT_ATTR_3_, String EXT_ATTR_4_, String EXT_ATTR_5_, String EXT_ATTR_6_, Integer ORDER_) {
-        String sql = "insert into CB_CODE (CODE_ID_, PARENT_CODE_ID_, CATEGORY_, CODE_, NAME_, EXT_ATTR_1_, EXT_ATTR_2_, EXT_ATTR_3_, EXT_ATTR_4_, EXT_ATTR_5_, EXT_ATTR_6_, ORDER_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_CODE (CODE_ID_, PARENT_CODE_ID_, CATEGORY_, CODE_, NAME_, EXT_ATTR_1_, EXT_ATTR_2_, EXT_ATTR_3_, EXT_ATTR_4_, EXT_ATTR_5_, EXT_ATTR_6_, ORDER_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, CODE_ID_, PARENT_CODE_ID_, CATEGORY_, CODE_, NAME_, EXT_ATTR_1_, EXT_ATTR_2_, EXT_ATTR_3_, EXT_ATTR_4_, EXT_ATTR_5_, EXT_ATTR_6_, ORDER_);
     }
 
     @Override
     public int updateCode(String CODE_ID_, String CODE_, String NAME_, String EXT_ATTR_1_, String EXT_ATTR_2_, String EXT_ATTR_3_, String EXT_ATTR_4_, String EXT_ATTR_5_, String EXT_ATTR_6_, Integer ORDER_) {
-        String sql = "update CB_CODE set CODE_ = NULLIF(?, ''), NAME_ = NULLIF(?, ''), EXT_ATTR_1_ = NULLIF(?, ''), EXT_ATTR_2_ = NULLIF(?, ''), EXT_ATTR_3_ = NULLIF(?, ''), EXT_ATTR_4_ = NULLIF(?, ''), EXT_ATTR_5_ = NULLIF(?, ''), EXT_ATTR_6_ = NULLIF(?, ''), ORDER_ = NULLIF(?, '') where CODE_ID_ = ?";
+        String sql = "update CB_CODE set CODE_ = ?, NAME_ = ?, EXT_ATTR_1_ = ?, EXT_ATTR_2_ = ?, EXT_ATTR_3_ = ?, EXT_ATTR_4_ = ?, EXT_ATTR_5_ = ?, EXT_ATTR_6_ = ?, ORDER_ = ? where CODE_ID_ = ?";
         return msJdbcTemplate.update(sql, CODE_, NAME_, EXT_ATTR_1_, EXT_ATTR_2_, EXT_ATTR_3_, EXT_ATTR_4_, EXT_ATTR_5_, EXT_ATTR_6_, ORDER_, CODE_ID_);
     }
 

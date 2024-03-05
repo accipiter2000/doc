@@ -118,13 +118,13 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public int insertTag(String TAG_ID_, String OBJ_ID_, String OBJ_TYPE_, String TAG_) {
-        String sql = "insert into CB_TAG (TAG_ID_, OBJ_ID_, OBJ_TYPE_, TAG_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_TAG (TAG_ID_, OBJ_ID_, OBJ_TYPE_, TAG_) values (?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, TAG_ID_, OBJ_ID_, OBJ_TYPE_, TAG_);
     }
 
     @Override
     public int updateTag(String TAG_ID_, String OBJ_ID_, String OBJ_TYPE_, String TAG_) {
-        String sql = "update CB_TAG set OBJ_ID_ = NULLIF(?, ''), OBJ_TYPE_ = NULLIF(?, ''), TAG_ = NULLIF(?, '') where TAG_ID_ = ?";
+        String sql = "update CB_TAG set OBJ_ID_ = ?, OBJ_TYPE_ = ?, TAG_ = ? where TAG_ID_ = ?";
         return msJdbcTemplate.update(sql, OBJ_ID_, OBJ_TYPE_, TAG_, TAG_ID_);
     }
 

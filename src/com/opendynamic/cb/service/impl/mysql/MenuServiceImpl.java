@@ -88,7 +88,7 @@ public class MenuServiceImpl implements MenuService {
             paramMap.put("PARENT_MENU_ID_", PARENT_MENU_ID_);
         }
         if (StringUtils.isNotEmpty(MENU_NAME_)) {
-            sql += " and MENU_NAME_like concat('%',:MENU_NAME_,'%')";
+            sql += " and MENU_NAME_ like concat('%',:MENU_NAME_,'%')";
             paramMap.put("MENU_NAME_", MENU_NAME_);
         }
         if (MENU_TYPE_LIST != null && MENU_TYPE_LIST.size() > 0) {
@@ -122,7 +122,7 @@ public class MenuServiceImpl implements MenuService {
         paramMap.put("MENU_ID_", MENU_ID_);
 
         if (StringUtils.isNotEmpty(MENU_NAME_)) {
-            sql += " and MENU_NAME_like concat('%',:MENU_NAME_,'%')";
+            sql += " and MENU_NAME_ like concat('%',:MENU_NAME_,'%')";
             paramMap.put("MENU_NAME_", MENU_NAME_);
         }
         if (MENU_TYPE_LIST != null && MENU_TYPE_LIST.size() > 0) {
@@ -159,7 +159,7 @@ public class MenuServiceImpl implements MenuService {
         paramMap.put("MENU_ID_", MENU_ID_);
 
         if (StringUtils.isNotEmpty(MENU_NAME_)) {
-            sql += " and MENU_NAME_like concat('%',:MENU_NAME_,'%')";
+            sql += " and MENU_NAME_ like concat('%',:MENU_NAME_,'%')";
             paramMap.put("MENU_NAME_", MENU_NAME_);
         }
         if (MENU_TYPE_LIST != null && MENU_TYPE_LIST.size() > 0) {
@@ -213,13 +213,13 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public int insertMenu(String MENU_ID_, String PARENT_MENU_ID_, String MENU_NAME_, String MENU_TYPE_, String URL_, String ICON_, Integer ORDER_, String MENU_STATUS_, Date CREATION_DATE_, Date UPDATE_DATE_, String OPERATOR_ID_, String OPERATOR_NAME_) {
-        String sql = "insert into CB_MENU (MENU_ID_, PARENT_MENU_ID_, MENU_NAME_, MENU_TYPE_, URL_, ICON_, ORDER_, MENU_STATUS_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''))";
+        String sql = "insert into CB_MENU (MENU_ID_, PARENT_MENU_ID_, MENU_NAME_, MENU_TYPE_, URL_, ICON_, ORDER_, MENU_STATUS_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return msJdbcTemplate.update(sql, MENU_ID_, PARENT_MENU_ID_, MENU_NAME_, MENU_TYPE_, URL_, ICON_, ORDER_, MENU_STATUS_, CREATION_DATE_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_);
     }
 
     @Override
     public int updateMenu(String MENU_ID_, String MENU_NAME_, String MENU_TYPE_, String URL_, String ICON_, Integer ORDER_, Date UPDATE_DATE_, String OPERATOR_ID_, String OPERATOR_NAME_) {
-        String sql = "update CB_MENU set MENU_NAME_ = NULLIF(?, ''), MENU_TYPE_ = NULLIF(?, ''), URL_ = NULLIF(?, ''), ICON_ = NULLIF(?, ''),  ORDER_ = NULLIF(?, ''), UPDATE_DATE_ = NULLIF(?, ''), OPERATOR_ID_ = NULLIF(?, ''), OPERATOR_NAME_ = NULLIF(?, '') where MENU_ID_ = ?";
+        String sql = "update CB_MENU set MENU_NAME_ = ?, MENU_TYPE_ = ?, URL_ = ?, ICON_ = ?,  ORDER_ = ?, UPDATE_DATE_ = ?, OPERATOR_ID_ = ?, OPERATOR_NAME_ = ? where MENU_ID_ = ?";
         return msJdbcTemplate.update(sql, MENU_NAME_, MENU_TYPE_, URL_, ICON_, ORDER_, UPDATE_DATE_, OPERATOR_ID_, OPERATOR_NAME_, MENU_ID_);
     }
 
