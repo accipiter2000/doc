@@ -1,0 +1,193 @@
+{
+    "procDefCode": "centerForwardDemo",
+    "procDefName": "中心转发示例",
+    "procDefCat": "demo.hq.hr",
+    "procDefDiagramWidth": null,
+    "procDefDiagramHeight": null,
+    "memo": "memo",
+    "nodeDefList": [
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 150; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "部长审批",
+            "nodeName": "部长审批",
+            "assignee": "${ffOmService.selectOrgLeader(drafter.get(\"ORG_ID_\"),\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "exclusive": "1",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "textOffsetY": 10,
+                "style": "left: 50; top: 100; width: 300; height: 350; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: top; "
+            },
+            "nodeType": "STAGE",
+            "nodeCode": "文书流转阶段",
+            "nodeName": "文书流转阶段",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 100; top: 150; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "CENTER_FORWARD_TASK",
+            "nodeCode": "文书",
+            "nodeName": "文书",
+            "parentNodeCode": "文书流转阶段",
+            "assignee": "${ffOmService.selectPosiEmp(drafter.get(\"COM_ID_\"),\"文书\",null,null)}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 250; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "财务部长审批",
+            "nodeName": "财务部长审批",
+            "parentNodeCode": "文书流转阶段",
+            "assignee": "${ffOmService.selectOrgLeader(ffOmService.selectOrg(drafter.get(\"COM_ID_\"),null,null,\"财务\").get(0).getOrgId(),\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeReturn": "1",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 200; top: 350; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "设备部长审批",
+            "nodeName": "设备部长审批",
+            "parentNodeCode": "文书流转阶段",
+            "assignee": "${ffOmService.selectOrgLeader(ffOmService.selectOrg(drafter.get(\"COM_ID_\"),null,null,\"设备\").get(0).getOrgId(),\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeReturn": "1",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        },
+        {
+            "shape": {
+                "type": "rectangle",
+                "style": "left: 150; top: 550; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "nodeType": "TASK",
+            "nodeCode": "厂长审批",
+            "nodeName": "厂长审批",
+            "assignee": "${ffOmService.selectOrgLeader(drafter.get(\"COM_ID_\"),\"1\")}",
+            "action": "commonApproveDoc.do?DOC_ID_=${proc.getBizId()}&TASK_ID_=${task.getTaskId()}",
+            "completeExpression": "${COMPLETE/TOTAL>=1}",
+            "completeReturn": "0",
+            "exclusive": "0",
+            "autoCompleteSameAssignee": "0",
+            "autoCompleteEmptyAssignee": "0",
+            "inform": "0",
+            "claim": "0",
+            "forwardable": "0",
+            "priority": "5"
+        }
+    ],
+    "flowDefList": [
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN"
+            },
+            "flowCode": "flow01",
+            "sourceNodeCode": "部长审批",
+            "targetNodeCode": "文书流转阶段",
+            "conditionExpression": "true"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SW",
+                "textLineIndex": 1,
+                "stub": 25,
+                "textWidth": 100,
+                "textHeight": 20,
+                "textOffsetY": -10,
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "flowCode": "flow02",
+            "flowName": "第一步",
+            "sourceNodeCode": "文书",
+            "targetNodeCode": "财务部长审批",
+            "conditionExpression": "${CENTER_FORWARD_STEP==1}"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SW",
+                "stub": 40,
+                "textLineIndex": 1,
+                "textWidth": 100,
+                "textHeight": 20,
+                "textOffsetY": -10,
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "flowCode": "flow03",
+            "flowName": "第二步",
+            "sourceNodeCode": "文书",
+            "targetNodeCode": "设备部长审批",
+            "conditionExpression": "${CENTER_FORWARD_STEP==2}"
+        },
+        {
+            "shape": {
+                "type": "line",
+                "linePath": "SN",
+                "textWidth": 100,
+                "stub": 25,
+                "textHeight": 20,
+                "style": "left: 0; top: 0; width: 100; height: 50; border-style: solid; border-width: 1; border-radius: 10; border-color: #000000; background-color: #ffffc8; font-family: Microsoft YaHei; font-weight: normal; font-size: 13px; color: #000000; text-align: center; vertical-align: middle; "
+            },
+            "flowCode": "flow04",
+            "flowName": "第三步",
+            "sourceNodeCode": "文书流转阶段",
+            "targetNodeCode": "厂长审批",
+            "conditionExpression": "true"
+        }
+    ]
+}
