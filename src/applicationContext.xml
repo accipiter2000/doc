@@ -10,10 +10,10 @@
 	<import resource="applicationContextMsT.xml" />
 
 	<context:component-scan base-package="com.opendynamic">
-		<context:exclude-filter type="regex" expression="com.opendynamic.om.service.impl.oracle.*" />
-		<context:exclude-filter type="regex" expression="com.opendynamic.cb.service.impl.oracle.*" />
-		<context:exclude-filter type="regex" expression="com.opendynamic.ff.service.impl.oracle.*" />
-		<context:exclude-filter type="regex" expression="com.opendynamic.doc.service.impl.oracle.*" />
+		<context:exclude-filter type="regex" expression="com.opendynamic.om.service.impl.(?!mysql).*" />
+		<context:exclude-filter type="regex" expression="com.opendynamic.cb.service.impl.(?!mysql).*" />
+		<context:exclude-filter type="regex" expression="com.opendynamic.ff.service.impl.(?!mysql).*" />
+		<context:exclude-filter type="regex" expression="com.opendynamic.doc.service.impl.(?!mysql).*" />
 	</context:component-scan>
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
